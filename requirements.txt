@@ -1,0 +1,7 @@
+html5lib
+requests
+lxml
+beautifulsoup4
+loguru
+colorama
+rich
