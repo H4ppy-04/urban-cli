@@ -15,12 +15,18 @@
 
 ## Installation
 
+__Linux__
+
 On Linux platforms, run `sh install.sh`.
 > This assumes that ~/.local/bin is present
 
-For Windows, you'll have to manually modify your path
-environment variables to add `%USERPROFILE%/Downloads/urban-tui/src/urban.py`
-From there you'll have to type `urban.py` instead of `urban` (unless you install WSL through which you can run `install.sh`).
+__Windows__
+
+For Windows, you'll have to manually modify your path environment variables to add:
+`%USERPROFILE%/Downloads/urban-tui/src/urban.py`
+
+From there you'll have to type `urban.py` instead of `urban`.
+The exception of course is you've installed WSL through which you can run `install.sh`.
 
 ## Usage
 
