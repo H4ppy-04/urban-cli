@@ -15,6 +15,15 @@
 
 ## Installation
 
+__All platforms__
+
+All platforms must install requirements before running.
+ > This won't be needed in the next planned release for Linux and WSL.
+
+```sh
+python -m pip install --user -r requirements.txt
+```
+
 __Linux__
 
 On Linux platforms, run `sh install.sh`.
