@@ -46,8 +46,8 @@ fi
 echo export "PATH=$GLOBAL_PATH" >> $RC_FILE 2> $LOG_FILE
 
 if [[ $? -eq 0 ]]; then
-	echo "Changing local file permissions for $FILE_PATH"
-	chmod +x $FILE_PATH
+	echo "Changing local file permissions for $GLOBAL_PATH"
+	chmod +x $GLOBAL_PATH
 else
 	fail_and_exit
 fi
