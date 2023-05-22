@@ -12,6 +12,15 @@
 </div>
 
 <!-- new section -->
+
+<h2>Installation</h2>
+On Linux platforms, run `sh install.sh`.
+> This assumes that ~/.local/bin is present
+
+For Windows, you'll have to manually modify your path
+environment variables to add `%USERPROFILE%/Downloads/urban-tui/src/urban.py`
+From there you'll have to type `urban.py` instead of `urban` (unless you install WSL through which you can run `install.sh`).
+
 <h2>Usage</h2>
 
 Usage is as simple as typing `urban` followed by the word you'd like to see the definition for.
