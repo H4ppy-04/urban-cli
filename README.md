@@ -1,14 +1,14 @@
 <div align="center">
 
-  <h1>Urban TUI</h1>
+  <h1>Urban CLI</h1>
 
    <a href="_blank">
      <img
           width="64px"
           alt="book icon"
-          src="https://github.com/GH-Syn/urban-tui/blob/feat/docs/readme/.github/images/book.png"/></a>
+          src="https://github.com/GH-Syn/urban-cli/blob/feat/docs/readme/.github/images/book.png"/></a>
     <br>
-  <code>The terminal user interface for the infamous <a href="https://www.urbandictionary.com/">Urban Dictionary</a></code>
+  <code>A command line interface for the infamous <a href="https://www.urbandictionary.com/">Urban Dictionary</a></code>
 </div>
 
 
@@ -32,7 +32,7 @@ On Linux platforms, run `sh install.sh`.
 __Windows__
 
 For Windows, you'll have to manually modify your path environment variables to add:
-`%USERPROFILE%/Downloads/urban-tui/src/urban.py`
+`%USERPROFILE%/Downloads/urban-cli/src/urban.py`
 
 From there you'll have to type `urban.py` instead of `urban`.
 The exception of course is you've installed WSL through which you can run `install.sh`.
