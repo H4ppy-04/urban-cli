@@ -8,10 +8,7 @@ import sys
 
 from bs4 import BeautifulSoup as bs, ResultSet, Tag
 import colorama
-from loguru import logger
 import requests
-
-logger.add(sys.stderr, format="{time} {level} {message}", filter="my_module", level="INFO")
 
 colorama.init()
 
@@ -29,7 +26,7 @@ else:
         sys.exit(0)
 
 # TODO get `_definition` working
-def fetch_word_from_remote(_word: str, _definition: int | float = 0) -> dict[str, str] | None:
+def fetch_word_from_remote(_word: str, _definition: int = 0) -> dict[str, str] | None:
     """Query urban dictionary for `_word`.
 
     :param `_word`: Word to query urban dictonary for.
@@ -37,16 +34,10 @@ def fetch_word_from_remote(_word: str, _definition: int | float = 0) -> dict[str
     :returns: result, author and date as a dictionary.
     """
 
-    # NOTE: remove in actual release; refactor _definition type to `int`
-    # for more argument types even though its strictly useless.
-    if isinstance(_definition, float):
-        _definition = int(_definition)
-
     # get request
     URL_QUERY = f"https://www.urbandictionary.com/define.php?term={_word}"
     response = requests.get(URL_QUERY)
 
-    # print(response.status_code)
     match response.status_code:
         case 404:
             print("That word doesn't exist yet. You can try adding it on urbandictionary.com!")
@@ -58,13 +49,11 @@ def fetch_word_from_remote(_word: str, _definition: int | float = 0) -> dict[str
             print(
                 "This is quite rare, but assuming you're connected to the internet, 'urbandictionary.com' seems to be down!"
             )
-            colorama.deinit()
+            # removed as no colored words can have been printed.
+            # colorama.deinit()
             sys.exit(1)
 
-    # Format query
     soup = bs(response.content, "html.parser")
-
-    # print(soup.prettify())
 
     # TODO add to test:
     """
@@ -79,10 +68,8 @@ def fetch_word_from_remote(_word: str, _definition: int | float = 0) -> dict[str
     """
 
     found_word = soup.select(".word")[0].string
-    if found_word is None:
-        print("Crazy stuff happened")
-        colorama.deinit()
-        sys.exit(0)
+    # TODO: add to test
+    assert found_word is not None
 
     # TODO: move to test
     assert _word.lower() == found_word.lower()
@@ -105,30 +92,15 @@ def fetch_word_from_remote(_word: str, _definition: int | float = 0) -> dict[str
     words = word_meaning.get_text(strip=False).split(" ", -1)
     words_as_str = " ".join(words)
 
-    # print(hyperlinks_list)
-
     for _, word in enumerate(hyperlinks_list):
         if word in words:
             words_as_str = words_as_str.replace(word, colorama.Fore.BLUE + word + colorama.Fore.RESET)
-            # print(f" (dev stuff) Replaced: {word}")
             continue
         else:
-            # Houston, we got a problem.
-            # print("[dev issue] unfound word? the word is \'{word}\'".format(word=word))
             if " " in word:
-                # print("Subword found")
                 subwords = word.split(" ", -1)
                 for subword in subwords:
                     word = words_as_str.replace(subword, colorama.Fore.BLUE + subword + colorama.Fore.RESET)
-            # word_count = word.count(" ")
-            # _words = word.split(" ", word_count)
-            # Get the index of the first word
-            # words[index] = f"{colorama.Fore.BLUE}test{colorama.Fore.RESET}"
-
-            # sys.exit(1)
-            # colrama.deinit()
-
-    # print(" ".join(words))
 
     # NOTE don't delete!
     print(words_as_str)
