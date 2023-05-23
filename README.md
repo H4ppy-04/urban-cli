@@ -6,7 +6,7 @@
      <img
           width="64px"
           alt="book icon"
-          src="https://github.com/GH-Syn/urban-cli/blob/feat/docs/readme/.github/images/book.png"/></a>
+          src="https://github.com/GH-Syn/urban-cli/blob/main/.github/images/book.png"/></a>
     <br>
   <code>A command line interface for the infamous <a href="https://www.urbandictionary.com/">Urban Dictionary</a></code>
 </div>
@@ -39,7 +39,7 @@ The exception of course is you've installed WSL through which you can run `insta
 
 ## Usage
 
-![demo](https://gifcord.gg/direct/output-2023-05-23160638-456595.gif)
+<img alt="usage example" src="https://github.com/GH-Syn/urban-cli/blob/main/.github/images/output-2023-05-23_16.06.38.gif"/></img>
 
 ## License
 
