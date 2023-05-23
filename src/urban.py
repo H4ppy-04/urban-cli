@@ -41,22 +41,66 @@ def fetch_response_from_URL(_url: str) -> requests.Response:
     """
     response = requests.get(_url)
 
-    match response.status_code:
-        case 404:
+    # Sources: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+    match range(response.status_code):
+        # Informational response
+        case (100, 199):
+            pass
+
+        # Successful responses
+        case (200, 299):
+            pass
+
+        # Redirectional message
+        case (300, 399):
+            # TODO: make error this not 💩
+            print(f"Client redirected (redirect code {response.status_code}).")
+            print(
+                f"It would be amazing if you created an issue at https://github.com/GH-Syn/urban-cli/issues/new and made sure to include:"
+            )
+            print(f"`status_code` error: `{response.status_code}`")
+            print(f"`requests_url:` error: `{_url}`")
+            print(f"`response:` error: `{response.json()}`")
+            sys.exit(1)
+
+        # Client error response
+        case (400, 499):
+            print(f"Client error {response.status_code}.")
+            print(
+                f"Assuming your VPN and internet settings are fine, this is a bug (sorry)."
+            )
+            print(
+                f"It would be amazing if you created an issue at https://github.com/GH-Syn/urban-cli/issues/new and made sure to include:"
+            )
+            print(f"`status_code` error: `{response.status_code}`")
+            print(f"`requests_url:` error: `{_url}`")
+            print(f"`response:` error: `{response.json()}`")
+            sys.exit(1)
+
+        # Server error
+        case (400, 499):
+            if response.status_code != 404:
+                print(
+                    f"Got a server error. Somethings wrong with the website. (error {response.status_code})"
+                )
+                print(
+                    f"It would be amazing if you created an issue at https://github.com/GH-Syn/urban-cli/issues/new and made sure to include:"
+                )
+                print(f"`status_code` error: `{response.status_code}`")
+                print(f"`requests_url:` error: `{_url}`")
+                print(f"`response:` error: `{response.json()}`")
+                sys.exit(1)
             print(
                 "That word doesn't exist yet. You can try adding it on urbandictionary.com!"
             )
             colorama.deinit()
             sys.exit(0)
-        case 200:
-            pass
         case _:
             print(
                 "This is quite rare, but assuming you're connected to the internet, 'urbandictionary.com' seems to be down!"
             )
-            # removed as no colored words can have been printed.
-            # colorama.deinit()
             sys.exit(1)
+
     return response
 
 
