@@ -95,9 +95,7 @@ class TestUrban(unittest.TestCase):
 
         assert isinstance(_soup.string, BeautifulSoup)
         with self.assertRaises(TypeError):
-            assert_soup_and_index_valid(
-                _soup.string, _index=0
-            )
+            assert_soup_and_index_valid(_soup.string, _index=0)
 
     def test_word_none_raises_key_error(self):
         """
@@ -143,4 +141,6 @@ class TestUrban(unittest.TestCase):
         _soup = get_soup_object_from_word(self.word)
 
         with self.assertRaises(IndexError):
-            assert isinstance(derive_meaning_as_tag(_soup, _index=999), Tag)  # pyright: ignore
+            assert isinstance(
+                derive_meaning_as_tag(_soup, _index=999), Tag
+            )  # pyright: ignore
