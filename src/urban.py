@@ -14,7 +14,11 @@ colorama.init()
 
 
 def join_words():
-    """Join words into one string when 2 or more words are given."""
+    """Join words into one string when 2 or more words are given.
+
+    :return: One or more words depending on if spaces are present.
+    :rtype: `str`
+    """
 
     word: str
 
@@ -37,7 +41,8 @@ def fetch_response_from_URL(_url: str) -> requests.Response:
     Filters status code in the process of fetching `_url`.
 
     :param `_url`: Url query as a `str` type
-    :return: `requests.Response`
+
+    :return: `requests.Response` object from which `content` is derived.
     """
     response = requests.get(_url)
 
@@ -113,9 +118,12 @@ def fetch_response_from_URL(_url: str) -> requests.Response:
 def get_first_definition_from_soup(_soup: BeautifulSoup) -> Tag:
     """Return first definition section / 'block' from `_soup`.
 
-    :param _soup: `_soup` object as `BeautifulSoup`
-    :return: bs4 tag for first definition
+    :param _soup: `_soup` object as `BeautifulSoup` object.
+
+    :return: bs4 tag for initial definition.
+    :rtype: `Tag`
     """
+
     definition = get_result_set_from_soup(_soup, _index=0)
     return definition
 
@@ -124,7 +132,9 @@ def get_soup_object_from_word(_word: str) -> BeautifulSoup:
     """Return soup object as `BeautifulSoup` from `_word`.
 
     :param `_word`: Word to query urban dictionary for.
-    :param _soup: `_soup` object as `BeautifulSoup`
+
+    :return: `BeautifulSoup` object from word.
+    :rtype: `BeautifulSoup`
     """
 
     URL_QUERY = f"https://www.urbandictionary.com/define.php?term={_word}"
@@ -134,11 +144,13 @@ def get_soup_object_from_word(_word: str) -> BeautifulSoup:
     return _soup
 
 
-def get_result_set_from_soup(_soup: BeautifulSoup, _index=0):
+def get_result_set_from_soup(_soup: BeautifulSoup, _index=0) -> Tag:
     """Return result set from `_soup` object.
 
+    :param _soup: `_soup` object as `BeautifulSoup`.
     :param _index (still being implemented): Definition priority / how high definition is on page - ascending. (default=0)
-    :param _soup: `_soup` object as `BeautifulSoup`
+
+    :return: `Tag` object result.
     """
 
     assert_soup_and_index_valid(_soup, _index)
@@ -151,6 +163,7 @@ def assert_index_valid(_index: int):
     """Helper function for assert_soup_and_index_valid.
 
     :param _index (still being implemented): Definition priority / how high definition is on page - ascending. (default=0)
+    :type _index: `int`
     """
 
     if not isinstance(_index, int):
@@ -186,11 +199,12 @@ def assert_soup_and_index_valid(
     )
 
 
-def get_found_word_from_soup(_soup: BeautifulSoup, _index=0):
+def get_found_word_from_soup(_soup: BeautifulSoup, _index=0) -> str:
     """Return word from `_soup` object.
 
     :param _index (still being implemented): Definition priority / how high definition is on page - ascending. (default=0)
-    :param _soup: `_soup` object as `BeautifulSoup`
+    :param _soup: `_soup` object as `BeautifulSoup` object.
+    :return: word as `str`
     """
 
     assert_soup_and_index_valid(_soup, _index)
@@ -213,7 +227,7 @@ def derive_definition_as_tag(_soup: BeautifulSoup, _index=0) -> Tag:
 
     :param _soup: `_soup` object as `BeautifulSoup`
     :param _index (still being implemented): Definition priority / how high definition is on page - ascending. (default=0)
-    :returns: `Tag` containing definition, date, author, definition example
+    :return: `Tag` containing definition, date, author, definition example
     """
 
     assert_soup_and_index_valid(_soup, _index)
@@ -226,6 +240,7 @@ def derive_meaning_as_tag(_soup: BeautifulSoup) -> Tag:
     """Return deriveg meaning from `_soup` object.
 
     :param _soup: `_soup` object as `BeautifulSoup`
+    :return: Word meaning as `Tag`
     """
 
     assert_soup_and_index_valid(_soup, _index=None)
@@ -263,6 +278,8 @@ def format_words_as_string_from_tag(_word_meaning: Tag, _hyperlinks_list: list[s
 
     :param _word_meaning: Tag containing word definition
     :param _hyperlinks_list: List of strings that are also hyperlinks in definition
+    :return: Words as single conjoined string
+    :rtype: str
     """
 
     # all words, can be all links though, which is a pain.
@@ -291,12 +308,14 @@ def format_words_as_string_from_tag(_word_meaning: Tag, _hyperlinks_list: list[s
 
 
 # TODO get `_definition` working
-def fetch_word_from_remote(_word: str, _definition: int = 0) -> dict[str, str] | None:
+def fetch_word_from_remote(_word: str) -> dict[str, str] | None:
     """Query urban dictionary for `_word`.
 
     :param `_word`: Word to query urban dictonary for.
     :param `_definition`: Definition rank. The greater the number the less likely it'll be found.
-    :returns: result, author and date as a dictionary.
+
+    :return: result, author and date as a dictionary.
+    :rtype: dict[str, str] | None
     """
 
     _soup = get_soup_object_from_word(_word)
