@@ -20,16 +20,19 @@ __All platforms__
 All platforms must install requirements before running.
  > This won't be needed in the next planned release for Linux and WSL.
 
+Windows will have to run `usage.py` directly, as urban-cli is not installable via pip, however there are [alternatives](https://github.com/GH-Syn/urban-cli/edit/main/README.md#windows).
+
 ```sh
 python -m pip install --user -r requirements.txt
 ```
 
-__Linux__
+#### Linux
 
 On Linux platforms, run `sh install.sh`.
 > This assumes that ~/.local/bin is present
 
-__Windows__
+#### Windows
+> If you don't want to run `usage.py` directly
 
 For Windows, you'll have to manually modify your path environment variables to add:
 `%USERPROFILE%/Downloads/urban-cli/src/urban.py`
