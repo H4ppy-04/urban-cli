@@ -96,6 +96,7 @@ def get_result_set_from_soup(_soup: BeautifulSoup, _index=0):
 
     return result_set
 
+
 def assert_index_valid(_index: int):
     """Helper function for assert_soup_and_index_valid.
 
@@ -110,6 +111,7 @@ def assert_index_valid(_index: int):
             "Index parameter is introduced in > 1.1.0. If you are on an eariler release this is an experimental command."
         )
 
+
 def assert_soup_valid(_soup: BeautifulSoup):
     """Helper function for assert_soup_and_index_valid.
 
@@ -118,6 +120,7 @@ def assert_soup_valid(_soup: BeautifulSoup):
 
     if not isinstance(_soup, BeautifulSoup):
         raise TypeError(f"_soup must be of type `BeautifulSoup`, found {type(_soup)}")
+
 
 def assert_soup_and_index_valid(
     _soup: BeautifulSoup | None, _index: int | None = 0
@@ -131,6 +134,7 @@ def assert_soup_and_index_valid(
     assert_soup_valid(_soup) if _soup is not None else (
         assert_index_valid if _index is not None else None
     )
+
 
 def get_found_word_from_soup(_soup: BeautifulSoup, _index=0):
     """Return word from `_soup` object.
@@ -153,6 +157,7 @@ def get_found_word_from_soup(_soup: BeautifulSoup, _index=0):
 
     return found_word
 
+
 def derive_definition_as_tag(_soup: BeautifulSoup, _index=0) -> Tag:
     """Return the definition of a soup_ object.
 
@@ -166,6 +171,7 @@ def derive_definition_as_tag(_soup: BeautifulSoup, _index=0) -> Tag:
 
     return word_meaning
 
+
 def derive_meaning_as_tag(_soup: BeautifulSoup) -> Tag:
     """Return deriveg meaning from `_soup` object.
 
@@ -177,6 +183,7 @@ def derive_meaning_as_tag(_soup: BeautifulSoup) -> Tag:
     word_meaning = derived_definition.select(".meaning")[0]
 
     return word_meaning
+
 
 def get_hyperlinks_as_result_set(_word_meaning: Tag) -> ResultSet[Tag] | None:
     """Get hyperlinks as a result set of all unique tags.
@@ -200,6 +207,7 @@ def get_hyperlinks_as_result_set(_word_meaning: Tag) -> ResultSet[Tag] | None:
         return hyperlinks
     raise TypeError(f"expected ResultSet, got {type(hyperlinks)}")
 
+
 def format_words_as_string_from_tag(_word_meaning: Tag, _hyperlinks_list: list[str]):
     """Format words into one printable string from `_tag`
 
@@ -212,7 +220,7 @@ def format_words_as_string_from_tag(_word_meaning: Tag, _hyperlinks_list: list[s
 
     if len(words) == 0 | 1:
         # TODO: Handle definitions that only have one word
-        return;
+        return
 
     words_as_str = " ".join(words)
 
