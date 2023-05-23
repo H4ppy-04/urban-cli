@@ -42,7 +42,7 @@ def fetch_response_from_URL(_url: str) -> requests.Response:
     response = requests.get(_url)
 
     # Sources: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
-        # Informational response
+    # Informational response
     if 100 <= response.status_code < 199:
         print(f"Client information response (response code {response.status_code}).")
         print(
@@ -108,6 +108,7 @@ def fetch_response_from_URL(_url: str) -> requests.Response:
             "This is quite rare, but assuming you're connected to the internet, 'urbandictionary.com' seems to be down!"
         )
         sys.exit(1)
+
 
 def get_first_definition_from_soup(_soup: BeautifulSoup) -> Tag:
     """Return first definition section / 'block' from `_soup`.
