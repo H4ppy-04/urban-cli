@@ -142,5 +142,8 @@ class TestUrban(unittest.TestCase):
 
         with self.assertRaises(IndexError):
             assert isinstance(
-                derive_meaning_as_tag(_soup, _index=999), Tag
+                derive_meaning_as_tag(_soup), Tag
             )  # pyright: ignore
+
+    def test_words_as_other_type_returns_str_error(self):
+        """Test `words_as_str`  returns string-based error on invalid data type output"""

@@ -317,6 +317,9 @@ def fetch_word_from_remote(_word: str, _definition: int = 0) -> dict[str, str] |
 
     words_as_str = format_words_as_string_from_tag(word_meaning, hyperlinks_list)
 
+    if not isinstance(words_as_str, str) or words_as_str == "":
+        words_as_str = "Definition not found or not available."
+
     # NOTE don't delete!
     print(words_as_str)
 
@@ -325,7 +328,7 @@ def fetch_word_from_remote(_word: str, _definition: int = 0) -> dict[str, str] |
     date_posted = ""
 
     # TODO/FIXME return date and author as well
-    return {"definition": "", "author": post_author, "date": date_posted}
+    return {"definition": words_as_str, "author": post_author, "date": date_posted}
 
 
 word = join_words()
