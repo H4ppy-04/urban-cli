@@ -39,10 +39,7 @@ The exception of course is you've installed WSL through which you can run `insta
 
 ## Usage
 
-Usage is as simple as typing `urban` followed by the word you'd like to see the definition for.
-For example, to search the Urban Dictionary definition of the word "eshay" you'd type `urban eshay`.
-
-Simple as that! :rocket:
+![demo](https://gifcord.gg/direct/output-2023-05-23160638-456595.gif)
 
 ## License
 
