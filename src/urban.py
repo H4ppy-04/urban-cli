@@ -171,7 +171,7 @@ def assert_index_valid(_index: int):
         raise TypeError("Index should be an integer")
 
     if _index > 0:
-        PendingDeprecationWarning(
+        raise PendingDeprecationWarning(
             "Index parameter is introduced in > 1.1.0. If you are on an eariler release this is an experimental command."
         )
 
@@ -335,6 +335,42 @@ def get_statistics_from_soup(_soup: BeautifulSoup):
     # print(type(x))
     return;
 
+def get_author_from_soup(_soup: BeautifulSoup) -> str:
+    """Return author from soup.
+
+    :param _soup: `_soup` object as `BeautifulSoup` object.
+    :return: author as a string
+    """
+
+    # get definition container
+    container = derive_definition_as_tag(_soup)
+
+    return (
+        container.find_next("div", class_="contributor")
+        .find_next("a")["href"]
+        .split("=")[1]
+    )
+
+
+@deprecated("Likes and dislikes are rendered via javascript")
+def get_statistics_from_soup(_soup: BeautifulSoup):
+    """Return likes and dislikes (both integers) as a dictionary.
+
+    :param _soup: `_soup` object as `BeautifulSoup` object.
+    return: likes and dislikes (both integers) as a dictionary.
+    """
+
+    # get definition container
+    container = derive_definition_as_tag(_soup)
+
+    x: Tag = container.find_next("div", class_="contributor").find_next_sibling(
+        "div"
+    )  # pyright: ignore
+    print(x.find_all(name="span", recursive=True, attrs={"class": "text-xs"}))
+    # print(type(x))
+    return
+
+
 # TODO get `_definition` working
 def fetch_word_from_remote(_word: str) -> dict[str, str] | None:
     """Query urban dictionary for `_word`.
@@ -364,6 +400,9 @@ def fetch_word_from_remote(_word: str) -> dict[str, str] | None:
 
     words_as_str = format_words_as_string_from_tag(word_meaning, hyperlinks_list)
 
+    if not isinstance(words_as_str, str) or words_as_str == "":
+        words_as_str = "Definition not found or not available."
+
     # NOTE don't delete!
     print(words_as_str)
 
@@ -372,13 +411,19 @@ def fetch_word_from_remote(_word: str) -> dict[str, str] | None:
     date_posted = ""
 
     # TODO/FIXME return date and author as well
-    return {"definition": "", "author": post_author, "date": date_posted}
+    return {"definition": words_as_str, "author": post_author, "date": date_posted}
 
 
-word = join_words()
+def main():
+    word = join_words()
 
-# NOTE: deprecated function
-# get_statistics_from_soup(get_soup_object_from_word(word))
-fetch_word_from_remote(word)
+    # NOTE: deprecated function
+    # get_statistics_from_soup(get_soup_object_from_word(word))
+    fetch_word_from_remote(word)
 
-print(f"Defined by {colorama.Fore.BLUE}{get_author_from_soup(get_soup_object_from_word(word))}{colorama.Fore.RESET}")
+    print(
+        f"Defined by {colorama.Fore.BLUE}{get_author_from_soup(get_soup_object_from_word(word))}{colorama.Fore.RESET}"
+    )
+
+if __name__ == "__main__":
+    main()
