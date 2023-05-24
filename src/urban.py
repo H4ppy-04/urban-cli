@@ -341,7 +341,7 @@ def get_author_from_soup(_soup: BeautifulSoup) -> str:
 
 
 # TODO get `_definition` working
-def fetch_word_from_remote(_word: str) -> dict[str, str] | None:
+def fetch_word_from_remote(_word: str) -> dict[str, str]:
     """Query urban dictionary for `_word`.
 
     :param `_word`: Word to query urban dictonary for.
@@ -367,16 +367,18 @@ def fetch_word_from_remote(_word: str) -> dict[str, str] | None:
         for word in hyperlinks:
             hyperlinks_list.append(word.string)
 
-    words_as_str = format_words_as_string_from_tag(word_meaning, hyperlinks_list)
+    words_as_str: str | None = format_words_as_string_from_tag(word_meaning, hyperlinks_list)
 
-    if not isinstance(words_as_str, str) or words_as_str == "":
+    if words_as_str == None:
+        words_as_str = "Definition not found or not available."
+    elif words_as_str == "":
         words_as_str = "Definition not found or not available."
 
     # NOTE don't delete!
-    print(words_as_str)
+    # print(words_as_str) # i just did.
 
     # Return definition, author, date all as dict
-    post_author = ""
+    post_author = get_author_from_soup(_soup)
     date_posted = ""
 
     # TODO/FIXME return date and author as well
@@ -388,10 +390,12 @@ def main():
 
     # NOTE: deprecated function
     # get_statistics_from_soup(get_soup_object_from_word(word))
-    fetch_word_from_remote(word)
+    definition, author, date = fetch_word_from_remote(word).values()
+
+    print(definition)
 
     print(
-        f"Defined by {colorama.Fore.BLUE}{get_author_from_soup(get_soup_object_from_word(word))}{colorama.Fore.RESET}"
+        f"Defined by {colorama.Fore.BLUE}{author}{colorama.Fore.RESET}"
     )
 
 if __name__ == "__main__":
