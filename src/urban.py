@@ -307,18 +307,6 @@ def format_words_as_string_from_tag(_word_meaning: Tag, _hyperlinks_list: list[s
                     )
     return words_as_str
 
-def get_author_from_soup(_soup: BeautifulSoup) -> str:
-    """Return author from soup.
-
-    :param _soup: `_soup` object as `BeautifulSoup` object.
-    :return: author as a string
-    """
-
-    # get definition container
-    container = derive_definition_as_tag(_soup)
-
-    return container.find_next("div", class_="contributor").find_next("a")["href"].split("=")[1]  # pyright: ignore
-
 @deprecated("Likes and dislikes are rendered via javascript")
 def get_statistics_from_soup(_soup: BeautifulSoup):
     """Return likes and dislikes (both integers) as a dictionary.
@@ -343,32 +331,13 @@ def get_author_from_soup(_soup: BeautifulSoup) -> str:
     """
 
     # get definition container
-    container = derive_definition_as_tag(_soup)
+    container: ResultSet[Tag] = derive_definition_as_tag(_soup)  # pyright: ignore
 
     return (
-        container.find_next("div", class_="contributor")
+        container.find_next("div", class_="contributor")  # pyright: ignore
         .find_next("a")["href"]
         .split("=")[1]
     )
-
-
-@deprecated("Likes and dislikes are rendered via javascript")
-def get_statistics_from_soup(_soup: BeautifulSoup):
-    """Return likes and dislikes (both integers) as a dictionary.
-
-    :param _soup: `_soup` object as `BeautifulSoup` object.
-    return: likes and dislikes (both integers) as a dictionary.
-    """
-
-    # get definition container
-    container = derive_definition_as_tag(_soup)
-
-    x: Tag = container.find_next("div", class_="contributor").find_next_sibling(
-        "div"
-    )  # pyright: ignore
-    print(x.find_all(name="span", recursive=True, attrs={"class": "text-xs"}))
-    # print(type(x))
-    return
 
 
 # TODO get `_definition` working
