@@ -379,6 +379,9 @@ def fetch_word_from_remote(_word: str) -> dict[str, str] | None:
 
 
 word = join_words()
-get_statistics_from_soup(get_soup_object_from_word(word))
+
+# NOTE: deprecated function
+# get_statistics_from_soup(get_soup_object_from_word(word))
 fetch_word_from_remote(word)
+
 print(f"Defined by {colorama.Fore.BLUE}{get_author_from_soup(get_soup_object_from_word(word))}{colorama.Fore.RESET}")
