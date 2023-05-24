@@ -12,6 +12,8 @@
 </div>
 
 
+## Preface
+> Please read the wiki for roadmap, versioning and contributing.
 
 ## Installation
 
