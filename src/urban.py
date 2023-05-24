@@ -307,6 +307,7 @@ def format_words_as_string_from_tag(_word_meaning: Tag, _hyperlinks_list: list[s
                     )
     return words_as_str
 
+
 @deprecated("Likes and dislikes are rendered via javascript")
 def get_statistics_from_soup(_soup: BeautifulSoup):
     """Return likes and dislikes (both integers) as a dictionary.
@@ -318,10 +319,13 @@ def get_statistics_from_soup(_soup: BeautifulSoup):
     # get definition container
     container = derive_definition_as_tag(_soup)
 
-    x: Tag = container.find_next("div", class_="contributor").find_next_sibling("div") # pyright: ignore
-    print(x.find_all(name='span', recursive=True, attrs={'class': 'text-xs'}))
+    x: Tag = container.find_next("div", class_="contributor").find_next_sibling(
+        "div"
+    )  # pyright: ignore
+    print(x.find_all(name="span", recursive=True, attrs={"class": "text-xs"}))
     # print(type(x))
-    return;
+    return
+
 
 def get_author_from_soup(_soup: BeautifulSoup) -> str:
     """Return author from soup.
@@ -336,7 +340,8 @@ def get_author_from_soup(_soup: BeautifulSoup) -> str:
     return (
         container.find_next("div", class_="contributor")  # pyright: ignore
         .find_next("a")["href"]
-        .split("=")[1].replace("%20", " ", -1)
+        .split("=")[1]
+        .replace("%20", " ", -1)
     )
 
 
@@ -393,6 +398,7 @@ def main():
     print(
         f"Defined by {colorama.Fore.BLUE}{get_author_from_soup(get_soup_object_from_word(word))}{colorama.Fore.RESET}"
     )
+
 
 if __name__ == "__main__":
     main()
