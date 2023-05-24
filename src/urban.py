@@ -336,7 +336,7 @@ def get_author_from_soup(_soup: BeautifulSoup) -> str:
     return (
         container.find_next("div", class_="contributor")  # pyright: ignore
         .find_next("a")["href"]
-        .split("=")[1]
+        .split("=")[1].replace("%20", " ", -1)
     )
 
 
