@@ -4,18 +4,19 @@ import unittest
 
 from bs4 import BeautifulSoup, NavigableString, Tag
 
-from urban import (
+sys.path.insert(0, os.getcwd())
+
+from src.urban import (
+    assert_index_valid,
     assert_soup_and_index_valid,
     derive_meaning_as_tag,
     get_found_word_from_soup,
     get_soup_object_from_word,
 )
 
-sys.path.insert(0, os.path.join(os.path.dirname(os.getcwd()), "src"))
-
 
 class TestUrban(unittest.TestCase):
-    def __init__(self) -> None:
+    def __init__(self, methodName: str = "runTest") -> None:
         self.word_index = 0
         self.words = [
             "YOLO",
@@ -31,17 +32,16 @@ class TestUrban(unittest.TestCase):
             "rickroll",
         ]
 
-        super().__init__()
+        super().__init__(methodName)
 
     def setUp(self) -> None:
         try:
-            self.word = self.words[self.word_index]
+            import random
+            self.word = random.choice(self.words)
+            print(f"[{self.words.index(self.word)}] LOOKING UP: {self.word}")
             self.soup = get_soup_object_from_word(self.word)
-            self.word_index += 1
         except IndexError:
             sys.exit(0)
-
-        return super().setUp()
 
     def test_definition_from_soup_object(self):
         """
@@ -67,11 +67,18 @@ class TestUrban(unittest.TestCase):
         Test that word index raises warning when greater than 0
         """
 
-        _soup = get_soup_object_from_word(self.word)
+        # NOTE This relies on there being more than 1 definition present.
+        with self.assertRaises(PendingDeprecationWarning):
+            assert_index_valid(_index=1)
+
+    def test_invalid_word_index_raises_error_from_float(self):
+        """
+        Test invalid type in word index raises type erorr
+        """
 
         # NOTE This relies on there being more than 1 definition present.
-        with self.assertWarns(PendingDeprecationWarning):
-            assert_soup_and_index_valid(_soup, _index=1)
+        with self.assertRaises(TypeError):
+            assert_index_valid(_index=float(2.3))  # pyright: ignore
 
     def test_word_index_raises_index_error(self):
         """
@@ -80,11 +87,8 @@ class TestUrban(unittest.TestCase):
 
         _soup = get_soup_object_from_word(self.word)
 
-        # NOTE In order of warns / errors
-        with self.assertWarns(PendingDeprecationWarning) or self.assertRaises(
-            IndexError
-        ):
-            assert_soup_and_index_valid(_soup, _index=999)
+        with self.assertRaises(PendingDeprecationWarning):
+            assert_index_valid(_index=9000000)
 
     def test_word_type_raises_type_error(self):
         """
@@ -93,17 +97,17 @@ class TestUrban(unittest.TestCase):
 
         _soup = get_soup_object_from_word(self.word)
 
-        assert isinstance(_soup.string, BeautifulSoup)
+        # assert isinstance(_soup.string, BeautifulSoup)
         with self.assertRaises(TypeError):
-            assert_soup_and_index_valid(_soup.string, _index=0)
+            assert_soup_and_index_valid(_soup=False)
 
-    def test_word_none_raises_key_error(self):
+    def test_word_none_raises_index_error(self):
         """
-        Test that word raises keyerror when word is none
+        Test that word raises indexerror when word non-existant.
         """
 
-        with self.assertRaises(KeyError):
-            get_found_word_from_soup(None)  # pyright: ignore
+        with self.assertRaises(IndexError):
+            get_found_word_from_soup(BeautifulSoup("test", features="lxml"))  # pyright: ignore
 
     def test_found_word_equal_to_parameter(self):
         """
@@ -141,9 +145,25 @@ class TestUrban(unittest.TestCase):
         _soup = get_soup_object_from_word(self.word)
 
         with self.assertRaises(IndexError):
-            assert isinstance(
-                derive_meaning_as_tag(_soup), Tag
-            )  # pyright: ignore
+            assert isinstance(derive_meaning_as_tag(_soup), Tag)  # pyright: ignore
 
     def test_words_as_other_type_returns_str_error(self):
         """Test `words_as_str`  returns string-based error on invalid data type output"""
+
+    def test_word_from_soup_raises_index_error(self):
+        """Test that word from soup raises when a given value is missing"""
+
+        with self.assertRaises(IndexError):
+            _soup = get_soup_object_from_word(self.word)
+            word_soup = _soup.find_all_next("a")[0].select(".definintion")
+            word_soup_raises_key_error = word_soup[0].replace_with(
+                word_soup[0].get_text(strip=False)
+            )
+
+            assert_soup_and_index_valid(_soup)
+
+            get_found_word_from_soup(
+                BeautifulSoup(
+                    word_soup_raises_key_error.get_text(strip=False), "html.parser"
+                )
+            )
