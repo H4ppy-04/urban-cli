@@ -1,0 +1,15 @@
+CI:
+- .github/*
+- .github/*/*
+
+tests:
+- tests/*
+
+documentation:
+ - *.md
+
+configuration:
+ - *.sh
+
+dependencies:
+ - requirements.txt
