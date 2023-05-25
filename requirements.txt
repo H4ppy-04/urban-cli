@@ -8,3 +8,5 @@ coverage
 pytest
 pytest-cov
 pytest-emoji
+sphinx
+sphinx-readable-theme

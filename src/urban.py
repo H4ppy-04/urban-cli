@@ -20,7 +20,7 @@ def join_words() -> str:
     """Join words into one string when 2 or more words are given.
 
     Raises:
-        `IndexError` if no word is specified
+        `IndexError`: if no word is specified
 
     Return:
         One or more words depending on if spaces are present (as str)
@@ -178,7 +178,7 @@ def get_soup_object_from_word(_word: str) -> BeautifulSoup | None:
     """Return soup object as `BeautifulSoup` from `_word`.
 
     Raises:
-        TypeError if the response or response content is not a valid type.
+        TypeError: if the response or response content is not a valid type.
 
     Parameters:
         `_word`: Word to query urban dictionary for.
@@ -230,11 +230,8 @@ def assert_index_valid(_index: int) -> None:
         _index (still being implemented): Definition priority / how high definition is on page - ascending. (default=0)
 
     Raises:
-        Type error if `_index` is not an integer.
-        PendingDeprecationWarning if `_index` is greater than 0.
-
-    Return:
-        None
+        TypeError: if `_index` is not an integer.
+        PendingDeprecationWarning: if `_index` is greater than 0.
     """
 
     if not isinstance(_index, int):
@@ -250,13 +247,10 @@ def assert_soup_valid(_soup: BeautifulSoup) -> None:
     """Helper function for assert_soup_and_index_valid.
 
     Parameters:
-        _soup: `_soup` object as `BeautifulSoup`
+        _soup: soup object as type `BeautifulSoup`
 
     Raises:
-        TypeError as a warning if `_soup` is not of type `BeautifulSoup`
-
-    Return:
-        None
+        TypeError: as a warning if `_soup` is not of type `BeautifulSoup`
     """
 
     if not isinstance(_soup, bs4.BeautifulSoup):
@@ -269,12 +263,15 @@ def assert_soup_and_index_valid(
     """This code is used more than once - prevents violating DRY (don't repeat yourself)
 
     Parameters:
-        _index (still being implemented): Definition priority / how high definition is on page - ascending. (default=0)
+        _index: (still being implemented) definition priority / how high definition is on page - ascending. (default=0)
         _soup: `_soup` object as `BeautifulSoup`
 
-    Return:
-        Literal[True] if `_soup` and `_index` are both valid.
-        None if either `soup` or `index` are not valid
+    Return
+    ------
+    `boolean`
+
+        True: if `_soup` and `_index` are both valid returns\n
+        False: if either `soup` or `index` are not valid\n
     """
 
     if not isinstance(_soup, bs4.BeautifulSoup) and _soup is not None:
@@ -292,11 +289,11 @@ def get_found_word_from_soup(_soup: bs4.BeautifulSoup, _index=0) -> str:
 
     Parameters:
         _index (still being implemented): Definition priority / how high definition is on page - ascending. (default=0)
-        _soup: `_soup` object as `BeautifulSoup` object.
+        _soup: soup as `BeautifulSoup` object.
 
     Raises:
-        IndexError if the definition is out of the range of the tag object.
-        KeyError if the .word tag is not in the soup object.
+        IndexError: if the definition is out of the range of the tag object.
+        KeyError: if the .word tag is not in the soup object.
 
     Return:
         Word from soup object as a string value.
@@ -318,15 +315,15 @@ def get_found_word_from_soup(_soup: bs4.BeautifulSoup, _index=0) -> str:
 
 
 def derive_definition_as_tag(_soup: BeautifulSoup, _index=0) -> Tag:
-    """Return the definition of a soup_ object.
+    """Return the definition of a _soup object.
 
     Parameters:
-        _soup: `_soup` object as `BeautifulSoup`
+        _soup: _soup object as BeautifulSoup
         _index: definition priority / how high definition is on page - ascending. (default=0)
                 Please note that index is still something that is being implemented.
 
     Returns:
-        `Tag` containing definition, date, author, definition example.
+        Tag: contains definition, date, author, definition example.
     """
 
     assert_soup_and_index_valid(_soup, _index)
@@ -378,8 +375,7 @@ def get_hyperlinks_as_result_set(_word_meaning: Tag) -> ResultSet[Tag] | None:
         returns None if no links are present. (rare but possible)
 
     Raises:
-        TypeError if result set is not of type `ResultSet`.
-        Doesn't check for contents of `ResultSet`.
+        TypeError: if result set is not of type `ResultSet`. It doesn't check for contents of `ResultSet`.
 
     Parameters:
         return value of derive_meaning_as_tag function.
@@ -408,7 +404,9 @@ def format_words_as_string_from_tag(
         _hyperlinks_list: List of strings that are also hyperlinks in definition
 
     Returns:
-        returns either none or a string/list of strings.
+        None: if the length of `words` is equal to 0 or 1
+        str: If the definition is found to be one word
+        list[str]: if the definition is more than one word
     """
 
     # all words, can be all links though, which is a pain.
@@ -455,9 +453,9 @@ def get_statistics_from_soup(_soup: BeautifulSoup):
     Parameters:
         _soup: `_soup` object as `BeautifulSoup` object.
 
-    Exceptions:
-        Raises TypeError if contributor is not a `Tag` or `NavigableString`
-        Raises TypeError if contributor_element_sibling is not a `Tag`
+    Raises:
+        TypeError: if contributor is not a `Tag` or `NavigableString`
+        TypeError: if contributor_element_sibling is not a `Tag`
 
     Return:
         Likes and dislikes (both integers) as a dictionary.
@@ -583,8 +581,8 @@ def insert_space_after_chars(text: list[str], char: str = ".") -> str:
     This function is generally used for grammatical correctness.
 
     Parameters:
-        - text (list[str]): The input text to process.
-        - char (str): The character to replace any spaces after.
+        text (list[str]): The input text to process.
+        char (str): The character to replace any spaces after.
 
     Returns:
         str: The modified text with spaces inserted after `char`
@@ -597,13 +595,13 @@ def insert_space_after_chars(text: list[str], char: str = ".") -> str:
 
 
 def insert_newline_for_break_tags(text: str) -> str:
-    """Returns `text` but the line break tags are replaced with \n
+    """Returns `text` but the line break tags are replaced with `\n`.
 
     Parameters:
         text (str): The input text to process.
 
     Returns:
-        str: The modified text with \n replacing <br>
+        str: The modified text with `\n` replacing `<br>`.
     """
 
     # There's a better way of doing it with regex but i dont' care atm
@@ -636,8 +634,8 @@ def main():
         Fetches and prints definition, author and date.
 
     Raises:
-        `Warning` if words is None
-        `TypeError` if dictionary is invalid
+        `Warning`: if words is None
+        `TypeError`: if dictionary is invalid
 
     Returns:
       `None`
