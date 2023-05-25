@@ -392,8 +392,11 @@ def format_words_as_string_from_tag(
         returns either none or a string/list of strings.
     """
 
+
     # all words, can be all links though, which is a pain.
-    words = _word_meaning.get_text(strip=False).split(" ", -1)
+    break_formatted_definition = insert_newline_for_break_tags(_word_meaning.__str__())
+    # word_meaning_format_breaks = insert_newline_for_break_tags(_word_meaning.strings)
+    words = BeautifulSoup(break_formatted_definition, "html.parser").get_text(strip=False).split(" ", -1)
 
     if len(words) == 0 | 1:
         # TODO: Handle definitions that only have one word
@@ -538,17 +541,36 @@ def insert_space_after_fullstop(text: list[str]) -> str:
     - str: The modified text with spaces inserted after full stops.
     """
 
-    for n in range(0, len(list(text))-1):
-        if text[n] == "." and text[n+1] != " ":
-            text.insert(n+1, " ")
+    for n in range(0, len(list(text)) - 1):
+        if text[n] == "." and text[n + 1] != " ":
+            text.insert(n + 1, " ")
     return "".join(text)
+
+
+def insert_newline_for_break_tags(text: str) -> str:
+    """Returns `text` but the line break tags are replaced with \n
+
+    Parameters:
+    - text (str): The input text to process.
+
+    Returns:
+    - str: The modified text with \n replacing <br>
+    """
+
+    # There's a better way of doing it with regex but i dont' care atm
+    text = text.replace("<br></br>", "\n")
+    text = text.replace("<br />", "\n")
+    text = text.replace("<br/>", "\n")
+    text = text.replace("<br>", "\n")
+
+    return text
 
 
 def main():
     """main as global function called from dunder condition.
 
     Description:
-        Fetches and printsdefinition, author and date
+        Fetches and prints definition, author and date.
 
     Raises:
      - Warning if words is None
