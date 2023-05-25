@@ -10,3 +10,6 @@ pytest-cov
 pytest-emoji
 sphinx
 sphinx-readable-theme
+python-docs-theme
+sphinx-press-theme
+myst-parser

@@ -25,10 +25,12 @@ import requests, rich, colorama
 sys.path.insert(0, os.path.abspath('../..'))
 sys.path.insert(1, os.path.abspath('../../src'))
 sys.path.insert(2, os.path.abspath('../../src/'))
+import python_docs_theme
 
-import sphinx_readable_theme
-html_theme = 'readable'
-html_theme_path = [sphinx_readable_theme.get_html_theme_path()]
+# html_theme = 'python_docs_theme'
+html_theme = 'press'
+
+# html_theme_path = [sphinx_readable_theme.get_html_theme_path()]
 
 # -- General configuration ------------------------------------------------
 
@@ -45,6 +47,7 @@ html_theme_path = [sphinx_readable_theme.get_html_theme_path()]
 # ones.
 extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.napoleon',
+              'myst_parser',
               'sphinx.ext.todo',
               ]
 
@@ -55,7 +58,12 @@ templates_path = ['_templates']
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
-source_suffix = '.rst'
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.txt': 'markdown',
+    '.md': 'markdown',
+}
+
 
 # The master toctree document.
 master_doc = 'index'
@@ -87,10 +95,10 @@ language = "en"
 exclude_patterns = []
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+# pygments_style = 'sphinx'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = True
+# todo_include_todos = True
 
 
 # -- Options for HTML output ----------------------------------------------
