@@ -13,7 +13,7 @@ from src.urban import (
     get_found_word_from_soup,
     get_soup_object_from_word,
     insert_newline_for_break_tags,
-    insert_space_after_fullstop,
+    insert_space_after_chars,
 )
 
 
@@ -48,7 +48,7 @@ class TestUnitIntegration(unittest.TestCase):
                 )
             )
 
-    def test_space_insert_after_fullstop(self):
+    def test_space_insert_after_chars(self):
         """Test that a full stop before a character has a space inserted after
         this function has been run. (for grammar)
         """
@@ -57,7 +57,7 @@ class TestUnitIntegration(unittest.TestCase):
         correct_string = "Four brown ferrets. Five fantastic fairies."
 
         self.assertEqual(
-            insert_space_after_fullstop(list(incorrect_string)), correct_string
+            insert_space_after_chars(list(incorrect_string)), correct_string
         )
 
     def test_insert_newline_for_break_tags(self):

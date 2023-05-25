@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup, NavigableString, ResultSet, Tag
 import bs4
 import colorama
 import requests
+from rich import print as rich_print
 
 colorama.init()
 
@@ -351,6 +352,22 @@ def derive_meaning_as_tag(_soup: BeautifulSoup) -> Tag:
 
     return word_meaning
 
+def derive_example_as_tag(_soup: BeautifulSoup) -> Tag:
+    """Return derived example from `_soup` object.
+
+
+    Parameters:
+        _soup: `_soup` object as `BeautifulSoup`
+
+    Returns:
+        Word example as `Tag`.
+    """
+
+    assert_soup_and_index_valid(_soup, _index=None)
+    derived_definition = derive_definition_as_tag(_soup)
+    word_meaning = derived_definition.select(".example")[0]
+
+    return word_meaning
 
 def get_hyperlinks_as_result_set(_word_meaning: Tag) -> ResultSet[Tag] | None:
     """Get hyperlinks as a result set of all unique tags.
@@ -503,46 +520,65 @@ def fetch_word_from_remote(_word: str) -> dict[str, str] | None:
 
     # NOTE Is of type `Tag` - word_meanign contains author, date, definition
     word_meaning = derive_meaning_as_tag(_soup)
+    word_example = derive_example_as_tag(_soup)
 
-    hyperlinks_list = []
+    definition_hyperlinks_list = []
+    example_hyperlinks_list = []
 
     # Returns (most of the time) a list of tags
-    hyperlinks = get_hyperlinks_as_result_set(word_meaning)
+    definition_hyperlinks = get_hyperlinks_as_result_set(word_meaning)
+    example_hyperlinks = get_hyperlinks_as_result_set(word_example)
 
     # NOTE: returns list of strings that are links
-    if hyperlinks is not None:
+    if definition_hyperlinks is not None:
         # iterate through found definition meaning
-        for word in hyperlinks:
-            hyperlinks_list.append(word.string)
+        for word in definition_hyperlinks:
+            definition_hyperlinks_list.append(word.string)
+    # NOTE: returns list of strings that are links
+    if example_hyperlinks is not None:
+        # iterate through found definition meaning
+        for word in example_hyperlinks:
+            example_hyperlinks_list.append(word.string)
 
-    words_as_str = format_words_as_string_from_tag(word_meaning, hyperlinks_list)
+    words_as_str = format_words_as_string_from_tag(word_meaning, definition_hyperlinks_list)
+    example_as_str = format_words_as_string_from_tag(word_example, example_hyperlinks_list)
+
+    if not isinstance(example_as_str, str) or example_as_str == "":
+        example_as_str = "Definition not found or not available."
+        print(f"Debug (example_as_str variable): {example_as_str}")
+    else:
+        example_as_str = insert_space_after_chars(list(example_as_str))
 
     if not isinstance(words_as_str, str) or words_as_str == "":
         words_as_str = "Definition not found or not available."
         print(f"Debug (words_as_str variable): {words_as_str}")
     else:
-        words_as_str = insert_space_after_fullstop(list(words_as_str))
+        words_as_str = insert_space_after_chars(list(words_as_str))
 
     # Return definition, author, date all as dict
     post_author = get_author_from_soup(_soup)
 
     # TODO/FIXME return date as well
-    return {"definition": words_as_str, "author": post_author, "date": "Unknown"}
+    return {"definition": words_as_str, "example": example_as_str, "author": post_author, "date": "Unknown"}
 
 
-def insert_space_after_fullstop(text: list[str]) -> str:
+
+def insert_space_after_chars(text: list[str], char: str = ".") -> str:
     """
-    Detects if a letter immediately follows a full stop and inserts a space after the full stop for grammatical correctness.
+    Detects if a letter immediately follows a character and inserts a space after the character.
+
+    This function is generally used for grammatical correctness.
 
     Parameters:
     - text (list[str]): The input text to process.
+    - char (str): The character to replace any spaces after.
 
     Returns:
-    - str: The modified text with spaces inserted after full stops.
+    - str: The modified text with spaces inserted after `char`
     """
 
     for n in range(0, len(list(text)) - 1):
-        if text[n] == "." and text[n + 1] != " ":
+        if text[n] == char and text[n + 1] != " ":
             text.insert(n + 1, " ")
     return "".join(text)
 
@@ -591,14 +627,20 @@ def main():
             "Invalid type getting returned. Should be dictionary (function=main())"
         )
 
-    definition, author, date = return_dict.values()
+    definition, example, author, date = return_dict.values()
 
-    print(definition)
-    print(f"\nDefined by {colorama.Fore.BLUE}{author}{colorama.Fore.RESET}")
-    print(f"Date: {date}")
+    rich_print(f"[bold]{word}: [/bold]", end="")
+    print(definition, end="\n\n")
+
+    print(example)
+
+    rich_print(f"\n[bold]by[/bold]", end=" ")
+    print(f"{colorama.Fore.BLUE}{author}{colorama.Fore.RESET}", end=" ")
+    rich_print(f"[bold]{date}[/bold]")
 
     deinit_sys_exit()
 
 
 if __name__ == "__main__":
+    colorama.init()
     main()

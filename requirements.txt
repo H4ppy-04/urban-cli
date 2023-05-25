@@ -3,3 +3,4 @@ beautifulsoup4
 colorama
 typing_extensions
 lxml
+rich
