@@ -18,10 +18,6 @@ eggs/
 *.egg
 *.whl
 
-# Coverage reports
-.coverage
-.coverage.*.html
-
 # tox
 .tox/
 .tox*/
