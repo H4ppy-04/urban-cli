@@ -352,6 +352,7 @@ def derive_meaning_as_tag(_soup: BeautifulSoup) -> Tag:
 
     return word_meaning
 
+
 def derive_example_as_tag(_soup: BeautifulSoup) -> Tag:
     """Return derived example from `_soup` object.
 
@@ -368,6 +369,7 @@ def derive_example_as_tag(_soup: BeautifulSoup) -> Tag:
     word_meaning = derived_definition.select(".example")[0]
 
     return word_meaning
+
 
 def get_hyperlinks_as_result_set(_word_meaning: Tag) -> ResultSet[Tag] | None:
     """Get hyperlinks as a result set of all unique tags.
@@ -409,11 +411,14 @@ def format_words_as_string_from_tag(
         returns either none or a string/list of strings.
     """
 
-
     # all words, can be all links though, which is a pain.
     break_formatted_definition = insert_newline_for_break_tags(_word_meaning.__str__())
     # word_meaning_format_breaks = insert_newline_for_break_tags(_word_meaning.strings)
-    words = BeautifulSoup(break_formatted_definition, "html.parser").get_text(strip=False).split(" ", -1)
+    words = (
+        BeautifulSoup(break_formatted_definition, "html.parser")
+        .get_text(strip=False)
+        .split(" ", -1)
+    )
 
     if len(words) == 0 | 1:
         # TODO: Handle definitions that only have one word
@@ -540,8 +545,12 @@ def fetch_word_from_remote(_word: str) -> dict[str, str] | None:
         for word in example_hyperlinks:
             example_hyperlinks_list.append(word.string)
 
-    words_as_str = format_words_as_string_from_tag(word_meaning, definition_hyperlinks_list)
-    example_as_str = format_words_as_string_from_tag(word_example, example_hyperlinks_list)
+    words_as_str = format_words_as_string_from_tag(
+        word_meaning, definition_hyperlinks_list
+    )
+    example_as_str = format_words_as_string_from_tag(
+        word_example, example_hyperlinks_list
+    )
 
     if not isinstance(example_as_str, str) or example_as_str == "":
         example_as_str = "Definition not found or not available."
@@ -559,8 +568,12 @@ def fetch_word_from_remote(_word: str) -> dict[str, str] | None:
     post_author = get_author_from_soup(_soup)
 
     # TODO/FIXME return date as well
-    return {"definition": words_as_str, "example": example_as_str, "author": post_author, "date": "Unknown"}
-
+    return {
+        "definition": words_as_str,
+        "example": example_as_str,
+        "author": post_author,
+        "date": "Unknown",
+    }
 
 
 def insert_space_after_chars(text: list[str], char: str = ".") -> str:
@@ -633,7 +646,7 @@ def main():
     rich_print(f"[bold]{word}: [/bold]", end="")
     print(definition, end="\n\n")
 
-    print(colorama.Style.BRIGHT+f"{example}"+colorama.Style.RESET_ALL)
+    print(colorama.Style.BRIGHT + f"{example}" + colorama.Style.RESET_ALL)
 
     rich_print(f"\n[bold]by [italic]{author}[/italic][/bold]")
     # rich_print(f"[bold][/bold]")
