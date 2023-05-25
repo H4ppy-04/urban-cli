@@ -7,5 +7,4 @@ rich
 coverage
 pytest
 pytest-cov
-pytest-sugar
 pytest-emoji

@@ -118,17 +118,14 @@ def fetch_response_from_URL(_url: str) -> requests.Response | None:
 
     # Sources: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
     # Informational response
-    if 100 <= response.status_code < 199:
-        display_requests_error(response)
+    if 100 <= response.status_code < 199: display_requests_error(response)
 
     # Successful responses
     elif 200 <= response.status_code < 299:
-        # display_requests_error(response)
         return response
 
     # Redirectional message
-    elif 300 <= response.status_code < 399:
-        display_requests_error(response)
+    elif 300 <= response.status_code < 399: display_requests_error(response)
 
     # Client error response
     elif 400 <= response.status_code < 499:
@@ -157,7 +154,7 @@ def fetch_response_from_URL(_url: str) -> requests.Response | None:
         deinit_sys_exit()
 
 
-def get_first_definition_from_soup(_soup: BeautifulSoup) -> Tag:
+def get_first_definition_from_soup(_soup: BeautifulSoup, index=0) -> Tag | BeautifulSoup:
     """Return first definition section / 'block' from `_soup`.
 
     Parameters:
@@ -167,7 +164,9 @@ def get_first_definition_from_soup(_soup: BeautifulSoup) -> Tag:
         definition as a `Tag`
     """
 
-    definition = get_result_set_from_soup(_soup, _index=0)
+    if index > 0:
+        raise IndexError("index cannot exceed 0")
+    definition: Tag | BeautifulSoup = get_result_set_from_soup(_soup, _index=0)
     return definition
 
 
