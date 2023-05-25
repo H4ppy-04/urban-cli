@@ -1,9 +1,8 @@
+import json
 import os
 import sys
 import unittest
 import random
-
-from bs4 import BeautifulSoup, NavigableString, Tag
 
 sys.path.insert(0, os.getcwd())
 
@@ -13,28 +12,14 @@ from src.urban import (
 )
 
 
-words = [
-    "YOLO",
-    "eshay",
-    "swag",
-    "gtfo",
-    "lit",
-    "rad",
-    "hella",
-    "joint",
-    "block",
-    "dope",
-    "rickroll",
-]
-
 
 class TestIndexValid(unittest.TestCase):
     """Test the tests. Audit the audit. Shit like that."""
 
     def setUp(self) -> None:
         try:
-            self.word = random.choice(words)
-            print(f"[{words.index(self.word)}] LOOKING UP: {self.word}")
+            words = json.load(open('./tests/words.json', 'r'))
+            self.word = random.choice(words['words'])
             self.soup = get_soup_object_from_word(self.word)
         except IndexError:
             sys.exit(0)

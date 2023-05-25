@@ -1,3 +1,4 @@
+import json
 import os
 import sys
 import unittest
@@ -16,28 +17,13 @@ from src.urban import (
 )
 
 
-words = [
-    "YOLO",
-    "eshay",
-    "swag",
-    "gtfo",
-    "lit",
-    "rad",
-    "hella",
-    "joint",
-    "block",
-    "dope",
-    "rickroll",
-]
-
-
 class TestUnitIntegration(unittest.TestCase):
     """Test functions working with other functions"""
 
     def setUp(self) -> None:
         try:
-            self.word = random.choice(words)
-            print(f"[{words.index(self.word)}] LOOKING UP: {self.word}")
+            words = json.load(open('./tests/words.json', 'r'))
+            self.word = random.choice(words['words'])
             self.soup = get_soup_object_from_word(self.word)
         except IndexError:
             sys.exit(0)
