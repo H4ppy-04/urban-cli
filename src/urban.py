@@ -28,7 +28,7 @@ def join_words() -> str:
 
     if len(sys.argv) >= 2:
         # to prevent user pain and suffering 🕊️
-        word = "".join(sys.argv[1:])
+        word = " ".join(sys.argv[1:])
     else:
         try:
             word = sys.argv[1]
@@ -627,20 +627,19 @@ def main():
             "Invalid type getting returned. Should be dictionary (function=main())"
         )
 
-    definition, example, author, date = return_dict.values()
+    # NOTE _ = `date`
+    definition, example, author, _ = return_dict.values()
 
     rich_print(f"[bold]{word}: [/bold]", end="")
     print(definition, end="\n\n")
 
-    print(example)
+    print(colorama.Style.BRIGHT+f"{example}"+colorama.Style.RESET_ALL)
 
-    rich_print(f"\n[bold]by[/bold]", end=" ")
-    print(f"{colorama.Fore.BLUE}{author}{colorama.Fore.RESET}", end=" ")
-    rich_print(f"[bold]{date}[/bold]")
+    rich_print(f"\n[bold]by [italic]{author}[/italic][/bold]")
+    # rich_print(f"[bold][/bold]")
 
     deinit_sys_exit()
 
 
 if __name__ == "__main__":
-    colorama.init()
     main()
