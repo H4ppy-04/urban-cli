@@ -1,5 +1,85 @@
 *.log
-*.pyc
+*.pyc
 *.pyi
+*.ini
 __pycache__/*
 __pycache__/
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+eggs/
+*.egg-info/
+*.egg
+*.whl
+
+# Coverage reports
+.coverage
+.coverage.*.html
+
+# tox
+.tox/
+.tox*/
+
+# venv
+venv/
+env/
+
+# IDEs / Editors
+.idea/
+.vscode/
+*.pydevproject
+*.project
+*.pytproj
+*.tmproj
+
+# PyCharm
+*.iml
+*.iws
+.idea/
+*.idea
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Sphinx documentation
+docs/_build/
+
+# Compiled Python modules
+*.pyc
+
+# Ignore pipenv / pipfile.lock
+Pipfile.lock
+
+# Ignore virtualenv
+.venv/
+
+# Ignore mypy cache
+.mypy_cache/
+
+# Ignore pytype cache
+.pytype/
+
+# Ignore coverage
+htmlcov/
+
+# Neovim
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
+
+# Cache files
+.cache/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+Makefile
