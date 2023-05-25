@@ -4,11 +4,12 @@ import sys
 import unittest
 import random
 
-from bs4 import BeautifulSoup, Tag
+from bs4 import BeautifulSoup, ResultSet, Tag
 
 sys.path.insert(0, os.getcwd())
 
 from src.urban import (
+    derive_example_as_tag,
     derive_meaning_as_tag,
     get_found_word_from_soup,
     get_soup_object_from_word,
@@ -71,3 +72,10 @@ class GetSoupObjects(unittest.TestCase):
 
         with self.assertRaises(TypeError):
             get_found_word_from_soup(BeautifulSoup(3.1, features="lxml"))  # pyright: ignore
+
+    def test_derive_example(self):
+        """
+        Test derive example returns tag
+        """
+
+        self.assertIsInstance(derive_example_as_tag(self.soup), ResultSet | Tag)  # pyright: ignore
