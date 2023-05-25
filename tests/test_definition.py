@@ -4,7 +4,8 @@ import sys
 import unittest
 import random
 
-from bs4 import BeautifulSoup, NavigableString, Tag
+from bs4 import BeautifulSoup, NavigableString, ResultSet, Tag
+import bs4
 
 sys.path.insert(0, os.getcwd())
 
@@ -26,7 +27,9 @@ class test_definition(unittest.TestCase):
         try:
             words = json.load(open("./tests/words.json", "r"))
             self.word = random.choice(words["words"])
-            self.soup: BeautifulSoup = get_soup_object_from_word(self.word)  # pyright: ignore
+            self.soup: BeautifulSoup = get_soup_object_from_word(
+                self.word
+            )  # pyright: ignore
         except IndexError:
             sys.exit(0)
 
@@ -70,5 +73,5 @@ class test_definition(unittest.TestCase):
         Test get_first_definition type
         """
 
-        print(type(get_first_definition_from_soup(self.soup)))
-        self.assertEqual(get_first_definition_from_soup(self.soup), BeautifulSoup)
+        soup_definition = get_first_definition_from_soup(self.soup)
+        self.assertIsInstance(soup_definition, bs4.element.Tag)

@@ -118,14 +118,16 @@ def fetch_response_from_URL(_url: str) -> requests.Response | None:
 
     # Sources: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
     # Informational response
-    if 100 <= response.status_code < 199: display_requests_error(response)
+    if 100 <= response.status_code < 199:
+        display_requests_error(response)
 
     # Successful responses
     elif 200 <= response.status_code < 299:
         return response
 
     # Redirectional message
-    elif 300 <= response.status_code < 399: display_requests_error(response)
+    elif 300 <= response.status_code < 399:
+        display_requests_error(response)
 
     # Client error response
     elif 400 <= response.status_code < 499:
@@ -154,7 +156,9 @@ def fetch_response_from_URL(_url: str) -> requests.Response | None:
         deinit_sys_exit()
 
 
-def get_first_definition_from_soup(_soup: BeautifulSoup, index=0) -> Tag | BeautifulSoup:
+def get_first_definition_from_soup(
+    _soup: BeautifulSoup, index=0
+) -> Tag | BeautifulSoup:
     """Return first definition section / 'block' from `_soup`.
 
     Parameters:
@@ -614,6 +618,20 @@ def insert_newline_for_break_tags(text: str) -> str:
     return text
 
 
+def process_word(_word=join_words()) -> str:
+    """Process word `word` (default is join-words return value)
+
+    Parameters:
+        word (str): default word to process
+
+    Return:
+        str
+    """
+
+    word = _word
+    return word
+
+
 def main():
     """main as global function called from dunder condition.
 
@@ -632,6 +650,7 @@ def main():
 
     if not isinstance(word, str):
         raise Warning("Words is none. This shouldn't be getting raised.")
+
     return_dict = fetch_word_from_remote(word)
 
     if not isinstance(return_dict, dict):
@@ -648,7 +667,6 @@ def main():
     print(colorama.Style.BRIGHT + f"{example}" + colorama.Style.RESET_ALL)
 
     rich_print(f"\n[bold]by [italic]{author}[/italic][/bold]")
-    # rich_print(f"[bold][/bold]")
 
     deinit_sys_exit()
 

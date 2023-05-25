@@ -14,6 +14,8 @@ from src.urban import (
     get_soup_object_from_word,
     insert_newline_for_break_tags,
     insert_space_after_chars,
+    join_words,
+    process_word,
 )
 
 
@@ -89,3 +91,8 @@ class TestUnitIntegration(unittest.TestCase):
         expected_result = "\n"
 
         self.assertEqual(insert_newline_for_break_tags(html), expected_result)
+
+    def test_word_join(self):
+        words = "the quick brown fox"
+        words_joined = process_word(words)
+        self.assertEqual(words, words_joined)
