@@ -44,7 +44,7 @@ The exception of course is you've installed WSL through which you can run `insta
 
 ## Usage
 
-<img alt="usage example" src="https://github.com/GH-Syn/urban-cli/blob/main/.github/images/output-2023-05-23_16.06.38.gif"/></img>
+![output-2023-05-25_17_51_58_AdobeExpress](https://github.com/GH-Syn/urban-cli/assets/101031214/2c60f08a-c3c1-4738-8711-f91dd7037f8e)
 
 ## License
 
