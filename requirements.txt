@@ -4,3 +4,6 @@ colorama
 typing_extensions
 lxml
 rich
+pytest
+pytest-sugar
+pytest-emoji
