@@ -4,6 +4,8 @@ colorama
 typing_extensions
 lxml
 rich
+coverage
 pytest
+pytest-cov
 pytest-sugar
 pytest-emoji
