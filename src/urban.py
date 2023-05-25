@@ -260,10 +260,7 @@ def assert_soup_valid(_soup: BeautifulSoup) -> None:
     """
 
     if not isinstance(_soup, bs4.BeautifulSoup):
-        Warning(
-            TypeError(f"_soup must be of type `BeautifulSoup`, found {type(_soup)}")
-        )
-        deinit_sys_exit()
+        raise TypeError(f"_soup must be of type `BeautifulSoup`, found {type(_soup)}")
 
 
 def assert_soup_and_index_valid(

@@ -8,6 +8,7 @@ sys.path.insert(0, os.getcwd())
 
 from src.urban import (
     assert_soup_and_index_valid,
+    assert_soup_valid,
     get_soup_object_from_word,
 )
 
@@ -32,3 +33,11 @@ class TestSoupAndIndexFunction(unittest.TestCase):
             assert_soup_and_index_valid(_index=True)  # pyright: ignore
         with self.assertRaises(TypeError):
             assert_soup_and_index_valid(_soup=False)  # pyright: ignore
+
+    def test_soup_valid_warns(self):
+        """
+        Test that soup valid yields warning when data type is wrong.
+        """
+
+        with self.assertRaises(TypeError):
+            assert_soup_valid(_soup=[1, 2, 3])

@@ -54,10 +54,20 @@ class GetSoupObjects(unittest.TestCase):
                 BeautifulSoup("test", features="lxml")
             )  # pyright: ignore
 
+    def test_soup_raise_key(self):
+        """
+        Test that word raises keyerror when key is invalid.
+        """
+
+        with self.assertRaises(IndexError):
+            soup = BeautifulSoup("""<a id="not_valid">test</a>""", features="lxml")
+            get_found_word_from_soup(soup)
+
+
     def test_soup_error(self):
         """
         Test type error raised when `soup` is an invalid type.
         """
 
         with self.assertRaises(TypeError):
-            get_found_word_from_soup(BeautifulSoup(3.1, features="lxml"))
+            get_found_word_from_soup(BeautifulSoup(3.1, features="lxml"))  # pyright: ignore
