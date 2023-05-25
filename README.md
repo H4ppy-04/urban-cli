@@ -15,6 +15,11 @@
 ## Preface
 > Please read the wiki for roadmap, versioning and contributing.
 
+## Usage
+
+![output-2023-05-25_17_51_58_AdobeExpress](https://github.com/GH-Syn/urban-cli/assets/101031214/2c60f08a-c3c1-4738-8711-f91dd7037f8e)
+
+
 ## Installation
 
 __All platforms__
@@ -42,9 +47,6 @@ For Windows, you'll have to manually modify your path environment variables to a
 From there you'll have to type `urban.py` instead of `urban`.
 The exception of course is you've installed WSL through which you can run `install.sh`.
 
-## Usage
-
-![output-2023-05-25_17_51_58_AdobeExpress](https://github.com/GH-Syn/urban-cli/assets/101031214/2c60f08a-c3c1-4738-8711-f91dd7037f8e)
 
 ## License
 
