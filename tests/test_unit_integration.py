@@ -3,7 +3,7 @@ import sys
 import unittest
 import random
 
-from bs4 import BeautifulSoup, NavigableString, Tag
+from bs4 import BeautifulSoup
 
 sys.path.insert(0, os.getcwd())
 
@@ -11,6 +11,7 @@ from src.urban import (
     assert_soup_and_index_valid,
     get_found_word_from_soup,
     get_soup_object_from_word,
+    insert_space_after_fullstop,
 )
 
 
@@ -59,3 +60,13 @@ class TestUnitIntegration(unittest.TestCase):
                     word_soup_raises_key_error.get_text(strip=False), "html.parser"
                 )
             )
+
+    def test_space_insert_after_fullstop(self):
+        """Test that a full stop before a character has a space inserted after
+           this function has been run. (for grammar)
+        """
+
+        incorrect_string = "Four brown ferrets.Five fantastic fairies."
+        correct_string = "Four brown ferrets. Five fantastic fairies."
+
+        self.assertEqual(insert_space_after_fullstop(list(incorrect_string)), correct_string)

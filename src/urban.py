@@ -517,6 +517,8 @@ def fetch_word_from_remote(_word: str) -> dict[str, str] | None:
     if not isinstance(words_as_str, str) or words_as_str == "":
         words_as_str = "Definition not found or not available."
         print(f"Debug (words_as_str variable): {words_as_str}")
+    else:
+        words_as_str = insert_space_after_fullstop(list(words_as_str))
 
     # Return definition, author, date all as dict
     post_author = get_author_from_soup(_soup)
@@ -525,18 +527,35 @@ def fetch_word_from_remote(_word: str) -> dict[str, str] | None:
     return {"definition": words_as_str, "author": post_author, "date": "Unknown"}
 
 
+def insert_space_after_fullstop(text: list[str]) -> str:
+    """
+    Detects if a letter immediately follows a full stop and inserts a space after the full stop for grammatical correctness.
+
+    Parameters:
+    - text (list[str]): The input text to process.
+
+    Returns:
+    - str: The modified text with spaces inserted after full stops.
+    """
+
+    for n in range(0, len(list(text))-1):
+        if text[n] == "." and text[n+1] != " ":
+            text.insert(n+1, " ")
+    return "".join(text)
+
+
 def main():
-    """main as global function called from dunder condition
+    """main as global function called from dunder condition.
 
     Description:
         Fetches and printsdefinition, author and date
 
     Raises:
-        Warning if words is None
-        TypeError if dictionary is invalid
+     - Warning if words is None
+     - TypeError if dictionary is invalid
 
     Returns:
-        None
+    - None
     """
 
     word = join_words()
@@ -553,8 +572,8 @@ def main():
     definition, author, date = return_dict.values()
 
     print(definition)
-    print(f"Defined by {colorama.Fore.BLUE}{author}{colorama.Fore.RESET}")
-    print(f"\nDate: {date}")
+    print(f"\nDefined by {colorama.Fore.BLUE}{author}{colorama.Fore.RESET}")
+    print(f"Date: {date}")
 
     deinit_sys_exit()
 
