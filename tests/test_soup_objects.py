@@ -74,6 +74,4 @@ class GetSoupObjects(unittest.TestCase):
         """
 
         with self.assertRaises(TypeError):
-            get_found_word_from_soup(
-                    BeautifulSoup(3.1, features="lxml")
-                )
+            get_found_word_from_soup(BeautifulSoup(3.1, features="lxml"))

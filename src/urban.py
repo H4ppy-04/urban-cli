@@ -277,7 +277,9 @@ def assert_soup_and_index_valid(
     """
 
     if not isinstance(_soup, bs4.BeautifulSoup) and _soup is not None:
-        raise TypeError(f"Soup should be either None or BeautifulSoup object (found {type(_soup)})")
+        raise TypeError(
+            f"Soup should be either None or BeautifulSoup object (found {type(_soup)})"
+        )
     else:
         assert_soup_valid(_soup) if _soup is not None else (
             assert_index_valid(_index) if _index is not None else None
@@ -544,7 +546,9 @@ def main():
     return_dict = fetch_word_from_remote(word)
 
     if not isinstance(return_dict, dict):
-        raise TypeError("Invalid type getting returned. Should be dictionary (function=main())")
+        raise TypeError(
+            "Invalid type getting returned. Should be dictionary (function=main())"
+        )
 
     definition, author, date = return_dict.values()
 
