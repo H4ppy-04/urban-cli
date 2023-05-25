@@ -52,7 +52,7 @@ class test_definition(unittest.TestCase):
 
         self.assertIsInstance(initial_definition, NavigableString | Tag)
 
-    def test_found_word_equal_to_parameter(self):
+    def test_definition_equal_to_parameter(self):
         """
         Test found word is equal to _word (both as lowered values)
         """
@@ -61,3 +61,13 @@ class test_definition(unittest.TestCase):
         found_word = get_found_word_from_soup(_soup)
 
         self.assertEqual(self.word.lower(), found_word.lower())
+
+    def test_definition_type_is_string(self):
+        """
+        Test that the definition/word type is a string
+        """
+
+        _soup = get_soup_object_from_word(self.word)
+        found_word = get_found_word_from_soup(_soup)
+
+        self.assertIsInstance(found_word, str)

@@ -67,3 +67,13 @@ class GetSoupObjects(unittest.TestCase):
             get_found_word_from_soup(
                 BeautifulSoup("test", features="lxml")
             )  # pyright: ignore
+
+    def test_soup_error(self):
+        """
+        Test type error raised when `soup` is an invalid type.
+        """
+
+        with self.assertRaises(TypeError):
+            get_found_word_from_soup(
+                    BeautifulSoup(3.1, features="lxml")
+                )
