@@ -583,11 +583,11 @@ def insert_space_after_chars(text: list[str], char: str = ".") -> str:
     This function is generally used for grammatical correctness.
 
     Parameters:
-    - text (list[str]): The input text to process.
-    - char (str): The character to replace any spaces after.
+        - text (list[str]): The input text to process.
+        - char (str): The character to replace any spaces after.
 
     Returns:
-    - str: The modified text with spaces inserted after `char`
+        str: The modified text with spaces inserted after `char`
     """
 
     for n in range(0, len(list(text)) - 1):
@@ -600,10 +600,10 @@ def insert_newline_for_break_tags(text: str) -> str:
     """Returns `text` but the line break tags are replaced with \n
 
     Parameters:
-    - text (str): The input text to process.
+        text (str): The input text to process.
 
     Returns:
-    - str: The modified text with \n replacing <br>
+        str: The modified text with \n replacing <br>
     """
 
     # There's a better way of doing it with regex but i dont' care atm
@@ -630,17 +630,17 @@ def process_word(_word=join_words()) -> str:
 
 
 def main():
-    """main as global function called from dunder condition.
+    """`main` as global function called from dunder condition.
 
     Description:
         Fetches and prints definition, author and date.
 
     Raises:
-     - Warning if words is None
-     - TypeError if dictionary is invalid
+        `Warning` if words is None
+        `TypeError` if dictionary is invalid
 
     Returns:
-    - None
+      `None`
     """
 
     word = join_words()
