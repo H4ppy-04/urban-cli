@@ -149,7 +149,7 @@ def fetch_response_from_URL(_url: str, _response: int | None = None) -> requests
 
     # Client error response
     elif 400 <= (response.status_code and _response) < 499:
-        if response.status_code | _response != 404:
+        if response.status_code and _response != 404:
             display_requests_error(
                 response,
                 preface=f"Assuming your VPN and internet settings are fine, this is a bug (sorry).",

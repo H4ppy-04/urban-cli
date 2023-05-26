@@ -21,6 +21,7 @@ from src.urban import (
     insert_newline_for_break_tags,
     insert_space_after_chars,
     join_words,
+    main,
     process_word,
 )
 
@@ -174,3 +175,10 @@ class TestUnitIntegration(unittest.TestCase):
         _input = ["python", "the", "brown", "cow"]
         _output = "the brown cow"
         self.assertEqual(join_words(_input), _output)
+
+    def test_main_function(self):
+        """
+        test `main` function
+        """
+        with self.assertRaises(SystemExit):
+            main()
