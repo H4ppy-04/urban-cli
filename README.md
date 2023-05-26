@@ -13,7 +13,7 @@
 
 
 ## Preface
-> Please read the wiki for roadmap, versioning and contributing.
+> Please read the [wiki](https://gh-syn.github.io/urban-cli/) for a detailed guide.
 
 ## Usage
 
