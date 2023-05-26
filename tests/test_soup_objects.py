@@ -64,18 +64,21 @@ class GetSoupObjects(unittest.TestCase):
             soup = BeautifulSoup("""<a id="not_valid">test</a>""", features="lxml")
             get_found_word_from_soup(soup)
 
-
     def test_soup_error(self):
         """
         Test type error raised when `soup` is an invalid type.
         """
 
         with self.assertRaises(TypeError):
-            get_found_word_from_soup(BeautifulSoup(3.1, features="lxml"))  # pyright: ignore
+            get_found_word_from_soup(
+                BeautifulSoup(3.1, features="lxml")
+            )  # pyright: ignore
 
     def test_derive_example(self):
         """
         Test derive example returns tag
         """
 
-        self.assertIsInstance(derive_example_as_tag(self.soup), ResultSet | Tag)  # pyright: ignore
+        self.assertIsInstance(
+            derive_example_as_tag(self.soup), ResultSet | Tag
+        )  # pyright: ignore

@@ -103,7 +103,9 @@ def display_requests_error(
     raise SystemExit
 
 
-def fetch_response_from_URL(_url: str, _response: int | None = None) -> requests.Response | None:
+def fetch_response_from_URL(
+    _url: str, _response: int | None = None
+) -> requests.Response | None:
     """Match response from `_url`.
 
     Description:
@@ -498,6 +500,26 @@ def get_statistics_from_soup(_soup: BeautifulSoup):
             )
 
 
+def get_date_from_soup(_soup: BeautifulSoup) -> str:
+    """Return date from soup.
+
+    Parameters:
+        _soup: `_soup` object as `BeautifulSoup` object.
+
+    Return:
+        date as a string
+    """
+
+    if not isinstance(_soup, BeautifulSoup):
+        raise TypeError
+
+    # get definition container
+    container: Tag = derive_definition_as_tag(_soup)  # pyright: ignore
+
+    author_and_date = container.find_next("div", class_="contributor").text
+    return author_and_date.split(" ", 2)[2]
+
+
 def get_author_from_soup(_soup: BeautifulSoup) -> str:
     """Return author from soup.
 
@@ -581,12 +603,14 @@ def fetch_word_from_remote(_word: str) -> dict[str, str] | None:
     # Return definition, author, date all as dict
     post_author = get_author_from_soup(_soup)
 
+    post_date = get_date_from_soup(_soup)
+
     # TODO/FIXME return date as well
     return {
         "definition": words_as_str,
         "example": example_as_str,
         "author": post_author,
-        "date": "Unknown",
+        "date": post_date,
     }
 
 
@@ -670,14 +694,14 @@ def main():
         )
 
     # NOTE _ = `date`
-    definition, example, author, _ = return_dict.values()
+    definition, example, author, date = return_dict.values()
 
     rich_print(f"[bold]{word}: [/bold]", end="")
     print(definition, end="\n\n")
 
     print(colorama.Style.BRIGHT + f"{example}" + colorama.Style.RESET_ALL)
 
-    rich_print(f"\n[bold]by [italic]{author}[/italic][/bold]")
+    rich_print(f"\n[bold]by [italic]{author}[/italic][/bold] [white]{date}[/white]")
 
     raise SystemExit
 
