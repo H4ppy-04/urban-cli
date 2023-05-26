@@ -74,6 +74,8 @@ def display_requests_error(
         None; function calls system exit.
     """
 
+    if not isinstance(preface, str):
+        raise TypeError
     print(preface)
 
     if _response is None:
@@ -81,8 +83,7 @@ def display_requests_error(
             f"It would be amazing if you created an issue at https://github.com/GH-Syn/urban-cli/issues/new"
         )
         print(f"Please include any error messages or weirdness that you encountered.")
-        deinit_sys_exit()
-        return
+        raise SystemExit
 
     print(f"Client information response (response code {_response.status_code}).")
     print(
@@ -91,7 +92,7 @@ def display_requests_error(
     print(f"`status_code` error: `{_response.status_code}`")
     print(f"`requests_url:` error: `{_response.url}`")
     # print(f"`response:` error: `{_response.json()}`")
-    deinit_sys_exit()
+    raise SystemExit
 
 
 def fetch_response_from_URL(_url: str) -> requests.Response | None:
@@ -139,7 +140,7 @@ def fetch_response_from_URL(_url: str) -> requests.Response | None:
         print(
             "That word doesn't exist yet. You can try adding it on urbandictionary.com!"
         )
-        deinit_sys_exit()
+        raise SystemExit
 
     # Server error
     elif 500 <= response.status_code < 599:
@@ -147,13 +148,13 @@ def fetch_response_from_URL(_url: str) -> requests.Response | None:
             response,
             preface=f"Got a server error. Somethings wrong with the website. (error {response.status_code})",
         )
-        deinit_sys_exit()
+        raise SystemExit
     else:
         print(response.status_code)
         print(
             "This is quite rare, but assuming you're connected to the internet, 'urbandictionary.com' seems to be down!"
         )
-        deinit_sys_exit()
+        raise SystemExit
 
 
 def get_first_definition_from_soup(
@@ -193,13 +194,11 @@ def get_soup_object_from_word(_word: str) -> BeautifulSoup | None:
     response = fetch_response_from_URL(URL_QUERY)
 
     if not isinstance(response, requests.Response):
-        deinit_sys_exit()
         raise TypeError("Response not valid type (get_soup_object_from_word")
 
     response_content = response.content
 
     if not isinstance(response_content, bytes):
-        deinit_sys_exit()
         raise TypeError("Response content not valid type (get_soup_object_from_word)")
 
     _soup = BeautifulSoup(response_content, "html.parser")
@@ -663,7 +662,7 @@ def main():
 
     rich_print(f"\n[bold]by [italic]{author}[/italic][/bold]")
 
-    deinit_sys_exit()
+    raise SystemExit
 
 
 if __name__ == "__main__":

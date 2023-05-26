@@ -5,16 +5,17 @@ import unittest
 import random
 
 from bs4 import BeautifulSoup
+import requests
 
 sys.path.insert(0, os.getcwd())
 
 from src.urban import (
     assert_soup_and_index_valid,
+    display_requests_error,
     get_found_word_from_soup,
     get_soup_object_from_word,
     insert_newline_for_break_tags,
     insert_space_after_chars,
-    join_words,
     process_word,
 )
 
@@ -93,6 +94,40 @@ class TestUnitIntegration(unittest.TestCase):
         self.assertEqual(insert_newline_for_break_tags(html), expected_result)
 
     def test_word_join(self):
+        """
+        Test word join function works.
+        """
         words = "the quick brown fox"
         words_joined = process_word(words)
         self.assertEqual(words, words_joined)
+
+    def test_display_requests_exits(self):
+        """
+        Test that display requests error exists on system
+        exit if the response given is equal to `None`
+        """
+        with self.assertRaises(SystemExit):
+            display_requests_error(None)
+
+    def test_display_requests_default(self):
+        """
+        Test that display requsets exists by default.
+        """
+        with self.assertRaises(SystemExit):
+            display_requests_error(requests.Response())
+
+    def test_preface(self):
+        """
+        Test preface component of display requests error
+        """
+
+        with self.assertRaises(TypeError):
+            display_requests_error(None, [])  # pyright: ignore
+
+    def test_preface_output(self):
+        """
+        Test preface prints properly
+        """
+
+        with self.assertRaises(SystemExit):
+            display_requests_error(None, "preface output...")
