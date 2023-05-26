@@ -500,7 +500,7 @@ def get_statistics_from_soup(_soup: BeautifulSoup):
             )
 
 
-def get_date_from_soup(_soup: BeautifulSoup) -> str:
+def get_date_from_soup(_soup: BeautifulSoup) -> str | None:
     """Return date from soup.
 
     Parameters:
@@ -516,8 +516,10 @@ def get_date_from_soup(_soup: BeautifulSoup) -> str:
     # get definition container
     container: Tag = derive_definition_as_tag(_soup)  # pyright: ignore
 
-    author_and_date = container.find_next("div", class_="contributor").text
-    return author_and_date.split(" ", 2)[2]
+    author_and_date = container.find_next("div", class_="contributor")
+
+    if author_and_date != None:
+        return author_and_date.text.split(" ", 2)[1]
 
 
 def get_author_from_soup(_soup: BeautifulSoup) -> str:
@@ -541,7 +543,7 @@ def get_author_from_soup(_soup: BeautifulSoup) -> str:
     )
 
 
-def fetch_word_from_remote(_word: str) -> dict[str, str] | None:
+def fetch_word_from_remote(_word: str) -> dict[str, str | None] | None:
     """Query urban dictionary for `_word`.
 
     Parameters:
