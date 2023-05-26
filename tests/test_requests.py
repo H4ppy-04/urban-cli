@@ -46,7 +46,9 @@ class test_definition(unittest.TestCase):
         """
         Test success response
         """
-        self.assertIsInstance(fetch_response_from_URL("https://example.com", 200), requests.Response)
+        self.assertIsInstance(
+            fetch_response_from_URL("https://example.com", 200), requests.Response
+        )
 
     def test_fetch_redirect(self):
         """
@@ -79,7 +81,6 @@ class test_definition(unittest.TestCase):
         with self.assertRaises(TypeError):
             fetch_response_from_URL(True)  # pyright: ignore
 
-
     def test_type_response(self):
         """
         Test raise type error for response object
@@ -92,4 +93,6 @@ class test_definition(unittest.TestCase):
         """
         Give none as the response default.
         """
-        self.assertIsInstance(fetch_response_from_URL("https://example.com", None), requests.Response)
+        self.assertIsInstance(
+            fetch_response_from_URL("https://example.com", None), requests.Response
+        )
