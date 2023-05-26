@@ -29,5 +29,5 @@ jobs:
       uses: sphinx-notes/pages@v3
       with:
         documentation_path: ./docs/source
-        requirements_path: ../requirements.txt
+        requirements_path: ./requirements.txt
         cache: true
