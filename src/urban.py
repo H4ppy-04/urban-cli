@@ -103,7 +103,7 @@ def display_requests_error(
     raise SystemExit
 
 
-def fetch_response_from_URL(_url: str) -> requests.Response | None:
+def fetch_response_from_URL(_url: str, _response: int | None = None) -> requests.Response | None:
     """Match response from `_url`.
 
     Description:
@@ -118,29 +118,38 @@ def fetch_response_from_URL(_url: str) -> requests.Response | None:
 
     Parameters:
         `_url`: Url query as a `str` type
+        `_response`: If the response code is already known
 
     Return:
         `requests.Response` / response object from which `content` is derived.
     """
 
+    if not isinstance(_url, str):
+        raise TypeError
+    if not isinstance(_response, int | None):
+        raise TypeError
+
     response = requests.get(_url)
+
+    if _response is None:
+        _response = response.status_code
 
     # Sources: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
     # Informational response
-    if 100 <= response.status_code < 199:
+    if 100 <= (response.status_code and _response) < 199:
         display_requests_error(response)
 
     # Successful responses
-    elif 200 <= response.status_code < 299:
+    elif 200 <= (response.status_code and _response) < 299:
         return response
 
     # Redirectional message
-    elif 300 <= response.status_code < 399:
+    elif 300 <= (response.status_code and _response) < 399:
         display_requests_error(response)
 
     # Client error response
-    elif 400 <= response.status_code < 499:
-        if response.status_code != 404:
+    elif 400 <= (response.status_code and _response) < 499:
+        if response.status_code | _response != 404:
             display_requests_error(
                 response,
                 preface=f"Assuming your VPN and internet settings are fine, this is a bug (sorry).",
@@ -151,7 +160,7 @@ def fetch_response_from_URL(_url: str) -> requests.Response | None:
         raise SystemExit
 
     # Server error
-    elif 500 <= response.status_code < 599:
+    elif 500 <= (response.status_code and _response) < 599:
         display_requests_error(
             response,
             preface=f"Got a server error. Somethings wrong with the website. (error {response.status_code})",
