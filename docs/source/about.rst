@@ -2,10 +2,6 @@ About Urban CLI
 ===============
 
 Urban CLI was developed as a small portfolio side project while I was working at university. It was developed over a period of a week, in which I spent developing and refining this project to be as optimized and bug-free as possible.
-
-Development Timeline
---------------------
-
 As development ramped up, I realized that I wouldn't be able to separate code into chunks and files. It was at this point that I decided to test my code. This choice proved to be extremely useful.
 
 Current Features
@@ -19,15 +15,3 @@ Maintenance
 This project is fairly limited in scope and potential. If you're to consider something like a tkinter supported application/GUI that has various buttons and features, it would make sense to have an extensive roadmap. However, with something as limited as this, if there is no need to add extensive features, even if it's possible, I won't.
 
 I essentially started with an idea, a fairly simple one, and now that's come to fruition and approaching the end of development, I feel no need to chart out extra goals or create anything that hasn't already been done. I'll still be fixing bugs, making optimizations and improving things. If you've just come from the semantic versioning page, this roughly translates to: I'll only ever be incrementing the patch branch and very rarely the feature branch for optimizations.
-
-Theme
------
-
-For those wondering about the theme, it's in the footer, but I'll mention it here as well. I'm using Sphinx to generate the documentation and markup that you see here.
-
-
-Thank You
----------
-
-Thank you for looking at, and or using urban cli. It has been a pleasure working on it and crafting its development.
-
