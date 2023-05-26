@@ -6,3 +6,4 @@ Contents
    about.rst
    versioning.md
    contributing.md
+   coverage.md
