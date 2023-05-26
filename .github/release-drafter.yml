@@ -34,15 +34,3 @@ template: |
   ## Changes
 
   $CHANGES
-
-version-resolver:
-  major:
-    labels:
-      - 'major'
-  minor:
-    labels:
-      - 'enhancement'
-  patch:
-    labels:
-      - 'bug'
-  default: patch
