@@ -12,40 +12,12 @@
 </div>
 
 
-## Preface
-> Please read the [wiki](https://gh-syn.github.io/urban-cli/) for a detailed guide.
+<h2>Wiki</h2>
+Please take a moment to check out the <a href="https://gh-syn.github.io/urban-cli/index.html#contents">Urban CLI Wiki</a> for detailed information on installation, contributing, etc.
 
 ## Usage
 
 ![output-2023-05-25_17_51_58_AdobeExpress](https://github.com/GH-Syn/urban-cli/assets/101031214/2c60f08a-c3c1-4738-8711-f91dd7037f8e)
-
-
-## Installation
-
-__All platforms__
-
-All platforms must install requirements before running.
- > This won't be needed in the next planned release for Linux and WSL.
-
-Windows will have to run `usage.py` directly, as urban-cli is not installable via pip, however there are [alternatives](https://github.com/GH-Syn/urban-cli/edit/main/README.md#windows).
-
-```sh
-python -m pip install --user -r requirements.txt
-```
-
-#### Linux
-
-On Linux platforms, run `sh install.sh`.
-> This assumes that ~/.local/bin is present
-
-#### Windows
-> If you don't want to run `usage.py` directly
-
-For Windows, you'll have to manually modify your path environment variables to add:
-`%USERPROFILE%/Downloads/urban-cli/src/urban.py`
-
-From there you'll have to type `urban.py` instead of `urban`.
-The exception of course is you've installed WSL through which you can run `install.sh`.
 
 
 ## License
