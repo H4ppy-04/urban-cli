@@ -1,37 +1,24 @@
-About the Wiki
-==============
+About Urban CLI
+===============
 
-You're probably thinking:
+Urban CLI was developed as a small portfolio side project while I was working at university. It was developed over a period of a week, in which I spent developing and refining this project to be as optimized and bug-free as possible.
 
-*"Why do you have hundreds of lines of code?"*
+Development Timeline
+--------------------
 
-*"Why don't you split it up into different files?"*
+As development ramped up, I realized that I wouldn't be able to separate code into chunks and files. It was at this point that I decided to test my code. This choice proved to be extremely useful.
 
-And those are all great questions!
+Current Features
+----------------
+I plan to add definition examples under the definition itself. This has sort of been already mentioned in the issue/branch thread that is for this feature, however I'll state again that this feature will follow the same colorized format and conventions that the regular definitions have. If a word is colored, it means that word is also defined. The reason why words are colored is so that users know that they can look up that word next if they have an interest as to the meaning of that word in the urban dictionary.
 
-To answer both simultaneously, splitting this program up into different files is something that is generally considered good practice.
-With that said, there are certain situations that may prevent you from doing this. This program is one of those situations.
+There were plans to display likes and dislikes (or 'upvotes' and 'downvotes' depending on which part of the internet you come from) under definitions as well. This is unfortunately, pretty impossible because likes and dislikes are rendered after-the-fact and are not received in a request content object. This still remains an active function in the program in case this ever changes, and it will require minimal change to the code if the integration ever does happen, but as for now the function is decorated as deprecated.
 
-This Wiki addresses topics that cannot be fully explained in repository files.
+Maintenance
+------------
+This project is fairly limited in scope and potential. If you're to consider something like a tkinter supported application/GUI that has various buttons and features, it would make sense to have an extensive roadmap. However, with something as limited as this, if there is no need to add extensive features, even if it's possible, I won't.
 
-Topics
-------
-
-These topics are as follows.
-
-1. Contribution practices pertaining to documentation, code formatting and git practices.
-2. Semantic versioning as it pertains specifically to this project
-3. Current and future development plans.
-
-Documentation
--------------
-
-As you'll likely recall in ``installation.sh``, only one file is added to path. If there are multiple files, everything gets really bizarre
-and difficult to handle with relative imports. While it's *technically* possible, it's not worth the effort when code could work fine with just one file.
-
-The most convenient part of all of this is configuring the documentation. The scale of the main file, despite how large, can be automatically documented as such.
-It's for this reason I don't feel the need to split this documentation into sections, nor do I feel the need to make additional ``rst`` documentation.
-
+I essentially started with an idea, a fairly simple one, and now that's come to fruition and approaching the end of development, I feel no need to chart out extra goals or create anything that hasn't already been done. I'll still be fixing bugs, making optimizations and improving things. If you've just come from the semantic versioning page, this roughly translates to: I'll only ever be incrementing the patch branch and very rarely the feature branch for optimizations.
 
 Theme
 -----
@@ -39,8 +26,8 @@ Theme
 For those wondering about the theme, it's in the footer, but I'll mention it here as well. I'm using Sphinx to generate the documentation and markup that you see here.
 
 
-Thank You 💛
-------------
+Thank You
+---------
 
-Thank you for looking at, and or using urban cli. It has been a pleasure working on it and crafting it's development.
+Thank you for looking at, and or using urban cli. It has been a pleasure working on it and crafting its development.
 
