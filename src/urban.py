@@ -3,7 +3,6 @@
 # Author: Joshua Rose <joshuarose099@gmail.com>
 # License: MIT
 
-
 import sys
 from typing_extensions import deprecated
 
@@ -69,10 +68,10 @@ def deinit_sys_exit(exit_code: int = 0) -> None:
 def display_requests_error(
     _response: requests.Response | None = None, preface=""
 ) -> None:
-    """Display requests response with github link.
+    """Handle and display formatted output from a `requests.Response` object.
 
     Description:
-        This exists to prevent having to specify chunks of response dialogue.
+        GitHub links are provided when something unexpected happens.
 
     Parameters:
         response: Requests response, assumedly one that is unexpected
@@ -136,7 +135,6 @@ def fetch_response_from_URL(
     if _response is None:
         _response = response.status_code
 
-    # Sources: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
     # Informational response
     if 100 <= (response.status_code and _response) < 199:
         display_requests_error(response)
@@ -519,7 +517,7 @@ def get_date_from_soup(_soup: BeautifulSoup) -> str | None:
     author_and_date = container.find_next("div", class_="contributor")
 
     if author_and_date != None:
-        return author_and_date.text.split(" ", 2)[1]
+        return (author_and_date.text).split(" ", 2)[2]
 
 
 def get_author_from_soup(_soup: BeautifulSoup) -> str:

@@ -1,17 +1,17 @@
 # Versioning
-This project follows semantic versioning. Build numbers will not necessarily be factored in to versioning. This is because python is a dynamically typed, interpreted language that does not build machine code or generate executables natively. This project does however implement the standard features of semantic versioning. It is generally understood that semantic versioning practices are best suited to API's (as stipulated in rule 1 in the [semantic versioning website](https://semver.org )). However, it is a practice that I greatly admire and I believe that integrating semantic versioning and its practices into this codebase would give a much more comprehensive release history that lack thereof.   
+This project follows semantic versioning. Build numbers will not necessarily be factored in to versioning. This is because python is a dynamically typed, interpreted language that does not build machine code or generate executables natively. This project does, however, implement the standard features of semantic versioning. It is generally understood that semantic versioning practices are best suited to API's (as stipulated in rule 1 on the [semantic versioning website](https://semver.org )). However, it is a practice that I greatly admire. I believe that integrating semantic versioning and its practices into this codebase would give a much more comprehensive release history that lack thereof.   
 
 ## Introduction
 First, I'll briefly cover semantic versioning as it pertains to API's. Please note that this is a shortened explanation and highly condensed into the fundamentals and doesn't necessarily include release candidates, pre-alpha releases, release code names, and so on.
 
-You typically have 3 'branches' or 'numbers'. The **Major**, **Minor**, and **Patch** but it's actually much easier to think of them as **Major**, **Feature**, **Bugfix** branches, because that's really what they are. I've yet to rack my brain for a good replacement name for the Major branch in this example, so it'll stay that way for now. 
+You typically have 3 'branches' or 'numbers'. The **Major**, **Minor**, and **Patch**. It's much easier to think of them as **Major**, **Feature**, **Bug-fix** branches, because that's really what they are. I've yet to rack my brain for a good replacement name for the Major branch in this example, so it'll stay that way for now. 
 
 ## Branching
 
-As explained previously, each branch represents a change in the codes progression over time. Be the state one of repair, implementation or massive-implementation (as denoted by the major branch), it's generally considered good practice to notate release numbers by way of semantic-version control. 
+As explained previously, each branch represents a change in the codes' progression over time. Be the state one of repair, implementation or massive-implementation (as denoted by the major branch), it's generally considered good practice to notate release numbers by way of semantic-version control. 
 
 ### **Major**
-When developing an **API**, the major version is incremented whenever there is a breaking change. A breaking change, as the name implies refers to a change that breaks things. 'Things' being previous versions. For example, if an API makes a change that removes a function, or refactors a function name, it would be considered a 'breaking change' because all of the projects that use that function would now have to either: 
+When developing an **API**, the major version is incremented whenever there is a breaking change. A breaking change, as the name implies refers to a change that breaks things. 'Things' being previous versions. For example, if an API makes a change that removes a function, or refactors a function name, it would be considered a 'breaking change' because all the projects that use that function would now have to either: 
 
  a) Stay with the previous versions as to not have to refactor
 

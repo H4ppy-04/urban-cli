@@ -12,6 +12,6 @@ There were plans to display likes and dislikes (or 'upvotes' and 'downvotes' dep
 
 Maintenance
 ------------
-This project is fairly limited in scope and potential. If you're to consider something like a tkinter supported application/GUI that has various buttons and features, it would make sense to have an extensive roadmap. However, with something as limited as this, if there is no need to add extensive features, even if it's possible, I won't.
+This project is fairly limited in scope and potential. If you're to consider something like a `tkinter` supported application/GUI that has various buttons and features, it would make sense to have an extensive roadmap. However, with something as limited as this, if there is no need to add extensive features, even if it's possible, I won't.
 
 I essentially started with an idea, a fairly simple one, and now that's come to fruition and approaching the end of development, I feel no need to chart out extra goals or create anything that hasn't already been done. I'll still be fixing bugs, making optimizations and improving things. If you've just come from the semantic versioning page, this roughly translates to: I'll only ever be incrementing the patch branch and very rarely the feature branch for optimizations.

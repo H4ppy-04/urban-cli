@@ -1,7 +1,7 @@
 Contents
 --------
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
 
    about.rst
    installation.md
@@ -9,3 +9,4 @@ Contents
    contributing.md
    coverage.md
    blog.md
+   documentation.rst
