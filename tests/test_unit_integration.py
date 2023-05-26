@@ -20,6 +20,7 @@ from src.urban import (
     get_soup_object_from_word,
     insert_newline_for_break_tags,
     insert_space_after_chars,
+    join_words,
     process_word,
 )
 
@@ -150,3 +151,26 @@ class TestUnitIntegration(unittest.TestCase):
         """
         with self.assertRaises(TypeError):
             deinit_sys_exit(exit_code="")  # pyright: ignore
+
+    def test_join_words_exit(self):
+        """
+        Test join words exists on invalid words argument
+        """
+
+        with self.assertRaises(SystemExit):
+            join_words(words=["test"])
+
+    def test_join_words_type(self):
+        """
+        Test raise typerror on non-list words argument
+        """
+        with self.assertRaises(TypeError):
+            join_words(2)  # pyright: ignore
+
+    def test_join_words_concat(self):
+        """
+        Test join words function concatenates list
+        """
+        _input = ["python", "the", "brown", "cow"]
+        _output = "the brown cow"
+        self.assertEqual(join_words(_input), _output)
