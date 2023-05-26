@@ -1,16 +1,20 @@
 import json
+from logging import error
 import os
 import sys
 import unittest
 import random
 
 from bs4 import BeautifulSoup
+import colorama
+from colorama.initialise import deinit
 import requests
 
 sys.path.insert(0, os.getcwd())
 
 from src.urban import (
     assert_soup_and_index_valid,
+    deinit_sys_exit,
     display_requests_error,
     get_found_word_from_soup,
     get_soup_object_from_word,
@@ -131,3 +135,18 @@ class TestUnitIntegration(unittest.TestCase):
 
         with self.assertRaises(SystemExit):
             display_requests_error(None, "preface output...")
+
+    def test_deinit_sys_exit(self):
+        """
+        Test deinit raises SystemExit
+        """
+        with self.assertRaises(SystemExit):
+            deinit_sys_exit()
+
+
+    def test_deinit_type(self):
+        """
+        Test deinit type error
+        """
+        with self.assertRaises(TypeError):
+            deinit_sys_exit(exit_code="")  # pyright: ignore

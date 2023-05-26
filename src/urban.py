@@ -54,8 +54,11 @@ def deinit_sys_exit(exit_code: int = 0) -> None:
         None
     """
 
+    if not isinstance(exit_code, int):
+        raise TypeError
+
     colorama.deinit()
-    sys.exit(exit_code)
+    raise SystemExit
 
 
 def display_requests_error(
