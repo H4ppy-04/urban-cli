@@ -12,10 +12,12 @@ categories:
       - 'chore'
       - 'CI'
       - 'configuration'
-  - title: "📦 Dependencies":
-     - 'dependencies'
-  - title: " 🛠️Tests"
-    - 'tests'
+  - title: '📦 Dependencies'
+    labels:
+      - 'dependencies'
+  - title: '🛠️Tests'
+    labels:
+      - 'tests'
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
 change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
 version-resolver:
@@ -32,5 +34,3 @@ version-resolver:
 
 template: |
   ## Changes
-
-  $CHANGES
