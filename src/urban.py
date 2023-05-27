@@ -617,7 +617,6 @@ def fetch_word_from_remote(_word: str) -> dict[str, str | None] | None:
 
     Parameters:
         `_word`: Word to query urban dictonary for.
-        `_definition`: Definition rank. The greater the number the less likely it'll be found.
 
     Return:
         Result, author and date as a dictionary.
@@ -837,7 +836,7 @@ def main():
     )
     args = parser.parse_args()
 
-    word = join_words()
+    word = args.word
 
     if not isinstance(word, str):
         raise Warning("Words is none. This shouldn't be getting raised.")
@@ -856,11 +855,11 @@ def main():
     # logger.debug(TERMINAL_WIDTH)
 
     soup: BeautifulSoup = get_soup_object_from_word(args.word)  # pyright: ignore
-    result_set = get_result_set_from_soup(soup)
+    # result_set = get_result_set_from_soup(soup)
 
     # --
 
-    logger.debug(result_set)
+    # logger.debug(result_set)
 
     definition, example, author_and_date = return_dict.values()
     formatted_definition = ""
