@@ -4,6 +4,7 @@ Contents
    :maxdepth: 2
 
    about.md
+   releases.md
    installation.md
    versioning.md
    contributing.md
