@@ -3,7 +3,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   about.rst
+   about.md
    installation.md
    versioning.md
    contributing.md
