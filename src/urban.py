@@ -16,7 +16,7 @@ from rich import print as rich_print
 colorama.init()
 
 
-def join_words(words=sys.argv) -> str:
+def join_words() -> str:
     """Join words into one string when 2 or more words are given.
 
     Raises:
@@ -29,20 +29,19 @@ def join_words(words=sys.argv) -> str:
         One or more words depending on if spaces are present (as str)
     """
 
-    if not isinstance(words, list):
-        raise TypeError
+    if sys.argv == 0:
+        raise IndexError
 
-    if len(words) >= 2:
+    if len(sys.argv) >= 2:
         # to prevent user pain and suffering 🕊️
-        word = " ".join(words[1:])
+        word = " ".join(sys.argv[1:])
     else:
         try:
-            word = words[1]
+            word = sys.argv[1]
         except IndexError:
             rich_print("You need to specify a word. Example: urban drip")
             raise SystemExit
     return word
-
 
 def deinit_sys_exit(exit_code: int = 0) -> None:
     """Uninitialize colorama and exit with `exit_code`.
