@@ -5,6 +5,7 @@
 
 import datetime
 import sys
+import argparse
 import urllib.parse
 
 from bs4 import BeautifulSoup, NavigableString, ResultSet, Tag
@@ -734,6 +735,16 @@ def main():
     Returns:
       `None`
     """
+
+    parser = argparse.ArgumentParser(
+                        prog='Urban',
+                        description='Remotely query definitions from the Urban Dictionary',
+                        epilog='Developed by Joshua Rose')
+
+    parser.add_argument('word', help="Request a definition from the Urban Dictionary")
+    parser.add_argument('--index', type=int, choices=[1, 2, 3], default=1, help="The index of the definition to fetch 1-3")
+    parser.add_argument('--author', type=str, help="List a definition by a given author")
+    args = parser.parse_args()
 
     word = join_words()
 
