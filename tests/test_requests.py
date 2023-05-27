@@ -4,16 +4,14 @@ import sys
 import unittest
 import random
 
-from bs4 import BeautifulSoup, NavigableString, ResultSet, Tag
-import bs4
+from bs4 import BeautifulSoup
 import requests
 
 sys.path.insert(0, os.getcwd())
 
 from src.urban import (
     fetch_response_from_URL,
-    get_first_definition_from_soup,
-    get_found_word_from_soup,
+    get_error_as_string,
     get_soup_object_from_word,
 )
 
@@ -39,7 +37,7 @@ class test_definition(unittest.TestCase):
         """
         Test error codes within informational range
         """
-        with self.assertRaises(SystemExit):
+        with self.assertRaises(Warning):
             fetch_response_from_URL("https://example.com", 150)
 
     def test_fetch_success(self):
@@ -70,7 +68,7 @@ class test_definition(unittest.TestCase):
         """
         Test fetch server error
         """
-        with self.assertRaises(SystemExit):
+        with self.assertRaises(Warning):
             fetch_response_from_URL("https://example.com", 520)
 
     def test_default_match_case(self):
@@ -111,3 +109,26 @@ class test_definition(unittest.TestCase):
 
         with self.assertRaises(SystemExit):
             fetch_response_from_URL("https://example.com/", 500)
+
+    def test_error_string_type(self):
+        """
+        test raise type error on invalid input for get error as string
+        """
+
+        with self.assertRaises(Warning):
+            get_error_as_string(True)
+
+    def test_error_index(self):
+        """
+        test raise index error
+        """
+
+        with self.assertRaises(Warning):
+            get_error_as_string(999)
+
+    def test_error_valid(self):
+        """
+        test return valid response
+        """
+
+        self.assertEqual(get_error_as_string(404), "not_found")
