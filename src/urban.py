@@ -120,7 +120,6 @@ def get_error_as_string(_error_code: int):
     return _codes[_error_code][0]
 
 
-
 def fetch_response_from_URL(
     _url: str, _response: int | None = None
 ) -> requests.Response | None:
@@ -171,7 +170,8 @@ def fetch_response_from_URL(
         if response.status_code and _response != 404:
             display_requests_error(
                 response,
-                preface=f"\nError as string: {get_error_as_string(_response)}\nAssuming your VPN and internet settings are fine, this is a bug (sorry).",)
+                preface=f"\nError as string: {get_error_as_string(_response)}\nAssuming your VPN and internet settings are fine, this is a bug (sorry).",
+            )
         print(
             "That word doesn't exist yet. You can try adding it on urbandictionary.com!"
         )

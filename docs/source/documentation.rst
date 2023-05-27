@@ -73,7 +73,7 @@ Please note that individual error message handling for ``requests.Response`` obj
     :return: `integer`
 
 This function handles requests response values that exceed a given range.
-This is used in conjunction with ``fetch_response_from_URL`` and is called when the response 
+This is used in conjunction with ``fetch_response_from_URL`` and is called when the response
 doesn't match response code `200`.
 
 ..
