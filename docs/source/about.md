@@ -8,7 +8,7 @@ Roadmap
 | Item                                                          | Type        | Status | Thread                                                    | Release |
 |---------------------------------------------------------------|-------------|--------|-----------------------------------------------------------|---------|
 | Status code referencing                                       | Feature     | ❎     | [#32](https://github.com/GH-Syn/urban-cli/issues/32)      | v1.1.0  |
-| Display author and date                                       | Feature     | ❎     | [#2](https://github.com/GH-Syn/urban-cli/issues/2)        | v1.0.0  |
+| Display author and date                                       | Feature     | ✅     | [#2](https://github.com/GH-Syn/urban-cli/issues/2)        | v1.0.0  |
 | Display definition example under definition                   | Feature     | ✅     | [#10](https://github.com/GH-Syn/urban-cli/issues/10)      | v1.0.0  |
 | Process command from terminal                                 | Feature     | ✅     | [#1](https://github.com/GH-Syn/urban-cli/issues/1)        | v1.0.0  |
 | Integrate date next to post author                            | Feature     | ✅     | [#28](https://github.com/GH-Syn/urban-cli/issues/28)      | v1.0.0  |
