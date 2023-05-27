@@ -7,6 +7,19 @@ FILE_PATH="$SRC_PATH/urban.py"
 EXEC_PATH="$HOME/.local/bin/urban"
 LOG_FILE="$CURRENT_PATH/logs/traceback.log"
 RC_FILE="$HOME/.bashrc"
+# Directory path
+LOGS_DIR="logs"
+
+create_logs_dir() {
+	# Check if directory exists
+	if [ ! -d "$directory" ]; then
+	  # Create the directory
+	  mkdir "$LOGS_DIR"
+	  echo "Directory '$LOGS_DIR' created."
+	else
+	  echo "Directory '$directory' already exists."
+	fi
+}
 
 reload_rc_file() {
 	echo "Reloading file information..."
@@ -42,6 +55,8 @@ if ! is_first_time_install; then
 	echo "Warning: Installation cannot be done twice"
 	exit 0
 fi
+
+create_logs_dir
 
 echo export "PATH=$GLOBAL_PATH" >> $RC_FILE 2> $LOG_FILE
 
