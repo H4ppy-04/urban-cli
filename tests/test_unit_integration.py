@@ -14,8 +14,8 @@ from src.urban import (
     get_soup_object_from_word,
     insert_newline_for_break_tags,
     insert_space_after_chars,
-    join_words,
     main,
+    parse_url_chars,
     process_word,
 )
 
@@ -27,6 +27,17 @@ class TestUnitIntegration(unittest.TestCase):
         words = json.load(open("./tests/words.json", "r"))
         self.word = random.choice(words["words"])
         self.soup = get_soup_object_from_word(self.word)
+
+    def test_parse_url_chars(self):
+        """Test url chars are parsed into normal text"""
+
+        expected_result = "Hello world!"
+        self.assertEqual(parse_url_chars("   Hello%20world%21 "), expected_result)
+
+    def test_parse_raise(self):
+        """Test url chars parsing is raised typerror invalid str"""
+        with self.assertRaises(TypeError):
+            parse_url_chars(True)  # pyright: ignore
 
     def test_word_from_soup_raises_index_error(self):
         """Test that word from soup raises when a given value is missing"""
