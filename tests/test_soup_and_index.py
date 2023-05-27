@@ -1,3 +1,4 @@
+import loguru
 import sys
 import unittest
 import random
@@ -20,7 +21,7 @@ class TestSoupAndIndexFunction(unittest.TestCase):
         words = json.load(open("./tests/words.json", "r"))
         self.word = random.choice(words["words"])
         self.soup = get_soup_object_from_word(self.word)
-        print(self.word)
+        loguru.logger.debug(self.word)
 
     def test_soup_and_index_raises_type_error(self):
         """
@@ -38,4 +39,4 @@ class TestSoupAndIndexFunction(unittest.TestCase):
         """
 
         with self.assertRaises(TypeError):
-            assert_soup_valid(_soup=[1, 2, 3])
+            assert_soup_valid(_soup=[1, 2, 3])  # pyright: ignore

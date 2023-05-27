@@ -1,3 +1,4 @@
+import loguru
 import json
 import os
 import sys
@@ -27,7 +28,7 @@ class TestUnitIntegration(unittest.TestCase):
         words = json.load(open("./tests/words.json", "r"))
         self.word = random.choice(words["words"])
         self.soup = get_soup_object_from_word(self.word)
-        print(self.word)
+        loguru.logger.debug(self.word)
 
     def test_parse_url_chars(self):
         """Test url chars are parsed into normal text"""

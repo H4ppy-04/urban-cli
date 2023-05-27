@@ -3,6 +3,7 @@ import os
 import sys
 import unittest
 import random
+import loguru
 
 from bs4 import BeautifulSoup, NavigableString, Tag
 import bs4
@@ -29,7 +30,7 @@ class test_definition(unittest.TestCase):
         self.soup: BeautifulSoup = get_soup_object_from_word(
             self.word
         )  # pyright: ignore
-        print(self.word)
+        loguru.logger.debug(self.word)
 
     def test_definition_from_soup_object(self):
         """

@@ -3,6 +3,7 @@ import os
 import sys
 import unittest
 import random
+from loguru import logger
 
 from bs4 import BeautifulSoup
 
@@ -27,7 +28,7 @@ class test_definition(unittest.TestCase):
         self.soup: BeautifulSoup = get_soup_object_from_word(
             self.word
         )  # pyright: ignore
-        print(self.word)
+        logger.debug(self.word)
 
     def test_error_string_type(self):
         """
