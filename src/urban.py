@@ -660,7 +660,10 @@ def fetch_word_from_remote(_word: str) -> dict[str, str | None] | None:
         word_example, example_hyperlinks_list
     )  # pyright: ignore
 
-    example_as_str = insert_space_after_chars(list(example_as_str))
+    if example_as_str is not None:
+        example_as_str = insert_space_after_chars(list(example_as_str))
+    else:
+        example_as_str = "Example not provided"
 
     if not isinstance(words_as_str_val, str):
         if words_as_str_val is not None:
