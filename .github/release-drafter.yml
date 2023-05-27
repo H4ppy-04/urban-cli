@@ -14,6 +14,11 @@ categories:
       - 'dependencies'
       - 'configuration'
       - 'chore'
+  - title: 'Documentation :page_with_curl:'
+    labels:
+      - 'documentation'
+      - 'wiki'
+      - 'docs'
 change-template: '- $TITLE (#$NUMBER)'
 change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
 version-resolver:
@@ -27,6 +32,6 @@ version-resolver:
     labels:
       - 'patch'
   default: patch
-  
+
 template: |
   $CHANGES
