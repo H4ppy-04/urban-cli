@@ -43,6 +43,7 @@ def join_words() -> str:
             raise SystemExit
     return word
 
+
 def deinit_sys_exit(exit_code: int = 0) -> None:
     """Uninitialize colorama and exit with `exit_code`.
 
