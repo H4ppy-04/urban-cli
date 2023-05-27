@@ -9,7 +9,6 @@ Roadmap
 |---------------------------------------------------------------|-------------|--------|-----------------------------------------------------------|---------|
 | Fix installation checks for existing logs and directories     | Bug         | ✅     | [#37](https://github.com/GH-Syn/urban-cli/issues/37)      | v1.0.1  |
 | Fix missing definitions output parsing issues                 | Bug         | ✅     | [#34](https://github.com/GH-Syn/urban-cli/issues/34)      | v1.0.1  |
-| Fix missing definitions output parsing issues                 | Bug         | ✅     | [#34](https://github.com/GH-Syn/urban-cli/issues/34)      | v1.0.1  |
 | Comprehensive error status requests objects                   | Bug         | ✅     | [#32](https://github.com/GH-Syn/urban-cli/issues/32)      | v1.0.1  |
 | Remove redundant stubbing in unit tests                       | Maintenance | ✅     | [#38](https://github.com/GH-Syn/urban-cli/issues/38)      | v1.0.1  |
 | Display author and date                                       | Feature     | ✅     | [#2](https://github.com/GH-Syn/urban-cli/issues/2)        | v1.0.0  |
