@@ -1,6 +1,6 @@
 ## Documentation
- - [ ] Split up table into releases.
-    -  [ ] Each table should have releases with a status, a type (maintain/docs/feat/bug)
+ - [x] Split up table into releases.
+    -  [x] Each table should have releases with a status, a type (maintain/docs/feat/bug)
        > This should copy the format of the existing table.
  - [ ] Finish writing out manual documentation for each function in [Documentation](https://gh-syn.github.io/urban-cli/documentation.html).
  - [ ] Update `CONTRIBUTING.md` with refactored wiki contributing page.
