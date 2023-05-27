@@ -14,3 +14,5 @@ sphinx-readable-theme
 python-docs-theme
 sphinx-press-theme
 myst-parser
+pytest-html
+pytest-xdist
