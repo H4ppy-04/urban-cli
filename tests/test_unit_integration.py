@@ -17,7 +17,6 @@ from src.urban import (
     assert_soup_and_index_valid,
     deinit_sys_exit,
     display_requests_error,
-    get_date_from_soup,
     get_found_word_from_soup,
     get_soup_object_from_word,
     insert_newline_for_break_tags,
@@ -183,18 +182,3 @@ class TestUnitIntegration(unittest.TestCase):
         """
         with self.assertRaises(SystemExit):
             main()
-
-    def test_get_date(self):
-        """
-        test get author function
-        """
-
-        self.assertIsInstance(get_date_from_soup(self.soup), str)  # pyright: ignore
-
-    def test_date_type(self):
-        """
-        Test date type raises type error
-        """
-
-        with self.assertRaises(TypeError):
-            get_date_from_soup("test")  # pyright: ignore
