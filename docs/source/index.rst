@@ -8,5 +8,5 @@ Contents
    versioning.md
    contributing.md
    coverage.md
-   blog.md
+   blog.rst
    documentation.rst
