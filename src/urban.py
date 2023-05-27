@@ -42,8 +42,9 @@ def join_words() -> str:
         except IndexError:
             rich_print("You need to specify a word. Example: urban drip")
             raise SystemExit
+
     decoded_word = parse_url_chars(word)
-    return decoded_word.strip()
+    return decoded_word
 
 def parse_url_chars(words: str) -> str:
     """Parse any weird url chars into readable text.
@@ -62,7 +63,7 @@ def parse_url_chars(words: str) -> str:
         raise TypeError("Words must be a string. It should preferrably contain url characters.")
 
     decoded_string = urllib.parse.unquote(words)
-    return decoded_string
+    return decoded_string.strip()
 
 def deinit_sys_exit(exit_code: int = 0) -> None:
     """Uninitialize colorama and exit with `exit_code`.
