@@ -20,12 +20,9 @@ class GetSoupObjects(unittest.TestCase):
     """Tests All of the functions that are responsible for getting stuff out of soup"""
 
     def setUp(self) -> None:
-        try:
-            words = json.load(open("./tests/words.json", "r"))
-            self.word = random.choice(words["words"])
-            self.soup = get_soup_object_from_word(self.word)
-        except IndexError:
-            sys.exit(0)
+        words = json.load(open("./tests/words.json", "r"))
+        self.word = random.choice(words["words"])
+        self.soup = get_soup_object_from_word(self.word)
 
     def test_soup_type(self):
         """

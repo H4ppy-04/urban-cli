@@ -123,9 +123,7 @@ def get_error_as_string(_error_code: int):
     return _codes[_error_code][0]
 
 
-def fetch_response_from_URL(
-    _url: str
-) -> requests.Response | None:
+def fetch_response_from_URL(_url: str) -> requests.Response | None:
     """Match response from `_url`.
 
     Description:

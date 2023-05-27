@@ -22,14 +22,11 @@ class test_definition(unittest.TestCase):
     """
 
     def setUp(self) -> None:
-        try:
-            words = json.load(open("./tests/words.json", "r"))
-            self.word = random.choice(words["words"])
-            self.soup: BeautifulSoup = get_soup_object_from_word(
-                self.word
-            )  # pyright: ignore
-        except IndexError:
-            sys.exit(0)
+        words = json.load(open("./tests/words.json", "r"))
+        self.word = random.choice(words["words"])
+        self.soup: BeautifulSoup = get_soup_object_from_word(
+            self.word
+        )  # pyright: ignore
 
     def test_error_string_type(self):
         """

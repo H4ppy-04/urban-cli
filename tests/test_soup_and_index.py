@@ -17,12 +17,9 @@ class TestSoupAndIndexFunction(unittest.TestCase):
     """So many test cases about assert_soup_and_index im just making this"""
 
     def setUp(self) -> None:
-        try:
-            words = json.load(open("./tests/words.json", "r"))
-            self.word = random.choice(words["words"])
-            self.soup = get_soup_object_from_word(self.word)
-        except IndexError:
-            sys.exit(0)
+        words = json.load(open("./tests/words.json", "r"))
+        self.word = random.choice(words["words"])
+        self.soup = get_soup_object_from_word(self.word)
 
     def test_soup_and_index_raises_type_error(self):
         """
