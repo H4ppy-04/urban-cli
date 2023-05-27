@@ -29,6 +29,7 @@ class test_definition(unittest.TestCase):
         self.soup: BeautifulSoup = get_soup_object_from_word(
             self.word
         )  # pyright: ignore
+        print(self.word)
 
     def test_definition_from_soup_object(self):
         """

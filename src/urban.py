@@ -47,6 +47,7 @@ def join_words() -> str:
     decoded_word = parse_url_chars(word)
     return decoded_word
 
+
 def parse_url_chars(words: str) -> str:
     """Parse any weird url chars into readable text.
 
@@ -61,10 +62,13 @@ def parse_url_chars(words: str) -> str:
     """
 
     if not isinstance(words, str):
-        raise TypeError("Words must be a string. It should preferrably contain url characters.")
+        raise TypeError(
+            "Words must be a string. It should preferrably contain url characters."
+        )
 
     decoded_string = urllib.parse.unquote(words)
     return decoded_string.strip()
+
 
 def deinit_sys_exit(exit_code: int = 0) -> None:
     """Uninitialize colorama and exit with `exit_code`.
@@ -509,7 +513,9 @@ def get_author_and_date_from_soup(_soup: BeautifulSoup) -> str | None:
     container: Tag = derive_definition_as_tag(_soup)  # pyright: ignore
 
     # this gets first definition as tag or navstring presumably.
-    author_and_date: NavigableString = container.find_next("div", class_="contributor")  # pyright: ignore
+    author_and_date: NavigableString = container.find_next(
+        "div", class_="contributor"
+    )  # pyright: ignore
     date = get_post_date_as_datetime(author_and_date)
     # print(author_and_date.getText())
 
@@ -519,12 +525,13 @@ def get_author_and_date_from_soup(_soup: BeautifulSoup) -> str | None:
 
     # more detailed date
     date_as_string = date.strftime("%B %dth, %Y")
-    if '=' in href_tag:
+    if "=" in href_tag:
         author: str = href_tag.split("=")[1]
     author = parse_url_chars(author)
 
     if author_and_date != None:
         return f"by {author} on {date_as_string}"
+
 
 def get_author_from_tag(tag: Tag) -> str:
     """Get author from tag.
@@ -545,16 +552,20 @@ def get_author_from_tag(tag: Tag) -> str:
         raise TypeError("tag needs to be of type `Tag`.")
 
     # NOTE TO SELF: fix this shit - i hate looking at it, and i hate myself for writing it
-    author = [k for index, k in enumerate([i for i in tag.text.split(' ') if i != '']) if index <= 1][1]
+    author = [
+        k
+        for index, k in enumerate([i for i in tag.text.split(" ") if i != ""])
+        if index <= 1
+    ][1]
     items = []
-    for i in tag.text.split(' '):
-        if i != '':
+    for i in tag.text.split(" "):
+        if i != "":
             items.append(i)
 
     author = []
 
-    if 'by' in items:
-        items.remove('by')
+    if "by" in items:
+        items.remove("by")
 
     for index, k in enumerate(items):
         if index <= 2:
@@ -562,6 +573,7 @@ def get_author_from_tag(tag: Tag) -> str:
             author.append(k)
 
     return " ".join(author)
+
 
 def get_post_date_as_datetime(definition_tag: Tag | NavigableString) -> datetime.date:
     """
@@ -582,7 +594,9 @@ def get_post_date_as_datetime(definition_tag: Tag | NavigableString) -> datetime
 
     # This prints tag for first definnition
     # print(definition_tag)
-    date_tag_elements: list[str] = [i for i in definition_tag.text.split(' ') if i != '']  # pyright: ignore
+    date_tag_elements: list[str] = [
+        i for i in definition_tag.text.split(" ") if i != ""
+    ]  # pyright: ignore
     if len(date_tag_elements) >= 3:
         # NOTE this prints the *first* definitions' author
         # print(date_tag_elements)
@@ -591,10 +605,11 @@ def get_post_date_as_datetime(definition_tag: Tag | NavigableString) -> datetime
         logger.critical(date_tag_elements)
         sys.exit(1)
     day = day.replace(",", "", day.count(","))
-    month_as_int = (datetime.datetime.strptime(month, "%B").month)
-    post_date = datetime.date(int(year),int(month_as_int), int(day))
+    month_as_int = datetime.datetime.strptime(month, "%B").month
+    post_date = datetime.date(int(year), int(month_as_int), int(day))
 
     return post_date
+
 
 def fetch_word_from_remote(_word: str) -> dict[str, str | None] | None:
     """Query urban dictionary for `_word`.

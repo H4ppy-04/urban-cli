@@ -27,6 +27,7 @@ class TestUnitIntegration(unittest.TestCase):
         words = json.load(open("./tests/words.json", "r"))
         self.word = random.choice(words["words"])
         self.soup = get_soup_object_from_word(self.word)
+        print(self.word)
 
     def test_parse_url_chars(self):
         """Test url chars are parsed into normal text"""
@@ -44,9 +45,7 @@ class TestUnitIntegration(unittest.TestCase):
 
         with self.assertRaises(IndexError):
             _soup = get_soup_object_from_word(self.word)
-            _soup.find_all_next("a")[0].select(  # pyright: ignore
-                ".definintion"
-            )
+            _soup.find_all_next("a")[0].select(".definintion")  # pyright: ignore
 
     def test_space_insert_after_chars(self):
         """Test that a full stop before a character has a space inserted after

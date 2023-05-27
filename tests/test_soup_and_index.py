@@ -20,6 +20,7 @@ class TestSoupAndIndexFunction(unittest.TestCase):
         words = json.load(open("./tests/words.json", "r"))
         self.word = random.choice(words["words"])
         self.soup = get_soup_object_from_word(self.word)
+        print(self.word)
 
     def test_soup_and_index_raises_type_error(self):
         """
