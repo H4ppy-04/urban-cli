@@ -3,10 +3,11 @@
 # Author: Joshua Rose <joshuarose099@gmail.com>
 # License: MIT
 
+import datetime
 import sys
 import urllib.parse
 
-from bs4 import BeautifulSoup, ResultSet, Tag
+from bs4 import BeautifulSoup, NavigableString, ResultSet, Tag
 import bs4
 import colorama
 from loguru import logger
@@ -507,11 +508,93 @@ def get_author_and_date_from_soup(_soup: BeautifulSoup) -> str | None:
     # get definition container
     container: Tag = derive_definition_as_tag(_soup)  # pyright: ignore
 
-    author_and_date = container.find_next("div", class_="contributor")
+    # this gets first definition as tag or navstring presumably.
+    author_and_date: NavigableString = container.find_next("div", class_="contributor")  # pyright: ignore
+    date = get_post_date_as_datetime(author_and_date)
+    # print(author_and_date.getText())
+
+    # type(href_tag) == str .. evals to `True`
+    href_tag: str = author_and_date.find_next("a")["href"]  # pyright: ignore
+    author: NavigableString = get_author_from_tag(author_and_date)  # pyright: ignore
+
+    # more detailed date
+    date_as_string = date.strftime("%B %dth, %Y")
+    if '=' in href_tag:
+        author: str = href_tag.split("=")[1]
+    author = parse_url_chars(author)
 
     if author_and_date != None:
-        return author_and_date.text.split(" ", " ".count(author_and_date.text))[0][3:]
+        return f"by {author} on {date_as_string}"
 
+def get_author_from_tag(tag: Tag) -> str:
+    """Get author from tag.
+
+    A (much) cleaner way to get author from tag.
+
+    Raises:
+        TypeError: if tag is not `Tag`
+
+    Parameters:
+        tag: Tag to get author from
+
+    Return:
+        author as a string type.
+    """
+
+    if not isinstance(tag, Tag):
+        raise TypeError("tag needs to be of type `Tag`.")
+
+    # NOTE TO SELF: fix this shit - i hate looking at it, and i hate myself for writing it
+    author = [k for index, k in enumerate([i for i in tag.text.split(' ') if i != '']) if index <= 1][1]
+    items = []
+    for i in tag.text.split(' '):
+        if i != '':
+            items.append(i)
+
+    author = []
+
+    if 'by' in items:
+        items.remove('by')
+
+    for index, k in enumerate(items):
+        if index <= 2:
+            # print(items[index])
+            author.append(k)
+
+    return " ".join(author)
+
+def get_post_date_as_datetime(definition_tag: Tag | NavigableString) -> datetime.date:
+    """
+    Return datetime object from definition tag
+
+    Raises:
+        TypeError: if definition tag is not of type `Tag` or `NavigableString`
+
+    Parameters:
+        definition_tag: Tag or NavigableString containing a div html tag and contributor class
+
+    Return:
+        `datetime.Date` object from `Tag` or `NavigableString`
+    """
+
+    if not isinstance(definition_tag, Tag):
+        raise TypeError("Definition tag must be of type `Tag` or `NavigableString`.")
+
+    # This prints tag for first definnition
+    # print(definition_tag)
+    date_tag_elements: list[str] = [i for i in definition_tag.text.split(' ') if i != '']  # pyright: ignore
+    if len(date_tag_elements) >= 3:
+        # NOTE this prints the *first* definitions' author
+        # print(date_tag_elements)
+        month, day, year = date_tag_elements[-3:]
+    else:
+        logger.critical(date_tag_elements)
+        sys.exit(1)
+    day = day.replace(",", "", day.count(","))
+    month_as_int = (datetime.datetime.strptime(month, "%B").month)
+    post_date = datetime.date(int(year),int(month_as_int), int(day))
+
+    return post_date
 
 def fetch_word_from_remote(_word: str) -> dict[str, str | None] | None:
     """Query urban dictionary for `_word`.
@@ -671,7 +754,7 @@ def main():
 
     print(colorama.Style.BRIGHT + f"{example}" + colorama.Style.RESET_ALL)
 
-    rich_print(f"\n[bold][white]by {author_and_date}[/white][/bold]")
+    rich_print(f"\n[bold][white]{author_and_date}[/white][/bold]")
 
     raise SystemExit
 
