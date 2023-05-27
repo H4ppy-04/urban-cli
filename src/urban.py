@@ -498,7 +498,7 @@ def get_statistics_from_soup(_soup: BeautifulSoup):
             )
 
 
-def get_date_from_soup(_soup: BeautifulSoup) -> str | None:
+def get_author_and_date_from_soup(_soup: BeautifulSoup) -> str | None:
     """Return date from soup.
 
     Parameters:
@@ -517,29 +517,7 @@ def get_date_from_soup(_soup: BeautifulSoup) -> str | None:
     author_and_date = container.find_next("div", class_="contributor")
 
     if author_and_date != None:
-        return (author_and_date.text).split(" ", 2)[2]
-
-
-def get_author_from_soup(_soup: BeautifulSoup) -> str:
-    """Return author from soup.
-
-    Parameters:
-        _soup: `_soup` object as `BeautifulSoup` object.
-
-    Return:
-        author as a string
-    """
-
-    # get definition container
-    container: ResultSet[Tag] = derive_definition_as_tag(_soup)  # pyright: ignore
-
-    return (
-        container.find_next("div", class_="contributor")  # pyright: ignore
-        .find_next("a")["href"]
-        .split("=")[1]
-        .replace("%20", " ", -1)
-    )
-
+        return author_and_date.text.split(" ", " ".count(author_and_date.text))[0][3:]
 
 def fetch_word_from_remote(_word: str) -> dict[str, str | None] | None:
     """Query urban dictionary for `_word`.
@@ -600,17 +578,13 @@ def fetch_word_from_remote(_word: str) -> dict[str, str | None] | None:
     else:
         words_as_str = insert_space_after_chars(list(words_as_str))
 
-    # Return definition, author, date all as dict
-    post_author = get_author_from_soup(_soup)
-
-    post_date = get_date_from_soup(_soup)
+    post_author_and_date = get_author_and_date_from_soup(_soup)
 
     # TODO/FIXME return date as well
     return {
         "definition": words_as_str,
         "example": example_as_str,
-        "author": post_author,
-        "date": post_date,
+        "author_and_date": post_author_and_date,
     }
 
 
@@ -693,15 +667,14 @@ def main():
             "Invalid type getting returned. Should be dictionary (function=main())"
         )
 
-    # NOTE _ = `date`
-    definition, example, author, date = return_dict.values()
+    definition, example, author_and_date = return_dict.values()
 
     rich_print(f"[bold]{word}: [/bold]", end="")
     print(definition, end="\n\n")
 
     print(colorama.Style.BRIGHT + f"{example}" + colorama.Style.RESET_ALL)
 
-    rich_print(f"\n[bold]by [italic]{author}[/italic][/bold] [white]{date}[/white]")
+    rich_print(f"\n[bold][white]by {author_and_date}[/white][/bold]")
 
     raise SystemExit
 
