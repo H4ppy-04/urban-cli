@@ -48,6 +48,7 @@ def join_words() -> str:
     decoded_word = parse_url_chars(word)
     return decoded_word
 
+
 def parse_url_chars(words: str) -> str:
     """Parse any weird url chars into readable text.
 
@@ -62,10 +63,13 @@ def parse_url_chars(words: str) -> str:
     """
 
     if not isinstance(words, str):
-        raise TypeError("Words must be a string. It should preferrably contain url characters.")
+        raise TypeError(
+            "Words must be a string. It should preferrably contain url characters."
+        )
 
     decoded_string = urllib.parse.unquote(words)
     return decoded_string.strip()
+
 
 def deinit_sys_exit(exit_code: int = 0) -> None:
     """Uninitialize colorama and exit with `exit_code`.
@@ -510,7 +514,9 @@ def get_author_and_date_from_soup(_soup: BeautifulSoup) -> str | None:
     container: Tag = derive_definition_as_tag(_soup)  # pyright: ignore
 
     # this gets first definition as tag or navstring presumably.
-    author_and_date: NavigableString = container.find_next("div", class_="contributor")  # pyright: ignore
+    author_and_date: NavigableString = container.find_next(
+        "div", class_="contributor"
+    )  # pyright: ignore
     date = get_post_date_as_datetime(author_and_date)
     # print(author_and_date.getText())
 
@@ -520,12 +526,13 @@ def get_author_and_date_from_soup(_soup: BeautifulSoup) -> str | None:
 
     # more detailed date
     date_as_string = date.strftime("%B %dth, %Y")
-    if '=' in href_tag:
+    if "=" in href_tag:
         author: str = href_tag.split("=")[1]
     author = parse_url_chars(author)
 
     if author_and_date != None:
         return f"by {author} on {date_as_string}"
+
 
 def get_author_from_tag(tag: Tag) -> str:
     """Get author from tag.
@@ -546,16 +553,20 @@ def get_author_from_tag(tag: Tag) -> str:
         raise TypeError("tag needs to be of type `Tag`.")
 
     # NOTE TO SELF: fix this shit - i hate looking at it, and i hate myself for writing it
-    author = [k for index, k in enumerate([i for i in tag.text.split(' ') if i != '']) if index <= 1][1]
+    author = [
+        k
+        for index, k in enumerate([i for i in tag.text.split(" ") if i != ""])
+        if index <= 1
+    ][1]
     items = []
-    for i in tag.text.split(' '):
-        if i != '':
+    for i in tag.text.split(" "):
+        if i != "":
             items.append(i)
 
     author = []
 
-    if 'by' in items:
-        items.remove('by')
+    if "by" in items:
+        items.remove("by")
 
     for index, k in enumerate(items):
         if index <= 2:
@@ -563,6 +574,7 @@ def get_author_from_tag(tag: Tag) -> str:
             author.append(k)
 
     return " ".join(author)
+
 
 def get_post_date_as_datetime(definition_tag: Tag | NavigableString) -> datetime.date:
     """
@@ -583,7 +595,9 @@ def get_post_date_as_datetime(definition_tag: Tag | NavigableString) -> datetime
 
     # This prints tag for first definnition
     # print(definition_tag)
-    date_tag_elements: list[str] = [i for i in definition_tag.text.split(' ') if i != '']  # pyright: ignore
+    date_tag_elements: list[str] = [
+        i for i in definition_tag.text.split(" ") if i != ""
+    ]  # pyright: ignore
     if len(date_tag_elements) >= 3:
         # NOTE this prints the *first* definitions' author
         # print(date_tag_elements)
@@ -592,10 +606,11 @@ def get_post_date_as_datetime(definition_tag: Tag | NavigableString) -> datetime
         logger.critical(date_tag_elements)
         sys.exit(1)
     day = day.replace(",", "", day.count(","))
-    month_as_int = (datetime.datetime.strptime(month, "%B").month)
-    post_date = datetime.date(int(year),int(month_as_int), int(day))
+    month_as_int = datetime.datetime.strptime(month, "%B").month
+    post_date = datetime.date(int(year), int(month_as_int), int(day))
 
     return post_date
+
 
 def fetch_word_from_remote(_word: str) -> dict[str, str | None] | None:
     """Query urban dictionary for `_word`.
@@ -722,6 +737,67 @@ def process_word(_word=join_words()) -> str:
     return word
 
 
+def format_sentences(text: str | Tag, max_length: int) -> str:
+    """
+    Formats sentences in the given text by starting a new line if a sentence
+    exceeds the maximum length. Each line will not exceed the maximum length,
+    even if it means breaking a word.
+
+    Args:
+        text (str | Tag): The input text containing sentences.
+        NOTE: tag can be specified from which data is extracted
+        relative to its contents
+
+        max_length (int): The maximum length of a line.
+
+    Returns:
+        str: The formatted text with sentences properly line-wrapped.
+    """
+
+    if not isinstance(max_length, int):
+        raise TypeError("The 'max_length' argument must be an integer.")
+
+    if isinstance(text, Tag):
+        lines = []
+        current_line = ""
+
+        for content in text.contents:
+            if isinstance(content, Tag) and content.name == "br":
+                lines.append(current_line.strip())
+                current_line = ""
+            else:
+                text = str(content).strip()
+                words = text.split()
+                for word in words:
+                    if len(current_line) + len(word) <= max_length:
+                        current_line += word + " "
+                    else:
+                        lines.append(current_line.strip())
+                        current_line = word + " "
+
+        lines.append(current_line.strip())
+        formatted_text = "\n".join(lines)
+
+        return formatted_text
+
+    if isinstance(text, str):
+        words = text.split()
+        lines = []
+        current_line = ""
+
+        for word in words:
+            if len(current_line) + len(word) <= max_length:
+                current_line += word + " "
+            else:
+                lines.append(current_line.strip())
+                current_line = word + " "
+
+        lines.append(current_line.strip())
+        formatted_text = "\n".join(lines)
+
+        return formatted_text
+
+
 def main():
     """`main` as global function called from dunder condition.
 
@@ -737,13 +813,25 @@ def main():
     """
 
     parser = argparse.ArgumentParser(
-                        prog='Urban',
-                        description='Remotely query definitions from the Urban Dictionary',
-                        epilog='Developed by Joshua Rose')
+        prog="Urban",
+        description="Remotely query definitions from the Urban Dictionary",
+        epilog="Developed by Joshua Rose",
+    )
 
-    parser.add_argument('word', help="Request a definition from the Urban Dictionary")
-    parser.add_argument('--index', type=int, choices=[1, 2, 3], default=1, help="The index of the definition to fetch 1-3")
-    parser.add_argument('--author', type=str, help="List a definition by a given author")
+    parser.add_argument("word", help="Request a definition from the Urban Dictionary")
+    parser.add_argument(
+        "--index",
+        type=int,
+        choices=[1, 2, 3],
+        default=1,
+        help="The index of the definition to fetch 1-3",
+    )
+    parser.add_argument(
+        "--author", type=str, help="List a definition by a given author"
+    )
+    parser.add_argument(
+        "--cols", type=int, default=80, help="Linebreak chars at a given column value"
+    )
     args = parser.parse_args()
 
     word = join_words()
@@ -758,14 +846,39 @@ def main():
             "Invalid type getting returned. Should be dictionary (function=main())"
         )
 
+    TERMINAL_WIDTH = (
+        args.cols if args.cols is not None else parser.get_default(args.cols)
+    )
+
+    # logger.debug(TERMINAL_WIDTH)
+
+    soup: BeautifulSoup = get_soup_object_from_word(args.word)  # pyright: ignore
+    result_set = get_result_set_from_soup(soup)
+
+    # --
+
+    logger.debug(result_set)
+
     definition, example, author_and_date = return_dict.values()
+    formatted_definition = ""
+    if isinstance(definition, str):
+        formatted_definition = format_sentences(definition, TERMINAL_WIDTH)
+    if formatted_definition == "" or definition is None:
+        formatted_definition = "No definition specified 🤕"
 
-    rich_print(f"[bold]{word}: [/bold]", end="")
-    print(definition, end="\n\n")
+    formatted_word = format_sentences(word, TERMINAL_WIDTH)
 
-    print(colorama.Style.BRIGHT + f"{example}" + colorama.Style.RESET_ALL)
+    rich_print(f"[bold]{formatted_word}: [/bold]", end="")
+    print(formatted_definition)  # word
 
-    rich_print(f"\n[bold][white]{author_and_date}[/white][/bold]")
+    if not isinstance(example, str):
+        example = "No example provided."
+    else:
+        example = format_sentences(example, TERMINAL_WIDTH)
+
+    print(colorama.Style.BRIGHT + f"\n{example}\n" + colorama.Style.RESET_ALL)
+
+    rich_print(f"[bold][white]{author_and_date}[/white][/bold]")
 
     raise SystemExit
 
