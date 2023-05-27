@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup, ResultSet, Tag
 import bs4
 import colorama
 import requests
+from loguru import logger
 from requests.status_codes import _codes  # pyright: ignore
 from rich import print as rich_print
 
@@ -38,7 +39,7 @@ def join_words(words=sys.argv) -> str:
         try:
             word = words[1]
         except IndexError:
-            print("You need to specify a word. Example: urban drip")
+            rich_print("You need to specify a word. Example: urban drip")
             raise SystemExit
     return word
 
@@ -85,18 +86,20 @@ def display_requests_error(
         raise TypeError
 
     if _response is None:
-        print(
+        rich_print(
             f"It would be amazing if you created an issue at https://github.com/GH-Syn/urban-cli/issues/new"
         )
-        print(f"Please include any error messages or weirdness that you encountered.")
+        rich_print(
+            f"Please include any error messages or weirdness that you encountered."
+        )
         raise SystemExit
 
-    print(f"Client information response (response code {_response.status_code}).")
-    print(
+    logger.info(f"Client information response (response code {_response.status_code}).")
+    rich_print(
         f"It would be amazing if you created an issue at https://github.com/GH-Syn/urban-cli/issues/new and made sure to include:"
     )
-    print(f"`status_code` error: `{_response.status_code}`")
-    print(f"`requests_url:` error: `{_response.url}`")
+    logger.error(f"`status_code` error: `{_response.status_code}`")
+    logger.error(f"`requests_url:` error: `{_response.url}`")
     # print(f"`response:` error: `{_response.json()}`")
     raise SystemExit
 
@@ -185,8 +188,8 @@ def fetch_response_from_URL(
         )
         raise SystemExit
     else:
-        print(response.status_code)
-        print(
+        logger.debug(response.status_code)
+        logger.critical(
             "Error as string: {get_error_as_string(_response)}\nThis is quite rare, but assuming you're connected to the internet, 'urbandictionary.com' seems to be down!"
         )
         raise SystemExit
@@ -544,14 +547,14 @@ def fetch_word_from_remote(_word: str) -> dict[str, str | None] | None:
     )
 
     if not isinstance(example_as_str, str) or example_as_str == "":
-        example_as_str = "Definition not found or not available."
-        print(f"Debug (example_as_str variable): {example_as_str}")
+        example_as_str = "Example not found or not available."
+        logger.critical(f"Debug (example_as_str variable): {example_as_str}")
     else:
         example_as_str = insert_space_after_chars(list(example_as_str))
 
     if not isinstance(words_as_str, str) or words_as_str == "":
         words_as_str = "Definition not found or not available."
-        print(f"Debug (words_as_str variable): {words_as_str}")
+        logger.critical(f"Debug (words_as_str variable): {words_as_str}")
     else:
         words_as_str = insert_space_after_chars(list(words_as_str))
 
