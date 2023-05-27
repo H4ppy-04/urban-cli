@@ -41,13 +41,13 @@ git config --global commit.template path/to/commit-template.txt
 
 For branches, you can generally have the following options:
 
-#### `docs/branch-name`
+### `docs/branch-name`
 If the branch pertains to documentation such as the wiki, a `readme` file, any images or resources that might need to be added, a license, contributing file and so on, this is the branch that it will come under. Typically, you will never need to make a docs branch if you are only introducing a small commit, but commits greater than 10 lines should typically have their own branch.
 
-#### `feat/branch-name`
+### `feat/branch-name`
 For any medium-large feature that will need likely revision before its integrated, the feature branch will be prefixed with `feat`. This is the most common type of branch, and using this is probably your best call if you're not sure.
 
-#### `fix/branch-name`
+### `fix/branch-name`
 If a bug is listed in issues this is the branch you'll be using. It'll most likely already be created because each issue has its own branch regardless of the size. Normally this isn't good practice, but because release-notes actions aren't configured, I want to be able to list comprehensive bug-fixes in the release notes automatically.
 
 Please note that if it's not listed in issues, make an issue and request a branch be made for it. 
