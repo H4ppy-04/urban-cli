@@ -110,10 +110,10 @@ def fetch_response_from_URL(
         Filters status code in the process of fetching `_url`.
 
     Notes:
-        I plan/planned on making each status code messsage individual; I haven't
+        I plan/planned on making each status code message individual; I haven't
         found a smart way of doing that yet.
 
-    Exceptions:
+    Raises:
         System exit if response status code is not in the range of an acceptable value.
 
     Parameters:
