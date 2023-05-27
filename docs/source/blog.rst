@@ -17,7 +17,7 @@ Some libraries, such as `colorama`, are very good with compatibility, however be
 are font libraries being used in tandem with one another, performance may not be as expected if using an in-compatible font. My suggestion, as for most fonts, is to use a Nerd Font. Nerd fonts support
 all current features from symbols to italics and are commonly used and recommended by developers and typography enthusiasts alike.
 
-.. Note:: This has been fixed as of v1.0.0
+.. Note:: This will be worked on.
 
 LXML
 ----
@@ -33,3 +33,5 @@ Text Processing
 Usernames that have characters such as ', @, ", and so on, that are normally replaced with symbols will show up as symbols, or rather, as processed by the browser URL. This is normally because
 the username is extracted from a hyperlink reference tag, in which navigates users to a users profile. This can be troubling as spaces can show up as ``%20`` characters, and other strange things.
 The text processing issue is actively being worked on. See `#27 <https://github.com/GH-Syn/urban-cli/issues/27>`_ for more details
+
+.. Note:: This has been fixed as of v1.0.0
