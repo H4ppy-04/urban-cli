@@ -448,7 +448,7 @@ def format_words_as_string_from_tag(
             continue
         else:
             if " " in word:
-                subwords = word.split(" ", -1)
+                subwords = word.split(" ", word.count(" "))
                 for subword in subwords:
                     word = words_as_str.replace(
                         subword, colorama.Fore.BLUE + subword + colorama.Fore.RESET
