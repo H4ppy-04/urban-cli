@@ -55,6 +55,9 @@ fi
 create_exec_symlink
 
 if [[ $? -eq 0 ]]; then
+	# Install requirments
+	echo "Installing requirments..."
+	exec python -m pip install --user -r requirements.txt
 	echo "Installation complete! 🎉"
 	source $RC_FILE # Final reload of file
 	exit 0
