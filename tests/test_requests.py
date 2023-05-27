@@ -5,12 +5,10 @@ import unittest
 import random
 
 from bs4 import BeautifulSoup
-import requests
 
 sys.path.insert(0, os.getcwd())
 
 from src.urban import (
-    fetch_response_from_URL,
     get_error_as_string,
     get_soup_object_from_word,
 )

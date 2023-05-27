@@ -124,7 +124,7 @@ def get_error_as_string(_error_code: int):
 
 
 def fetch_response_from_URL(
-    _url: str, _response: int | None = None
+    _url: str
 ) -> requests.Response | None:
     """Match response from `_url`.
 
@@ -148,32 +148,27 @@ def fetch_response_from_URL(
 
     if not isinstance(_url, str):
         raise TypeError
-    if not isinstance(_response, int | None):
-        raise TypeError
 
     response = requests.get(_url)
 
-    if _response is None:
-        _response = response.status_code
-
     # Informational response
-    if 100 <= (response.status_code and _response) < 199:
-        display_requests_error(response, get_error_as_string(_response))
+    if 100 <= (response.status_code) < 199:
+        display_requests_error(response)
 
     # Successful responses
-    elif 200 <= (response.status_code and _response) < 299:
+    elif 200 <= (response.status_code) < 299:
         return response
 
     # Redirectional message
-    elif 300 <= (response.status_code and _response) < 399:
-        display_requests_error(response, get_error_as_string(_response))
+    elif 300 <= (response.status_code) < 399:
+        display_requests_error(response)
 
     # Client error response
-    elif 400 <= (response.status_code and _response) < 499:
-        if response.status_code and _response != 404:
+    elif 400 <= (response.status_code) < 499:
+        if response.status_code != 404:
             display_requests_error(
                 response,
-                preface=f"\nError as string: {get_error_as_string(_response)}\nAssuming your VPN and internet settings are fine, this is a bug (sorry).",
+                preface=f"\nError as string: {get_error_as_string(response.status_code)}\nAssuming your VPN and internet settings are fine, this is a bug (sorry).",
             )
         print(
             "That word doesn't exist yet. You can try adding it on urbandictionary.com!"
@@ -181,16 +176,16 @@ def fetch_response_from_URL(
         raise SystemExit
 
     # Server error
-    elif 500 <= (response.status_code and _response) < 599:
+    elif 500 <= (response.status_code) < 599:
         display_requests_error(
             response,
-            preface=f"Error as string: {get_error_as_string(_response)}\nGot a server error. Somethings wrong with the website. (error {response.status_code})",
+            preface=f"Error as string: {get_error_as_string(response.status_code)}\nGot a server error. Somethings wrong with the website. (error {response.status_code})",
         )
         raise SystemExit
     else:
         logger.debug(response.status_code)
         logger.critical(
-            "Error as string: {get_error_as_string(_response)}\nThis is quite rare, but assuming you're connected to the internet, 'urbandictionary.com' seems to be down!"
+            f"Error as string: {get_error_as_string(response.status_code)}\nThis is quite rare, but assuming you're connected to the internet, 'urbandictionary.com' seems to be down!"
         )
         raise SystemExit
 
