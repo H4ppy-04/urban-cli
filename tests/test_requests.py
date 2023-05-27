@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 sys.path.insert(0, os.getcwd())
 
 from src.urban import (
+    fetch_response_from_URL,
     get_error_as_string,
     get_soup_object_from_word,
 )
@@ -50,3 +51,10 @@ class test_definition(unittest.TestCase):
         """
 
         self.assertEqual(get_error_as_string(404), "not_found")
+
+    def test_response_type_url(self):
+        """
+        test response type url.
+        """
+        with self.assertRaises(TypeError):
+            fetch_response_from_URL(None)  # pyright: ignore
