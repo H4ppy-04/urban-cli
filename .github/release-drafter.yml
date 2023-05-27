@@ -31,3 +31,8 @@ version-resolver:
     labels:
       - 'patch'
   default: patch
+  
+template: |
+  ## What’s Changed
+
+  $CHANGES
