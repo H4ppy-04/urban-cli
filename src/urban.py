@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup, ResultSet, Tag
 import bs4
 import colorama
 import requests
+from requests.status_codes import _codes  # pyright: ignore
 from rich import print as rich_print
 
 colorama.init()
@@ -82,7 +83,6 @@ def display_requests_error(
 
     if not isinstance(preface, str):
         raise TypeError
-    print(preface)
 
     if _response is None:
         print(
@@ -99,6 +99,26 @@ def display_requests_error(
     print(f"`requests_url:` error: `{_response.url}`")
     # print(f"`response:` error: `{_response.json()}`")
     raise SystemExit
+
+
+def get_error_as_string(_error_code: int):
+    """Get error as string from `error_code`.
+
+    Raises:
+        Warning: If _error_code is not in `_codes`.
+
+    Parameters:
+        `_error_code`: Error code to index requests library error codes.
+
+    Return:
+        string: error code string from `_error_code`.
+    """
+
+    if _error_code not in _codes.keys():
+        raise Warning("Error code not in keys")
+
+    return _codes[_error_code][0]
+
 
 
 def fetch_response_from_URL(
@@ -136,7 +156,7 @@ def fetch_response_from_URL(
 
     # Informational response
     if 100 <= (response.status_code and _response) < 199:
-        display_requests_error(response)
+        display_requests_error(response, get_error_as_string(_response))
 
     # Successful responses
     elif 200 <= (response.status_code and _response) < 299:
@@ -144,15 +164,14 @@ def fetch_response_from_URL(
 
     # Redirectional message
     elif 300 <= (response.status_code and _response) < 399:
-        display_requests_error(response)
+        display_requests_error(response, get_error_as_string(_response))
 
     # Client error response
     elif 400 <= (response.status_code and _response) < 499:
         if response.status_code and _response != 404:
             display_requests_error(
                 response,
-                preface=f"Assuming your VPN and internet settings are fine, this is a bug (sorry).",
-            )
+                preface=f"\nError as string: {get_error_as_string(_response)}\nAssuming your VPN and internet settings are fine, this is a bug (sorry).",)
         print(
             "That word doesn't exist yet. You can try adding it on urbandictionary.com!"
         )
@@ -162,13 +181,13 @@ def fetch_response_from_URL(
     elif 500 <= (response.status_code and _response) < 599:
         display_requests_error(
             response,
-            preface=f"Got a server error. Somethings wrong with the website. (error {response.status_code})",
+            preface=f"Error as string: {get_error_as_string(_response)}\nGot a server error. Somethings wrong with the website. (error {response.status_code})",
         )
         raise SystemExit
     else:
         print(response.status_code)
         print(
-            "This is quite rare, but assuming you're connected to the internet, 'urbandictionary.com' seems to be down!"
+            "Error as string: {get_error_as_string(_response)}\nThis is quite rare, but assuming you're connected to the internet, 'urbandictionary.com' seems to be down!"
         )
         raise SystemExit
 
@@ -475,6 +494,7 @@ def get_author_and_date_from_soup(_soup: BeautifulSoup) -> str | None:
 
     if author_and_date != None:
         return author_and_date.text.split(" ", " ".count(author_and_date.text))[0][3:]
+
 
 def fetch_word_from_remote(_word: str) -> dict[str, str | None] | None:
     """Query urban dictionary for `_word`.
