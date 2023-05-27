@@ -740,6 +740,67 @@ def process_word(_word=join_words()) -> str:
     return word
 
 
+def format_sentences(text: str | Tag, max_length: int) -> str:
+    """
+    Formats sentences in the given text by starting a new line if a sentence
+    exceeds the maximum length. Each line will not exceed the maximum length,
+    even if it means breaking a word.
+
+    Args:
+        text (str | Tag): The input text containing sentences.
+        NOTE: tag can be specified from which data is extracted
+        relative to its contents
+
+        max_length (int): The maximum length of a line.
+
+    Returns:
+        str: The formatted text with sentences properly line-wrapped.
+    """
+
+    if not isinstance(max_length, int):
+        raise TypeError("The 'max_length' argument must be an integer.")
+
+    if isinstance(text, Tag):
+        lines = []
+        current_line = ""
+
+        for content in text.contents:
+            if isinstance(content, Tag) and content.name == "br":
+                lines.append(current_line.strip())
+                current_line = ""
+            else:
+                text = str(content).strip()
+                words = text.split()
+                for word in words:
+                    if len(current_line) + len(word) <= max_length:
+                        current_line += word + " "
+                    else:
+                        lines.append(current_line.strip())
+                        current_line = word + " "
+
+        lines.append(current_line.strip())
+        formatted_text = "\n".join(lines)
+
+        return formatted_text
+
+    if isinstance(text, str):
+        words = text.split()
+        lines = []
+        current_line = ""
+
+        for word in words:
+            if len(current_line) + len(word) <= max_length:
+                current_line += word + " "
+            else:
+                lines.append(current_line.strip())
+                current_line = word + " "
+
+        lines.append(current_line.strip())
+        formatted_text = "\n".join(lines)
+
+        return formatted_text
+
+
 def main():
     """`main` as global function called from dunder condition.
 
@@ -755,13 +816,25 @@ def main():
     """
 
     parser = argparse.ArgumentParser(
-                        prog='Urban',
-                        description='Remotely query definitions from the Urban Dictionary',
-                        epilog='Developed by Joshua Rose')
+        prog="Urban",
+        description="Remotely query definitions from the Urban Dictionary",
+        epilog="Developed by Joshua Rose",
+    )
 
-    parser.add_argument('word', help="Request a definition from the Urban Dictionary")
-    parser.add_argument('--index', type=int, choices=[1, 2, 3], default=1, help="The index of the definition to fetch 1-3")
-    parser.add_argument('--author', type=str, help="List a definition by a given author")
+    parser.add_argument("word", help="Request a definition from the Urban Dictionary")
+    parser.add_argument(
+        "--index",
+        type=int,
+        choices=[1, 2, 3],
+        default=1,
+        help="The index of the definition to fetch 1-3",
+    )
+    parser.add_argument(
+        "--author", type=str, help="List a definition by a given author"
+    )
+    parser.add_argument(
+        "--cols", type=int, default=80, help="Linebreak chars at a given column value"
+    )
     args = parser.parse_args()
 
     word = join_words()
@@ -776,14 +849,39 @@ def main():
             "Invalid type getting returned. Should be dictionary (function=main())"
         )
 
+    TERMINAL_WIDTH = (
+        args.cols if args.cols is not None else parser.get_default(args.cols)
+    )
+
+    # logger.debug(TERMINAL_WIDTH)
+
+    soup: BeautifulSoup = get_soup_object_from_word(args.word)  # pyright: ignore
+    result_set = get_result_set_from_soup(soup)
+
+    # --
+
+    logger.debug(result_set)
+
     definition, example, author_and_date = return_dict.values()
+    formatted_definition = ""
+    if isinstance(definition, str):
+        formatted_definition = format_sentences(definition, TERMINAL_WIDTH)
+    if formatted_definition == "" or definition is None:
+        formatted_definition = "No definition specified 🤕"
 
-    rich_print(f"[bold]{word}: [/bold]", end="")
-    print(definition, end="\n\n")
+    formatted_word = format_sentences(word, TERMINAL_WIDTH)
 
-    print(colorama.Style.BRIGHT + f"{example}" + colorama.Style.RESET_ALL)
+    rich_print(f"[bold]{formatted_word}: [/bold]", end="")
+    print(formatted_definition)  # word
 
-    rich_print(f"\n[bold][white]{author_and_date}[/white][/bold]")
+    if not isinstance(example, str):
+        example = "No example provided."
+    else:
+        example = format_sentences(example, TERMINAL_WIDTH)
+
+    print(colorama.Style.BRIGHT + f"\n{example}\n" + colorama.Style.RESET_ALL)
+
+    rich_print(f"[bold][white]{author_and_date}[/white][/bold]")
 
     raise SystemExit
 
