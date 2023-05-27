@@ -1,23 +1,16 @@
 import json
-from logging import error
 import os
 import sys
-from typing_extensions import Type
 import unittest
 import random
 
-from bs4 import BeautifulSoup
-import colorama
-from colorama.initialise import deinit
 import requests
 
 sys.path.insert(0, os.getcwd())
 
 from src.urban import (
-    assert_soup_and_index_valid,
     deinit_sys_exit,
     display_requests_error,
-    get_found_word_from_soup,
     get_soup_object_from_word,
     insert_newline_for_break_tags,
     insert_space_after_chars,
@@ -40,9 +33,9 @@ class TestUnitIntegration(unittest.TestCase):
 
         with self.assertRaises(IndexError):
             _soup = get_soup_object_from_word(self.word)
-            word_soup = _soup.find_all_next("a")[0].select(  # pyright: ignore
+            _soup.find_all_next("a")[0].select(  # pyright: ignore
                 ".definintion"
-            )  # pyright: ignore
+            )
 
     def test_space_insert_after_chars(self):
         """Test that a full stop before a character has a space inserted after

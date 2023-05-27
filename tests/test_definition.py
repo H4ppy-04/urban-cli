@@ -4,7 +4,7 @@ import sys
 import unittest
 import random
 
-from bs4 import BeautifulSoup, NavigableString, ResultSet, Tag
+from bs4 import BeautifulSoup, NavigableString, Tag
 import bs4
 
 sys.path.insert(0, os.getcwd())
