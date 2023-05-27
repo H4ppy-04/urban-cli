@@ -539,30 +539,33 @@ def fetch_word_from_remote(_word: str) -> dict[str, str | None] | None:
         for word in example_hyperlinks:
             example_hyperlinks_list.append(word.string)
 
-    words_as_str = format_words_as_string_from_tag(
-        word_meaning, definition_hyperlinks_list
-    )
-    example_as_str = format_words_as_string_from_tag(
+    words_as_str_val: str | None = word_meaning.string
+    if words_as_str_val == None:
+        words_as_str_val: str | None = format_words_as_string_from_tag(
+            word_meaning, definition_hyperlinks_list
+        )
+    example_as_str: str = format_words_as_string_from_tag(
         word_example, example_hyperlinks_list
-    )
+    )  # pyright: ignore
 
-    if not isinstance(example_as_str, str) or example_as_str == "":
-        example_as_str = "Example not found or not available."
-        logger.critical(f"Debug (example_as_str variable): {example_as_str}")
-    else:
-        example_as_str = insert_space_after_chars(list(example_as_str))
+    example_as_str = insert_space_after_chars(list(example_as_str))
 
-    if not isinstance(words_as_str, str) or words_as_str == "":
-        words_as_str = "Definition not found or not available."
-        logger.critical(f"Debug (words_as_str variable): {words_as_str}")
+    if not isinstance(words_as_str_val, str):
+        if words_as_str_val is not None:
+            words_as_str: str = words_as_str_val.string
+            logger.debug(word_meaning)
+            logger.critical(f"Debug (words_as_str variable): {words_as_str}")
+        else:
+            logger.critical("words_as_str == `None`")
+            sys.exit(1)
     else:
-        words_as_str = insert_space_after_chars(list(words_as_str))
+        words_as_str = insert_space_after_chars(list(words_as_str_val))
 
     post_author_and_date = get_author_and_date_from_soup(_soup)
 
     # TODO/FIXME return date as well
     return {
-        "definition": words_as_str,
+        "definition": words_as_str_val,
         "example": example_as_str,
         "author_and_date": post_author_and_date,
     }
