@@ -4,12 +4,13 @@
 # License: MIT
 
 import sys
+import urllib.parse
 
 from bs4 import BeautifulSoup, ResultSet, Tag
 import bs4
 import colorama
-import requests
 from loguru import logger
+import requests
 from requests.status_codes import _codes  # pyright: ignore
 from rich import print as rich_print
 
@@ -41,7 +42,27 @@ def join_words() -> str:
         except IndexError:
             rich_print("You need to specify a word. Example: urban drip")
             raise SystemExit
-    return word
+    decoded_word = parse_url_chars(word)
+    return decoded_word.strip()
+
+def parse_url_chars(words: str) -> str:
+    """Parse any weird url chars into readable text.
+
+    Raises:
+        TypeError: if `words` is not a string.
+
+    Parameters:
+        words: one string of words, that assumedly have url characters in them.
+
+    Returns:
+        Words with the url chars as readable text.
+    """
+
+    if not isinstance(words, str):
+        raise TypeError("Words must be a string. It should preferrably contain url characters.")
+
+    decoded_string = urllib.parse.unquote(words)
+    return decoded_string
 
 def deinit_sys_exit(exit_code: int = 0) -> None:
     """Uninitialize colorama and exit with `exit_code`.
