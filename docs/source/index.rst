@@ -7,6 +7,6 @@ Contents
    installation.md
    versioning.md
    contributing.md
-   coverage.md
+   coverage.rst
    blog.rst
    documentation.rst
