@@ -4,9 +4,8 @@
 # License: MIT
 
 import sys
-from typing_extensions import deprecated
 
-from bs4 import BeautifulSoup, NavigableString, ResultSet, Tag
+from bs4 import BeautifulSoup, ResultSet, Tag
 import bs4
 import colorama
 import requests
@@ -454,48 +453,6 @@ def format_words_as_string_from_tag(
                         subword, colorama.Fore.BLUE + subword + colorama.Fore.RESET
                     )
     return words_as_str
-
-
-@deprecated("Likes and dislikes are rendered via javascript")
-def get_statistics_from_soup(_soup: BeautifulSoup):
-    """Return likes and dislikes (both integers) as a dictionary.
-
-    Description:
-        Prints out any contributor element sibling elements for debug purposes.
-
-    Notes:
-        Function is deprecated.
-
-    Parameters:
-        _soup: `_soup` object as `BeautifulSoup` object.
-
-    Raises:
-        TypeError: if contributor is not a `Tag` or `NavigableString`
-        TypeError: if contributor_element_sibling is not a `Tag`
-
-    Return:
-        Likes and dislikes (both integers) as a dictionary.
-    """
-
-    # get definition container
-    container = derive_definition_as_tag(_soup)
-    contributor = container.find_next("div", class_="contributor")
-    if not isinstance(contributor, Tag | NavigableString):
-        raise TypeError("Contributor is None (get_statistics_from_soup)")
-    else:
-        contributor_element_sibling = contributor.find_next_sibling(
-            "div", attrs={"class": "text-xs"}
-        )
-        if not isinstance(contributor_element_sibling, Tag):
-            raise TypeError(
-                "Contributor elements sibling is not of valid type (get_statistics_from_soup)"
-            )
-        else:
-            print(
-                contributor_element_sibling.find_all(
-                    name="span", recursive=True, attrs={"class": "text-xs"}
-                )
-            )
 
 
 def get_author_and_date_from_soup(_soup: BeautifulSoup) -> str | None:

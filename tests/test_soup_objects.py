@@ -33,7 +33,7 @@ class GetSoupObjects(unittest.TestCase):
         """
 
         _soup = get_soup_object_from_word(self.word)
-        self.assertIsInstance(derive_meaning_as_tag(_soup), Tag)
+        self.assertIsInstance(derive_meaning_as_tag(_soup), Tag)  # pyright: ignore
 
     def test_soup_none(self):
         """
@@ -41,7 +41,7 @@ class GetSoupObjects(unittest.TestCase):
         """
 
         _soup = get_soup_object_from_word(self.word)
-        found_word = get_found_word_from_soup(_soup)
+        found_word = get_found_word_from_soup(_soup)  # pyright: ignore
 
         self.assertIsNotNone(found_word)
 
@@ -71,7 +71,7 @@ class GetSoupObjects(unittest.TestCase):
 
         with self.assertRaises(TypeError):
             get_found_word_from_soup(
-                BeautifulSoup(3.1, features="lxml")
+                BeautifulSoup(3.1, features="lxml")  # pyright: ignore
             )  # pyright: ignore
 
     def test_derive_example(self):
@@ -80,5 +80,5 @@ class GetSoupObjects(unittest.TestCase):
         """
 
         self.assertIsInstance(
-            derive_example_as_tag(self.soup), ResultSet | Tag
+            derive_example_as_tag(self.soup), ResultSet | Tag  # pyright: ignore
         )  # pyright: ignore

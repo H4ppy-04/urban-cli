@@ -46,7 +46,7 @@ html_theme = "press"
 # ones.
 extensions = [
     "sphinx.ext.autodoc",
-    'sphinx.ext.autosectionlabel',
+    "sphinx.ext.autosectionlabel",
     "sphinx.ext.napoleon",
     "myst_parser",
     "sphinx.ext.todo",

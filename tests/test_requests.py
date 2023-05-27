@@ -55,7 +55,14 @@ class test_definition(unittest.TestCase):
         Test error test_fetch_redirect code(s)
         """
         with self.assertRaises(SystemExit):
-            fetch_response_from_URL("https://example.com", 420)
+            fetch_response_from_URL("https://example.com", 300)
+
+    def test_client_error(self):
+        """
+        test error for client error include 404 not found error(s).
+        """
+        with self.assertRaises(SystemExit):
+            fetch_response_from_URL("https://example.com", 400)
         with self.assertRaises(SystemExit):
             fetch_response_from_URL("https://example.com", 404)
 
@@ -96,3 +103,11 @@ class test_definition(unittest.TestCase):
         self.assertIsInstance(
             fetch_response_from_URL("https://example.com", None), requests.Response
         )
+
+    def test_response_exit_500(self):
+        """
+        Test exit on 500 error code
+        """
+
+        with self.assertRaises(SystemExit):
+            fetch_response_from_URL("https://example.com/", 500)
