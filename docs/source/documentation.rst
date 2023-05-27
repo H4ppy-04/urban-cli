@@ -40,16 +40,24 @@ This function is used, mainly as a practice of `DRY`_\. First, it removes any pr
 This means that if the program printing colored text, it will revert the font style to its default state before existing.
 This is then followed by an exit call, reason being, a raised `SystemExit` can be tested.
 
-.. _above function:
-
 .. py:function:: fetch_response_from_URL(_url, _response)
    :noindex:
 
-    Filters status code ranges by range type.
+   Filters status code in the process of fetching `_url`.
 
-    :raises TypeError: If `_url` is not a `string`.
-    :raises TypeError: If `_response` is not an `integer` or `None`.
+   :raises SystemExit: if response status code is not in the range of an acceptable value.
 
+   :param preface: If an error occurs, this will be used to provide additional context.
+
+   :param _url: Url query as a `str` type
+   :param _response: If the response code is already known
+
+   :return: `requests.Response` / response object from which `content` is derived.
+
+This function matches the response from `url`.
+I originally plan/planned on making each status code message individual. I haven't
+This can also been seen to some extent in the actual library, see `status_codes <https://github.com/psf/requests/blob/main/requests/status_codes.py>`_.
+Please note that individual error message handling for ``requests.Response`` objects have yet to be implemented.
 
 .. py:function:: display_requests_error(_response, preface)
     :noindex:
@@ -65,6 +73,8 @@ This is then followed by an exit call, reason being, a raised `SystemExit` can b
     :return: `integer`
 
 This function handles requests response values that exceed a given range.
+This is used in conjunction with ``fetch_response_from_URL`` and is called when the response 
+doesn't match response code `200`.
 
 ..
     Links and stuff. don't touch
