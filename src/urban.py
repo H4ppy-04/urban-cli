@@ -821,6 +821,9 @@ def main():
     )
 
     parser.add_argument("word", help="Request a definition from the Urban Dictionary")
+
+    # TODO
+    """
     parser.add_argument(
         "--index",
         type=int,
@@ -828,9 +831,15 @@ def main():
         default=1,
         help="The index of the definition to fetch 1-3",
     )
+    """
+
+    # TODO
+    """
     parser.add_argument(
         "--author", type=str, help="List a definition by a given author"
     )
+    """
+
     parser.add_argument(
         "--cols", type=int, default=80, help="Linebreak chars at a given column value"
     )
