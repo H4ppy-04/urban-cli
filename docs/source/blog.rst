@@ -17,7 +17,7 @@ Some libraries, such as `colorama`, are very good with compatibility, however be
 are font libraries being used in tandem with one another, performance may not be as expected if using an in-compatible font. My suggestion, as for most fonts, is to use a Nerd Font. Nerd fonts support
 all current features from symbols to italics and are commonly used and recommended by developers and typography enthusiasts alike.
 
-.. Note:: This has been fixed in `#29 <https://github.com/GH-Syn/urban-cli/pull/29>`_
+.. Note:: This has been fixed as of v1.0.0
 
 LXML
 ----
@@ -25,7 +25,7 @@ LXML
 Definition and their explanations/examples will occasionally not link to words. This normally happens when there are duplicate words, or words that aren't flagged by `lxml`.
 This issue is currently being investigated and will be updated as soon as a fix is available. See `#28 <https://github.com/GH-Syn/urban-cli/issues/28>`_ for more details.
 
-.. Note:: This has been fixed in `#30 <https://github.com/GH-Syn/urban-cli/pull/30>`_
+.. Note:: This has been fixed as of v1.0.0
 
 Text Processing
 ---------------
