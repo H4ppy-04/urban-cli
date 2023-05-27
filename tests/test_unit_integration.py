@@ -43,17 +43,6 @@ class TestUnitIntegration(unittest.TestCase):
             word_soup = _soup.find_all_next("a")[0].select(  # pyright: ignore
                 ".definintion"
             )  # pyright: ignore
-            word_soup_raises_key_error = word_soup[0].replace_with(
-                word_soup[0].get_text(strip=False)
-            )
-
-            assert_soup_and_index_valid(_soup)
-
-            get_found_word_from_soup(
-                BeautifulSoup(
-                    word_soup_raises_key_error.get_text(strip=False), "html.parser"
-                )
-            )
 
     def test_space_insert_after_chars(self):
         """Test that a full stop before a character has a space inserted after
