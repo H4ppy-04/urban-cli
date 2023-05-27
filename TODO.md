@@ -3,6 +3,7 @@
     -  [ ] Each table should have releases with a status, a type (maintain/docs/feat/bug)
        > This should copy the format of the existing table.
  - [ ] Finish writing out manual documentation for each function in [Documentation](https://gh-syn.github.io/urban-cli/documentation.html).
+ - [ ] Update `CONTRIBUTING.md` with refactored wiki contributing page.
 
 ## Refactors
  - [ ] Refactor un-needed parts of the wiki
