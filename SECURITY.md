@@ -1,3 +1,0 @@
-# Security Policy
-...
-> Please note: this security policy is simply here for community contribution standards, and serves no purpose other than a placeholder.
