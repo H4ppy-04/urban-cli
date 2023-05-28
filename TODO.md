@@ -6,11 +6,11 @@
  - [x] Update `CONTRIBUTING.md` with refactored wiki contributing page.
 
 ## Refactors
- - [ ] Refactor un-needed parts of the wiki
- - [ ] shorten and remove un-needed code
+ - [x] Refactor un-needed parts of the wiki
+ - [x] shorten and remove un-needed code
  - [x] remove un-needed test stubs 
  - [ ] Remove any redundancies in existing docstrings
 
 ## Media
  - [ ] Upload updated video showcasing improvements
- - [ ] Beautify ugly parts of the wiki
+ - [x] Beautify ugly parts of the wiki
