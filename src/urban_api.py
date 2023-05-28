@@ -16,7 +16,7 @@ This module handles:
 
 import requests
 
-from urban_exceptions import InvalidStatusCodeError
+from src.urban_exceptions import InvalidStatusCodeError
 
 
 def apply_word_to_url(word: str) -> str:
