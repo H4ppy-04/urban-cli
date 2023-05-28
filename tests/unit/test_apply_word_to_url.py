@@ -3,14 +3,13 @@ global dictionary_url
 
 import json
 import os
-import random
 import sys
-
 import pytest
+import random
 
-sys.path.insert(0, os.path.join(os.getcwd(), 'src'))
+sys.path.append(os.getcwd())
 
-from urban_api import apply_word_to_url
+from src import apply_word_to_url
 
 # Fetch test data
 testing_data_file_object = open(file="tests/fixtures/words.json", mode="r", encoding="utf-8")
@@ -35,7 +34,7 @@ def test_invalid_argument_raises_type_error():
         apply_word_to_url(argument)  # pyright: ignore
 
 @pytest.mark.smoke
-def test_float_argument_raises_key_error():
+def test_float_argument_raises_type_error():
     # Arrange
     argument = 32.4
 
