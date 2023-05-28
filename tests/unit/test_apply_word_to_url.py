@@ -1,4 +1,5 @@
 global word
+global dictionary_url
 
 import json
 import os
@@ -18,15 +19,18 @@ word_list = data_dictionary.get("words")
 
 word = random.choice(word_list)
 
-""" Type Tests """
+dictionary_url = "https://www.urbandictionary.com/define.php?term="
+''' URL in `apply_word_to_url` as `dictionary_url` constant '''
+
+''' Type Tests '''
 
 @pytest.mark.smoke
-def test_invalid_argument_raises_key_error():
+def test_invalid_argument_raises_type_error():
     # Arrange
     argument: set = {1, 2, 3}
 
     # Act & Assert
-    with pytest.raises(KeyError):
+    with pytest.raises(TypeError):
         # Act
         apply_word_to_url(argument)  # pyright: ignore
 
@@ -36,7 +40,7 @@ def test_float_argument_raises_key_error():
     argument = 32.4
 
     # Act & Assert
-    with pytest.raises(KeyError):
+    with pytest.raises(TypeError):
         # Act
         apply_word_to_url(argument)  # pyright: ignore
 
@@ -46,3 +50,38 @@ def test_no_arguments_raises_type_error():
     with pytest.raises(TypeError):
         # Act
         apply_word_to_url()  # pyright: ignore
+
+''' Functional Tests '''
+
+@pytest.mark.smoke
+def test_word_is_added_to_string():
+    # Arrange
+    word = "foxtrot"
+
+    # Act
+    expected_result = dictionary_url + word
+    actual_result = apply_word_to_url(word)
+
+    # Assert
+    assert expected_result == actual_result
+
+@pytest.mark.smoke
+def test_multiple_words_added_to_string():
+    # Arrange
+    words = "lima zulu bravo"
+
+    # Act
+    expected_result = dictionary_url + words
+    actual_result = apply_word_to_url(words)
+
+    # Assert
+    assert expected_result == actual_result
+
+@pytest.mark.smoke
+def test_empty_word_added_to_string():
+    # Arrange
+    expected_result = dictionary_url
+    actual_result = apply_word_to_url('')
+
+    # Assert
+    assert expected_result == actual_result

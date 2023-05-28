@@ -27,8 +27,8 @@ def apply_word_to_url(word: str) -> str:
     :return: URL with word attached to the end of it.
     """
 
-    dictionary_url = "https://www.urbandictionary.com/define.php?term={word}"
-    fetch_url = dictionary_url.format(word)
+    dictionary_url = "https://www.urbandictionary.com/define.php?term="
+    fetch_url = dictionary_url + word
 
     return fetch_url
 
