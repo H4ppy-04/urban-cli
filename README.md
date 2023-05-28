@@ -22,4 +22,4 @@ Please take a moment to check out the <a href="https://gh-syn.github.io/urban-cl
 
 ## License
 
-This project is licensed under the common MIT license, the details of which you'll find in `LICENSE` in the repository files.
+This project is licensed under the common MIT license, the details of which you'll [here](https://gh-syn.github.io/urban-cli/license.html).
