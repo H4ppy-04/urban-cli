@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 # Author: Joshua Rose <joshuarose099@gmail.com>
-# License: MIT
+# License: Apache 2.0
 
 import datetime
 import sys
@@ -13,84 +13,11 @@ import bs4
 import colorama
 from loguru import logger
 import requests
+from requests.models import Response
 from requests.status_codes import _codes  # pyright: ignore
 from rich import print as rich_print
 
 colorama.init()
-
-
-def join_words() -> str:
-    """Join words into one string when 2 or more words are given.
-
-    Raises:
-        `IndexError`: if no word is specified
-
-    Parameters:
-        words (list[str]): Words list, defaults to sys.argv
-
-    Return:
-        One or more words depending on if spaces are present (as str)
-    """
-
-    if sys.argv == 0:
-        raise IndexError
-
-    if len(sys.argv) >= 2:
-        # to prevent user pain and suffering 🕊️
-        word = " ".join(sys.argv[1:])
-    else:
-        try:
-            word = sys.argv[1]
-        except IndexError:
-            rich_print("You need to specify a word. Example: urban drip")
-            raise SystemExit
-
-    decoded_word = parse_url_chars(word)
-    return decoded_word
-
-
-def parse_url_chars(words: str) -> str:
-    """Parse any weird url chars into readable text.
-
-    Raises:
-        TypeError: if `words` is not a string.
-
-    Parameters:
-        words: one string of words, that assumedly have url characters in them.
-
-    Returns:
-        Words with the url chars as readable text.
-    """
-
-    if not isinstance(words, str):
-        raise TypeError(
-            "Words must be a string. It should preferrably contain url characters."
-        )
-
-    decoded_string = urllib.parse.unquote(words)
-    return decoded_string.strip()
-
-
-def deinit_sys_exit(exit_code: int = 0) -> None:
-    """Uninitialize colorama and exit with `exit_code`.
-
-    Description:
-        This function exists to prevent repeating blocks of code when
-        the program needs to exit.
-
-    Parameters:
-        exit_code: The exit code to use from sys.exit
-                   Default is 0 if none is specified.
-
-    Return:
-        None
-    """
-
-    if not isinstance(exit_code, int):
-        raise TypeError
-
-    colorama.deinit()
-    raise SystemExit
 
 
 def display_requests_error(
@@ -173,70 +100,31 @@ def fetch_response_from_URL(_url: str) -> requests.Response | None:
 
     response = requests.get(_url)
 
-    # Informational response
-    if 100 <= (response.status_code) < 199:
-        display_requests_error(response)
-
     # Successful responses
-    elif 200 <= (response.status_code) < 299:
+    if 200 <= (response.status_code) < 299:
         return response
 
-    # Redirectional message
-    elif 300 <= (response.status_code) < 399:
-        display_requests_error(response)
-
-    # Client error response
-    elif 400 <= (response.status_code) < 499:
-        if response.status_code != 404:
-            display_requests_error(
-                response,
-                # preface=f"\nError as string: {get_error_as_string(response.status_code)}\nAssuming your VPN and internet settings are fine, this is a bug (sorry).",
-            )
+    if response.status_code == 404:
         print(
             "That word doesn't exist yet. You can try adding it on urbandictionary.com!"
         )
-        raise SystemExit
-
-    # Server error
-    elif 500 <= (response.status_code) < 599:
-        display_requests_error(
-            response,
-            # preface=f"Error as string: {get_error_as_string(response.status_code)}\nGot a server error. Somethings wrong with the website. (error {response.status_code})",
-        )
-        raise SystemExit
-    else:
-        logger.debug(response.status_code)
-        logger.critical(
-            f"Error as string: {get_error_as_string(response.status_code)}\nThis is quite rare, but assuming you're connected to the internet, 'urbandictionary.com' seems to be down!"
-        )
-        raise SystemExit
+    raise SystemExit
 
 
 def get_soup_object_from_word(_word: str) -> BeautifulSoup | None:
     """Return soup object as `BeautifulSoup` from `_word`.
-
-    Raises:
-        TypeError: if the response or response content is not a valid type.
 
     Parameters:
         `_word`: Word to query urban dictionary for.
 
     Return:
         BeautifulSoup object assuming no exceptions were raised.
-        None object if things don't work out well. (this is a joke. None doesn't ever get returned.)
-        None is for the LSP to make it happy, content and feel warm inside.
     """
 
     URL_QUERY = f"https://www.urbandictionary.com/define.php?term={_word}"
-    response = fetch_response_from_URL(URL_QUERY)
+    response: Response = fetch_response_from_URL(URL_QUERY)  # pyright: ignore
 
-    if not isinstance(response, requests.Response):
-        raise TypeError("Response not valid type (get_soup_object_from_word")
-
-    response_content = response.content
-
-    if not isinstance(response_content, bytes):
-        raise TypeError("Response content not valid type (get_soup_object_from_word)")
+    response_content: bytes = response.content
 
     _soup = BeautifulSoup(response_content, "html.parser")
     return _soup
@@ -507,7 +395,8 @@ def get_author_and_date_from_soup(_soup: BeautifulSoup) -> str | None:
     date_as_string = date.strftime("%B %dth, %Y")
     if "=" in href_tag:
         author: str = href_tag.split("=")[1]
-    author = parse_url_chars(author)
+
+    author = urllib.parse.unquote(author).strip()
 
     if author_and_date != None:
         return f"by {author} on {date_as_string}"
@@ -701,7 +590,7 @@ def insert_newline_for_break_tags(text: str) -> str:
     return text
 
 
-def format_sentences(text: str | Tag, max_length: int) -> str:
+def format_sentences(text: str, max_length: int) -> str:
     """
     Formats sentences in the given text by starting a new line if a sentence
     exceeds the maximum length. Each line will not exceed the maximum length,
@@ -721,45 +610,21 @@ def format_sentences(text: str | Tag, max_length: int) -> str:
     if not isinstance(max_length, int):
         raise TypeError("The 'max_length' argument must be an integer.")
 
-    if isinstance(text, Tag):
-        lines = []
-        current_line = ""
+    words = text.split()
+    lines = []
+    current_line = ""
 
-        for content in text.contents:
-            if isinstance(content, Tag) and content.name == "br":
-                lines.append(current_line.strip())
-                current_line = ""
-            else:
-                text = str(content).strip()
-                words = text.split()
-                for word in words:
-                    if len(current_line) + len(word) <= max_length:
-                        current_line += word + " "
-                    else:
-                        lines.append(current_line.strip())
-                        current_line = word + " "
+    for word in words:
+        if len(current_line) + len(word) <= max_length:
+            current_line += word + " "
+        else:
+            lines.append(current_line.strip())
+            current_line = word + " "
 
-        lines.append(current_line.strip())
-        formatted_text = "\n".join(lines)
+    lines.append(current_line.strip())
+    formatted_text = "\n".join(lines)
 
-        return formatted_text
-
-    if isinstance(text, str):
-        words = text.split()
-        lines = []
-        current_line = ""
-
-        for word in words:
-            if len(current_line) + len(word) <= max_length:
-                current_line += word + " "
-            else:
-                lines.append(current_line.strip())
-                current_line = word + " "
-
-        lines.append(current_line.strip())
-        formatted_text = "\n".join(lines)
-
-        return formatted_text
+    return formatted_text
 
 
 def main():
@@ -823,14 +688,7 @@ def main():
         args.cols if args.cols is not None else parser.get_default(args.cols)
     )
 
-    # logger.debug(TERMINAL_WIDTH)
-
     soup: BeautifulSoup = get_soup_object_from_word(args.word)  # pyright: ignore
-    # result_set = get_result_set_from_soup(soup)
-
-    # --
-
-    # logger.debug(result_set)
 
     definition, example, author_and_date = return_dict.values()
     formatted_definition = ""
@@ -842,6 +700,7 @@ def main():
     formatted_word = format_sentences(word, TERMINAL_WIDTH)
 
     rich_print(f"[bold]{formatted_word}: [/bold]", end="")
+
     print(formatted_definition)  # word
 
     if not isinstance(example, str):

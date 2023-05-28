@@ -10,13 +10,11 @@ import requests
 sys.path.insert(0, os.getcwd())
 
 from src.urban import (
-    deinit_sys_exit,
     display_requests_error,
     get_soup_object_from_word,
     insert_newline_for_break_tags,
     insert_space_after_chars,
     main,
-    parse_url_chars,
 )
 
 
@@ -28,17 +26,6 @@ class TestUnitIntegration(unittest.TestCase):
         self.word = random.choice(words["words"])
         self.soup = get_soup_object_from_word(self.word)
         loguru.logger.debug(self.word)
-
-    def test_parse_url_chars(self):
-        """Test url chars are parsed into normal text"""
-
-        expected_result = "Hello world!"
-        self.assertEqual(parse_url_chars("   Hello%20world%21 "), expected_result)
-
-    def test_parse_raise(self):
-        """Test url chars parsing is raised typerror invalid str"""
-        with self.assertRaises(TypeError):
-            parse_url_chars(True)  # pyright: ignore
 
     def test_word_from_soup_raises_index_error(self):
         """Test that word from soup raises when a given value is missing"""
@@ -111,20 +98,6 @@ class TestUnitIntegration(unittest.TestCase):
 
         with self.assertRaises(TypeError):
             display_requests_error(None, [])  # pyright: ignore
-
-    def test_deinit_sys_exit(self):
-        """
-        Test deinit raises SystemExit
-        """
-        with self.assertRaises(SystemExit):
-            deinit_sys_exit()
-
-    def test_deinit_type(self):
-        """
-        Test deinit type error
-        """
-        with self.assertRaises(TypeError):
-            deinit_sys_exit(exit_code="")  # pyright: ignore
 
     def test_main_function(self):
         """
