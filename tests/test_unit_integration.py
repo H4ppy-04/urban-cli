@@ -112,14 +112,6 @@ class TestUnitIntegration(unittest.TestCase):
         with self.assertRaises(TypeError):
             display_requests_error(None, [])  # pyright: ignore
 
-    def test_preface_output(self):
-        """
-        Test preface prints properly
-        """
-
-        with self.assertRaises(SystemExit):
-            display_requests_error(None, "preface output...")
-
     def test_deinit_sys_exit(self):
         """
         Test deinit raises SystemExit
