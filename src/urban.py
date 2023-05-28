@@ -668,7 +668,7 @@ def main():
     """
 
     parser.add_argument(
-        "--cols", type=int, default=80, help="Linebreak chars at a given column value"
+        "--cols", type=int, default=150, help="Linebreak chars at a given column value"
     )
     args = parser.parse_args()
 
