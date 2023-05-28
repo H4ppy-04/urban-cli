@@ -10,4 +10,3 @@ Contains individual command implementations for Urban CLI.
 
 This module handles individual command implementations.
 """
-
