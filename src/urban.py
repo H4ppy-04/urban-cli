@@ -94,7 +94,7 @@ def deinit_sys_exit(exit_code: int = 0) -> None:
 
 
 def display_requests_error(
-    _response: requests.Response | None = None, preface=""
+    _response: requests.Response | None = None,
 ) -> None:
     """Handle and display formatted output from a `requests.Response` object.
 
@@ -108,9 +108,6 @@ def display_requests_error(
     Return:
         None; function calls system exit.
     """
-
-    if not isinstance(preface, str):
-        raise TypeError
 
     if _response is None:
         rich_print(
@@ -193,7 +190,7 @@ def fetch_response_from_URL(_url: str) -> requests.Response | None:
         if response.status_code != 404:
             display_requests_error(
                 response,
-                preface=f"\nError as string: {get_error_as_string(response.status_code)}\nAssuming your VPN and internet settings are fine, this is a bug (sorry).",
+                # preface=f"\nError as string: {get_error_as_string(response.status_code)}\nAssuming your VPN and internet settings are fine, this is a bug (sorry).",
             )
         print(
             "That word doesn't exist yet. You can try adding it on urbandictionary.com!"
@@ -204,7 +201,7 @@ def fetch_response_from_URL(_url: str) -> requests.Response | None:
     elif 500 <= (response.status_code) < 599:
         display_requests_error(
             response,
-            preface=f"Error as string: {get_error_as_string(response.status_code)}\nGot a server error. Somethings wrong with the website. (error {response.status_code})",
+            # preface=f"Error as string: {get_error_as_string(response.status_code)}\nGot a server error. Somethings wrong with the website. (error {response.status_code})",
         )
         raise SystemExit
     else:
@@ -608,7 +605,7 @@ def fetch_word_from_remote(_word: str) -> dict[str, str | None] | None:
     _soup = get_soup_object_from_word(_word)
 
     if not isinstance(_soup, BeautifulSoup):
-        display_requests_error(preface="Soup is None (fetch_word_from_remote)")
+        display_requests_error()
         return
 
     # NOTE Is of type `Tag` - word_meanign contains author, date, definition
