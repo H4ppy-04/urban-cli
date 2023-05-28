@@ -2,9 +2,9 @@
 <div>
 <div align="center">
 
-<h1>
-Apache License
-</h1>
+
+# Apache License
+
 <p>
 Version 2.0, January 2004
 <br>
