@@ -215,7 +215,6 @@ def fetch_response_from_URL(_url: str) -> requests.Response | None:
         raise SystemExit
 
 
-
 def get_soup_object_from_word(_word: str) -> BeautifulSoup | None:
     """Return soup object as `BeautifulSoup` from `_word`.
 
