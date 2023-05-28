@@ -24,6 +24,4 @@ Table of Contents
    blog.rst
    refactoring_guide.md
    documentation/index.rst
-   blog.rst
-   refactoring_guide.md
    license.md
