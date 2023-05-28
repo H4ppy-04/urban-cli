@@ -4,10 +4,11 @@ Contents
    :maxdepth: 2
 
    about.md
-   releases.md
    installation.md
-   versioning.md
+   releases.md
    contributing.md
-   coverage.rst
    blog.rst
+   coverage.rst
+   versioning.md
    documentation.rst
+   license.md
