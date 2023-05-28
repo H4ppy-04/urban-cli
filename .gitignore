@@ -1,10 +1,10 @@
 *config.json
 *.ini
+!pytest.ini
 *.txt
 *.log
 *.pyc
 *.pyi
-*.ini
 __pycache__/*
 __pycache__/
 
