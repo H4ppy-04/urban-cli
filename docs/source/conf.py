@@ -28,10 +28,8 @@ sys.path.insert(2, os.path.abspath("../../src/"))
 
 import python_docs_theme
 import urban
-from urban import join_words
 from urban import display_requests_error
 from urban import fetch_response_from_URL
-from urban import deinit_sys_exit
 
 # html_theme = 'python_docs_theme'
 html_theme = "press"

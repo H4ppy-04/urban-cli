@@ -3,22 +3,6 @@ Documentation
 
 This page covers each function in the program and what it does. Its main purpose is to help contributors understand the code.
 
-.. autofunction:: urban.join_words
-
-The `join_words` function is seldom but still of high importance.
-It's useful for when one or more words are entered into the command line.
-
-For example, if ``urban foo bar`` was entered, ``foo bar`` would
-be converted into a string and treated as one word. This is ideal because when querying a word,
-if multiple words can be concatenated in the search query, then we can be confident that we'll receive
-a correct and accurate response.
-
-.. autofunction:: urban.deinit_sys_exit
-
-This function is used, mainly as a practice of `DRY`_\. First, it removes any pre-existing formatting on the command line.
-This means that if the program printing colored text, it will revert the font style to its default state before existing.
-This is then followed by an exit call, reason being, a raised `SystemExit` can be tested.
-
 .. autofunction:: urban.fetch_response_from_URL
 
 This function matches the response from `url`.
