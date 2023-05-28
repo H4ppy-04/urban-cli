@@ -13,7 +13,7 @@
 
 
 <h2>Wiki</h2>
-Please take a moment to check out the <a href="https://gh-syn.github.io/urban-cli/index.html#contents">Wiki</a> for detailed information on installation, contributing, etc.
+Please take a moment to check out the <a href="https://gh-syn.github.io/urban-cli/index.html">Wiki</a> for detailed information on installation, contributing, etc.
 
 ## Usage
 
