@@ -1,17 +1,34 @@
 """
-### Meta & Licensing
-__File__: `urban_utils.py`
-__License__: [Apache 2.0](https://gh-syn.github.io/urban-cli/license.html)
-__Author__: Joshua Rose <joshuarose099@gmail.com>
+===
+API
+===
 
-### Module Description
+:Authors:
+    Joshua Rose
 
-Contains centralized interactions with urban-cli.
+:Version: 2.0.0 of 2023/05/28
+:License: `Apache 2.0 <https://gh-syn.github.io/urban-cli/license.html>`_
 
-This module handles:
- - sending requests
- - processing responses
- - handling API-related functionalities
+The API contains centralized interactions with urban-cli.
+It's responsible for the following functions.
+
+Sending requests
+----------------
+Requests that need to be sent to a remote source will be done so through
+functions declared in this file. Most of which, will be using custom
+exception classes as normal exceptions will not suit this specific use case..
+
+Processing responses
+--------------------
+Responses that received using the requests library are processed and checked.
+Edge cases such as 404 errors work differently in this application, as one
+would signify that a word has not been defined as oppose to a missing page.
+
+Integration
+-----------
+Functions that are defined in the various files around the codebase are managed
+within the API file. This file serves as a central point from which functions are
+accessed.
 """
 
 import requests

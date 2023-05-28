@@ -9,5 +9,5 @@ Contents
    contributing.md
    blog.rst
    refactoring_guide.md
-   documentation.rst
+   documentation/index.rst
    license.md
