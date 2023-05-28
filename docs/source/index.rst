@@ -7,6 +7,5 @@ Contents
    installation.md
    releases.md
    contributing.md
-   blog.rst
-   documentation.rst
+   documentation/index.rst
    license.md
