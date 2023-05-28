@@ -17,7 +17,6 @@ from src.urban import (
     insert_space_after_chars,
     main,
     parse_url_chars,
-    process_word,
 )
 
 
@@ -89,14 +88,6 @@ class TestUnitIntegration(unittest.TestCase):
         expected_result = "\n"
 
         self.assertEqual(insert_newline_for_break_tags(html), expected_result)
-
-    def test_word_join(self):
-        """
-        Test word join function works.
-        """
-        words = "the quick brown fox"
-        words_joined = process_word(words)
-        self.assertEqual(words, words_joined)
 
     def test_display_requests_exits(self):
         """

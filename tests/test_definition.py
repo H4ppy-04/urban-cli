@@ -1,20 +1,15 @@
 import json
 import os
+import random
 import sys
 import unittest
-import random
-import loguru
 
 from bs4 import BeautifulSoup, NavigableString, Tag
-import bs4
+import loguru
 
 sys.path.insert(0, os.getcwd())
 
-from src.urban import (
-    get_first_definition_from_soup,
-    get_found_word_from_soup,
-    get_soup_object_from_word,
-)
+from src.urban import get_found_word_from_soup, get_soup_object_from_word
 
 
 class test_definition(unittest.TestCase):
@@ -58,19 +53,3 @@ class test_definition(unittest.TestCase):
         found_word = get_found_word_from_soup(self.soup)
 
         self.assertIsInstance(found_word, str)
-
-    def test_definition_index(self):
-        """
-        Test definition IndxError is raised
-        """
-
-        with self.assertRaises(IndexError):
-            get_first_definition_from_soup(self.soup, index=1)
-
-    def test_definition_type_is_tag(self):
-        """
-        Test get_first_definition type
-        """
-
-        soup_definition = get_first_definition_from_soup(self.soup)
-        self.assertIsInstance(soup_definition, bs4.element.Tag)

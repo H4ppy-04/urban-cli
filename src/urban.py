@@ -215,23 +215,6 @@ def fetch_response_from_URL(_url: str) -> requests.Response | None:
         raise SystemExit
 
 
-def get_first_definition_from_soup(
-    _soup: BeautifulSoup, index=0
-) -> Tag | BeautifulSoup:
-    """Return first definition section / 'block' from `_soup`.
-
-    Parameters:
-        _soup: `_soup` object as `BeautifulSoup` object.
-
-    Return:
-        definition as a `Tag`
-    """
-
-    if index > 0:
-        raise IndexError("index cannot exceed 0")
-    definition: Tag | BeautifulSoup = get_result_set_from_soup(_soup, _index=0)
-    return definition
-
 
 def get_soup_object_from_word(_word: str) -> BeautifulSoup | None:
     """Return soup object as `BeautifulSoup` from `_word`.
@@ -660,10 +643,7 @@ def fetch_word_from_remote(_word: str) -> dict[str, str | None] | None:
         word_example, example_hyperlinks_list
     )  # pyright: ignore
 
-    if example_as_str is not None:
-        example_as_str = insert_space_after_chars(list(example_as_str))
-    else:
-        example_as_str = "Example not provided"
+    example_as_str = insert_space_after_chars(list(example_as_str))
 
     if not isinstance(words_as_str_val, str):
         if words_as_str_val is not None:
@@ -723,20 +703,6 @@ def insert_newline_for_break_tags(text: str) -> str:
     text = text.replace("<br>", "\n")
 
     return text
-
-
-def process_word(_word=join_words()) -> str:
-    """Process word `word` (default is join-words return value)
-
-    Parameters:
-        word (str): default word to process
-
-    Return:
-        str
-    """
-
-    word = _word
-    return word
 
 
 def format_sentences(text: str | Tag, max_length: int) -> str:
