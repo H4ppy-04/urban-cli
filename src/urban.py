@@ -3,9 +3,9 @@
 # Author: Joshua Rose <joshuarose099@gmail.com>
 # License: Apache 2.0
 
+import argparse
 import datetime
 import sys
-import argparse
 import urllib.parse
 
 from bs4 import BeautifulSoup, NavigableString, ResultSet, Tag
@@ -14,7 +14,7 @@ import colorama
 from loguru import logger
 import requests
 from requests.models import Response
-from requests.status_codes import _codes  # pyright: ignore
+from requests.status_codes import _codes
 from rich import print as rich_print
 
 colorama.init()
@@ -258,7 +258,6 @@ def derive_definition_as_tag(_soup: BeautifulSoup, _index=0) -> Tag:
 
 def derive_meaning_as_tag(_soup: BeautifulSoup) -> Tag:
     """Return derived meaning from `_soup` object.
-
 
     Parameters:
         _soup: `_soup` object as `BeautifulSoup`
