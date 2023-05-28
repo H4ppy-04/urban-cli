@@ -8,7 +8,5 @@ Contents
    releases.md
    contributing.md
    blog.rst
-   coverage.rst
-   versioning.md
    documentation.rst
    license.md
