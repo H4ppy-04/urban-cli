@@ -79,7 +79,6 @@ class Definition:
         # NTS: `selected_definitions` is much smaller than `filtered_soup_results` 🙂
         self.selected_definitions = filtered_soup_results[order - 1]
 
-
     @property
     def definition(self):
         return self._definition
@@ -90,7 +89,7 @@ class Definition:
 
     @definition.getter
     def definition(self):
-        return self.selected_definitions.select(".meaning")[0],
+        return (self.selected_definitions.select(".meaning")[0],)
 
 
 def show_does_not_exit_error(word: str):
