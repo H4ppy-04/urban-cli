@@ -33,7 +33,6 @@ accessed.
 from typing import Literal
 
 import requests
-import rich
 
 from src.urban_exceptions import InvalidStatusCodeError
 
@@ -101,12 +100,6 @@ def send_phrase_request(phrase: str) -> bytes:
 
     if not phrase_exists:
         # `phrase` doesn't exist in the dictionary ... !
-        rich.print("The word {} does'nt exist yet!", end="")
-        rich.print(
-            "You can change that by submitting a definition on the {link}".format(
-                link="[link url='https://urbandictionary.com/']Urban Dictionary website.[/link]"
-            )
-        )
 
         raise SystemExit
 
