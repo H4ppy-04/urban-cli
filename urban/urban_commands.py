@@ -57,6 +57,14 @@ def add_cols_argument(parser: argparse.ArgumentParser):
     """
     Add column width argument to `parser`.
 
+    Specifies the width of the column.
+    For example, if the width was 1, then it look like (see below)
+
+    t
+    h
+    i
+    s
+
     :param parser: Command parser object.
     :raise TypeError: if `parser` is not of type `argparse.ArgumentParser`.
     """
@@ -70,4 +78,27 @@ def add_cols_argument(parser: argparse.ArgumentParser):
         nargs=1,
         type=int,
         help="Adjust the definition column width",
+    )
+
+
+def add_result_argument(parser: argparse.ArgumentParser):
+    """
+    Add result argument to `parser`.
+
+    This command indexes a definition by ranking.
+    For example, if the index value was 1, it would return the 1st definition and so on...
+
+    :param parser: Command parser object.
+    :raise TypeError: if `parser` is not of type `argparse.ArgumentParser`.
+    """
+
+    if not isinstance(parser, argparse.ArgumentParser):
+        raise TypeError("Argument parser must be of type `ArgumentParser`")
+
+    # ➡️➡️➡️ TODO➡️➡️➡️➡️  -1 returns all definitions!
+    parser.add_argument(
+        "--result",
+        default=1,
+        type=int,
+        help="Specify the result number to define. Retrieves the corresponding definition",
     )

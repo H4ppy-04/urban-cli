@@ -37,6 +37,7 @@ class InvalidStatusCodeError(Exception):
 
         return f"Invalid status code: {self.code}. Must be 200 or 404."
 
+
 class InvalidOrderError(Exception):
     """
     Custom exception raised when an order is greater than the definitions found for a word.
