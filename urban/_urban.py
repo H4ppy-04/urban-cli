@@ -1,8 +1,3 @@
-#!/usr/bin/env python
-#
-# Author: Joshua Rose <joshuarose099@gmail.com>
-# License: Apache 2.0
-
 import argparse
 import datetime
 import sys

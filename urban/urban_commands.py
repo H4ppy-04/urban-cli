@@ -15,6 +15,25 @@ It's practicality lies in modularizing the code through the use of functions.
 import argparse
 
 
+def return_argument_parser():
+    """
+    Get argument parser.
+
+    :return: Argument parser.
+    :rtype: `ArgumentParser`
+    """
+
+    parser = argparse.ArgumentParser(
+        prog="urban",
+        usage="usage line here...",
+        description="Search the Urban Dictionary!",
+        epilog=None,
+        add_help=True,
+        allow_abbrev=False,
+    )
+
+    return parser
+
 def add_word_argument(parser: argparse.ArgumentParser):
     """
     Add word argument to `parser`.
@@ -27,14 +46,10 @@ def add_word_argument(parser: argparse.ArgumentParser):
         raise TypeError("Argument parser must be of type `ArgumentParser`")
 
     parser.add_argument(
-        name_or_flags="WORD",
-        required=True,
-        nargs=1,
-        version="2.0.0",
+        "WORD",
         type=str,
         help="Search the Urban Dictionary for a definition",
     )
-
 
 def add_cols_argument(parser: argparse.ArgumentParser):
     """
@@ -48,11 +63,9 @@ def add_cols_argument(parser: argparse.ArgumentParser):
         raise TypeError("Argument parser must be of type `ArgumentParser`")
 
     parser.add_argument(
-        name_or_flags="--cols",
-        required=False,
+        "--cols",
         default=150,
         nargs=1,
-        version="1.0.1",
         type=int,
         help="Adjust the definition column width",
     )

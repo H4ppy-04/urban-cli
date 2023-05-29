@@ -28,19 +28,8 @@ Common Data Structures
 Common data structures such as a date, definition struct, lives in this file.
 """
 
-import argparse
 
 import rich
-
-
-PARSER = argparse.ArgumentParser(
-    prog="Urban",
-    description="Get any definition from Urban Dictionary",
-    # epilog="Licensed to Joshua Rose with Apache 2.0",
-)
-# NOTE: parser is a constant, thus is capitalised
-"""Parser object as `argparse.ArgumentParser` constant"""
-
 
 def show_does_not_exit_error(word: str):
     """
