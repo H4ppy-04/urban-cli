@@ -32,10 +32,11 @@ accessed.
 
 from typing import Literal
 
+from loguru import logger
 import requests
-from urban.urban_utils import make_soup_from_response
 
 from urban_exceptions import InvalidStatusCodeError
+from urban_utils import make_soup_from_response
 
 
 def apply_word_to_url(word: str) -> str:
@@ -98,15 +99,17 @@ def send_phrase_request(phrase: str):
     # TODO: format `phrase` with urllib before asking if it exists
     phrase_exists = send_exists_request(phrase)
 
-    if not phrase_exists:
-        # `phrase` doesn't exist in the dictionary ... !
+    logger.debug(f"phrase_exists is {phrase_exists}")
+    if isinstance(phrase_exists, bool):
         raise SystemExit(send_exists_request(phrase))
 
     # Rename for readability
     phrase_response = phrase_exists
 
     # We now know that the phrase not only exists, but is a response.
-    response_soup = make_soup_from_response(phrase_response)
+    response_soup = make_soup_from_response(
+        phrase_response
+    )  # pyright: ignore -> already handled in SystemExit
 
     # We return the response content
     return response_soup
