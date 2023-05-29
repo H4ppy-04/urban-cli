@@ -61,4 +61,10 @@ class InvalidOrderError(Exception):
         :return: A string indicating the invalid order number and the amount of found orders.
         """
 
-        return f"Invalid order: {self.order}. Found only {definitions} definitions."
+        match definitions:
+            case 0:
+                return f"Invalid order: {self.order} (no definitions found)"
+            case 1:
+                return f"Invalid order: {self.order} (found 1 definition)"
+            case _:
+                return f"Invalid order: {self.order} (found {definitions} definitions)"
