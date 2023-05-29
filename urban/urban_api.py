@@ -34,7 +34,7 @@ from typing import Literal
 
 import requests
 
-from src.urban_exceptions import InvalidStatusCodeError
+from urban_exceptions import InvalidStatusCodeError
 
 
 def apply_word_to_url(word: str) -> str:
