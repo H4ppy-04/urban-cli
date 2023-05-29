@@ -34,6 +34,7 @@ def return_argument_parser():
 
     return parser
 
+
 def add_word_argument(parser: argparse.ArgumentParser):
     """
     Add word argument to `parser`.
@@ -50,6 +51,7 @@ def add_word_argument(parser: argparse.ArgumentParser):
         type=str,
         help="Search the Urban Dictionary for a definition",
     )
+
 
 def add_cols_argument(parser: argparse.ArgumentParser):
     """

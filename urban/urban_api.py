@@ -33,6 +33,7 @@ accessed.
 from typing import Literal
 
 import requests
+from urban.urban_utils import make_soup_from_response
 
 from urban_exceptions import InvalidStatusCodeError
 
@@ -78,7 +79,7 @@ def send_exists_request(word: str) -> Literal[False] | requests.Response:
             raise InvalidStatusCodeError(status)
 
 
-def send_phrase_request(phrase: str) -> bytes:
+def send_phrase_request(phrase: str):
     """
     Request phrase from the urban dictionary.
 
@@ -89,7 +90,6 @@ def send_phrase_request(phrase: str) -> bytes:
     :raise TypeError: If `phrase` is not a `string`.
     :raise SystemExit: If `phrase` returns a 404. That is - the phrase doesn't exist.
     :return: Received data from the `requests.Response` content method.
-    :rtype: bytes
     """
 
     if not isinstance(phrase, str):
@@ -100,11 +100,13 @@ def send_phrase_request(phrase: str) -> bytes:
 
     if not phrase_exists:
         # `phrase` doesn't exist in the dictionary ... !
+        raise SystemExit(send_exists_request(phrase))
 
-        raise SystemExit
+    # Rename for readability
+    phrase_response = phrase_exists
 
     # We now know that the phrase not only exists, but is a response.
-    phrase_response = phrase_exists.content
+    response_soup = make_soup_from_response(phrase_response)
 
     # We return the response content
-    return phrase_response
+    return response_soup
