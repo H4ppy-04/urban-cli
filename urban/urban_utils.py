@@ -28,8 +28,6 @@ Common Data Structures
 Common data structures such as a date, definition struct, lives in this file.
 """
 
-
-from dataclasses import dataclass
 from datetime import datetime
 from typing_extensions import deprecated
 
@@ -41,22 +39,58 @@ import rich
 from urban_exceptions import InvalidOrderError
 
 
-@dataclass
 class Definition:
-    """Definition struct/dataclass to manage defitions easier.
+    def __init__(
+        self,
+        example: str | None = None,
+        author: str = "John Doe",
+        date: datetime = datetime.now(),
+        order: int = 1,
+        **kwargs
+    ):
+        """
+        Definition class to manage defitions easier.
 
-    It's times like these when I really wish I was using rust.
+        It's times like these when I really wish I was using rust.
 
-    :param date: datetime object
-    :param author: Username of definition OP
-    :param definition: The main definition string
-    :param example: The definition usage / example
-    """
+        :param date: datetime object
+        :param author: Username of definition OP
+        :param definition: The main definition string
+        :param example: The definition usage / example
 
-    definition: str
-    example: str | None = None
-    author: str = "John Doe"
-    date: datetime = datetime.now()
+        **kwargs: Kwargs such as soup objects, order, etc ...
+        """
+
+        self._definition = self.definition
+        self.example = example
+        self.author = author
+        self.date = date
+
+        raw_soup = kwargs["soup"]
+        order = kwargs["order"]
+
+        definitions_found = len(raw_soup.select(".definition"))
+
+        if order > definitions_found:
+            raise InvalidOrderError(definitions_found)
+
+        filtered_soup_results = raw_soup.find_all("div", class_="definition")
+
+        # NTS: `selected_definitions` is much smaller than `filtered_soup_results` 🙂
+        self.selected_definitions = filtered_soup_results[order - 1]
+
+
+    @property
+    def definition(self):
+        return self._definition
+
+    @definition.setter
+    def definition(self, value):
+        self._definition = value
+
+    @definition.getter
+    def definition(self):
+        return self.selected_definitions.select(".meaning")[0],
 
 
 def show_does_not_exit_error(word: str):
@@ -77,7 +111,7 @@ def show_does_not_exit_error(word: str):
 
 
 @deprecated("Removed in favour of indexing")
-def _get_num_of_definitions(result_set: bs4.ResultSet) -> int:
+def _get_num_of_definitions(result_set: bs4.ResultSet) -> int:  # pyright: ignore
     """
     Returns the number of definitions found for a given word
 
@@ -121,39 +155,14 @@ def stringify_definition_tag(definition_tag: bs4.Tag) -> str:
     return str(definition_tag.strings)
 
 
-def return_definition(raw_soup: BeautifulSoup, order=1):
+def format_wotd_content(soup: BeautifulSoup) -> Definition:
     """
-    Extract the order(st/nd/rd/th) definition from raw_soup (gross)
+    Format word of the day content response from a soup into a definition.
 
-    :param raw_soup: The raw, unformatted, soup object content
-    :param order: The order of the definition.
-
-    For example, if the order was 1, it would return the 1st definition.
-    If the order was 2, it would return the second. So on and so forth.
-
-    By default, `return_definition` returns the 1st definition it finds.
-
-    :raises InvalidOrderError: If the order exceeds the number of definitions that've been found.
-    :return: Definition as a *beautifully structured* dataclass ⛳
-    :rtype: `Definition` dataclass
+    :param soup: Content received from the word of the day site
+    :return: Definition object formatted from content and parsed using bs4
     """
 
-    definitions_found = len(raw_soup.select(".definition"))
+    _definition = Definition(soup=soup)
 
-    # Order index readable in python
-    indexable_order = order - 1
-
-    filtered_soup_results = raw_soup.find_all("div", class_="definition")
-
-    # NTS: `selected_definitions` is much smaller than `filtered_soup_results` 🙂
-    selected_definitions = filtered_soup_results[indexable_order]
-
-    if order > definitions_found:
-        raise InvalidOrderError(definitions_found)
-
-    # Create definitoin class
-    definition_class = Definition(
-            definition=selected_definitions.select(".meaning")[0],
-            )
-
-    return definition_class
+    return _definition
