@@ -5,6 +5,7 @@ Centralized urban file that is calls the API.
 from argparse import ArgumentParser
 
 from urban_api import send_phrase_request
+from urban_utils import return_definition
 from urban_commands import add_cols_argument, add_word_argument
 from urban_commands import return_argument_parser
 
@@ -21,6 +22,9 @@ def main():
 
     # Ask urban dictionary for our word.
     send_phrase_request(args.WORD)
+
+    # NOTE: debugging purposes *ONLY* ...
+    return_definition(
 
 if __name__ == "__main__":
     main()
