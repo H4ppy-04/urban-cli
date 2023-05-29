@@ -12,16 +12,19 @@ sys.path.append(os.getcwd())
 from src import apply_word_to_url
 
 # Fetch test data
-testing_data_file_object = open(file="tests/fixtures/words.json", mode="r", encoding="utf-8")
+testing_data_file_object = open(
+    file="tests/fixtures/words.json", mode="r", encoding="utf-8"
+)
 data_dictionary = json.load(testing_data_file_object)
 word_list = data_dictionary.get("words")
 
 word = random.choice(word_list)
 
 dictionary_url = "https://www.urbandictionary.com/define.php?term="
-''' URL in `apply_word_to_url` as `dictionary_url` constant '''
+""" URL in `apply_word_to_url` as `dictionary_url` constant """
 
-''' Type Tests '''
+""" Type Tests """
+
 
 @pytest.mark.smoke
 def test_invalid_argument_raises_type_error():
@@ -33,6 +36,7 @@ def test_invalid_argument_raises_type_error():
         # Act
         apply_word_to_url(argument)  # pyright: ignore
 
+
 @pytest.mark.smoke
 def test_float_argument_raises_type_error():
     # Arrange
@@ -43,6 +47,7 @@ def test_float_argument_raises_type_error():
         # Act
         apply_word_to_url(argument)  # pyright: ignore
 
+
 @pytest.mark.smoke
 def test_no_arguments_raises_type_error():
     # Act & assert
@@ -50,7 +55,9 @@ def test_no_arguments_raises_type_error():
         # Act
         apply_word_to_url()  # pyright: ignore
 
-''' Functional Tests '''
+
+""" Functional Tests """
+
 
 @pytest.mark.smoke
 def test_word_is_added_to_string():
@@ -64,6 +71,7 @@ def test_word_is_added_to_string():
     # Assert
     assert expected_result == actual_result
 
+
 @pytest.mark.smoke
 def test_multiple_words_added_to_string():
     # Arrange
@@ -76,11 +84,12 @@ def test_multiple_words_added_to_string():
     # Assert
     assert expected_result == actual_result
 
+
 @pytest.mark.smoke
 def test_empty_word_added_to_string():
     # Arrange
     expected_result = dictionary_url
-    actual_result = apply_word_to_url('')
+    actual_result = apply_word_to_url("")
 
     # Assert
     assert expected_result == actual_result
