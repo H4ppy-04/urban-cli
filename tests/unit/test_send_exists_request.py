@@ -9,7 +9,7 @@ import pytest
 
 sys.path.insert(0, os.path.join(os.getcwd(), "src"))
 
-from src.urban_api import apply_word_to_url
+from urban.urban_api import send_phrase_request
 
 # Fetch test data
 testing_data_file_object = open(
@@ -31,7 +31,7 @@ def test_float_argument_raises_type_error():
     # Act & Assert
     with pytest.raises(TypeError):
         # Act
-        apply_word_to_url(argument)  # pyright: ignore
+        send_phrase_request(argument)  # pyright: ignore
 
 
 @pytest.mark.smoke
@@ -39,4 +39,4 @@ def test_no_arguments_raises_type_error():
     # Act & assert
     with pytest.raises(TypeError):
         # Act
-        apply_word_to_url()  # pyright: ignore
+        send_phrase_request()  # pyright: ignore
