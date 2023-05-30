@@ -70,6 +70,7 @@ class InvalidOrderError(Exception):
             case _:
                 return f"Invalid order: {self.order} (found {definitions} definitions)"
 
+
 class InvalidWordError(Exception):
     """
     Custom exception raised when a word doesn't exist.
