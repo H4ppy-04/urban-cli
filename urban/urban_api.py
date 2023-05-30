@@ -35,7 +35,7 @@ from typing import Literal
 from loguru import logger
 import requests
 
-from urban_exceptions import InvalidStatusCodeError
+from urban_exceptions import InvalidStatusCodeError, InvalidWordError
 from urban_utils import format_wotd_content, make_soup_from_response
 
 
@@ -136,7 +136,7 @@ def send_phrase_request(phrase: str):
 
     logger.debug(f"phrase_exists is {phrase_exists}")
     if isinstance(phrase_exists, bool):
-        raise SystemExit(send_exists_request(phrase))
+        raise InvalidWordError(phrase)
 
     # Rename for readability
     phrase_response = phrase_exists
