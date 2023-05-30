@@ -112,6 +112,7 @@ def format_wotd_content(soup: BeautifulSoup) -> Definition:
 
     return _definition
 
+
 def author_hyperlink_reference(href: str):
     """
     Return author from hyperlink reference.
@@ -137,9 +138,19 @@ def author_hyperlink_reference(href: str):
 
     soup = BeautifulSoup(href, "lxml")
 
-    a_tag = soup.select_one('a')
+    a_tag = soup.select_one("a")
 
     if a_tag is None:
         raise Exception("String / `soup` does not contain <a>")
 
     return a_tag.value
+
+
+def get_facebook_link(soup: BeautifulSoup):
+    """
+    Get facebook link from soup object.
+
+    The link pertains to the specific definition value.
+
+    :return: facebook link as a string value from a given definition.
+    """

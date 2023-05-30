@@ -19,11 +19,12 @@ It functions as a centralized location from which the API can be utilized.
 """
 
 from argparse import ArgumentParser
+import sys
 
 from loguru import logger
 
 from urban_api import send_phrase_request
-from urban_commands import add_cols_argument
+from urban_commands import add_cols_argument, add_verbose_argument
 from urban_commands import add_result_argument, add_word_argument
 from urban_commands import return_argument_parser
 from urban_definition import Definition
@@ -37,16 +38,26 @@ def main():
      > Furthermore, it would be silly.
     """
 
+    # Configure logging
+    logger.remove()  # Remove all handlers added so far, including the default one.
+    logger.add(sys.stderr, level="WARNING")
+
     logger.debug("Instantiating parser object from `return_argument_parser()`")
     parser: ArgumentParser = return_argument_parser()
 
     logger.debug("Adding commands to parser (cols, word, result)")
-    # Add commands to `parser`.
-    add_cols_argument(parser)
+
+    # Add argument groups
+    output_group = parser.add_argument_group("output", "configure and customize console output")
+
+    # Add commands to output
     add_word_argument(parser)
     add_result_argument(parser)
+    add_cols_argument(output_group)
+    add_verbose_argument(output_group)
 
     logger.debug("Parsing commands with `parse_args()`")
+
     # Parse newly added commands.
     args = parser.parse_args()
 
@@ -55,11 +66,14 @@ def main():
     soup = send_phrase_request(args.WORD)
 
     # NOTE: debugging purposes *ONLY* ...
-    definition_object: Definition = Definition(soup=soup, order=args.result)
+    args = {"soup": soup}
+
+    definition_object: Definition = Definition(soup=soup)
     logger.debug("Tag fetched")
 
     # NOTE: and this as well is debug only!
-    print(definition_object.definition)
+    print(definition_object.definition_string)
+    print(definition_object.author)
 
     logger.debug("stringify stuff done")
 
