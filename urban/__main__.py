@@ -48,7 +48,9 @@ def main():
     logger.debug("Adding commands to parser (cols, word, result)")
 
     # Add argument groups
-    output_group = parser.add_argument_group("output", "configure and customize console output")
+    output_group = parser.add_argument_group(
+        "output", "configure and customize console output"
+    )
 
     # Add commands to output
     add_word_argument(parser)
