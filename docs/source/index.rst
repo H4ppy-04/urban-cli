@@ -22,4 +22,6 @@ Table of Contents
    rework.rst
    contributing.md
    documentation/index.rst
+   blog.rst
+   refactoring_guide.md
    license.md
