@@ -60,25 +60,26 @@ class Definition:
         self.author_div = self.definition.find_next("div", class_="contributor")
 
         # Format definition once author has been found
-        self.definition_string = self.format_definition_object()
+        self.definition_string = self.get_formatted_definition()
         """ Definition as a readable string - can be printed """
 
         # Derive author from author div
         self.author = urban_utils.author_hyperlink_reference(str(self.author_div))
         """The author of `definition` - derived from `soup`"""
 
-    def format_definition_object(self):
+    def get_formatted_definition(self) -> str:
         """
-        Format definition object from html
+        Retrieves and formats a definition object from HTML.
 
-        :return: string of a formatted definition object.
+        :return: A string representation of the formatted definition object.
         """
 
         definition_div: Tag = self.definition.find_next("div", class_="meaning")
-        definition_div_stripped_list = definition_div.stripped_strings
-        definition_list_of_words = [word for word in definition_div_stripped_list]
+        definition_div_stripped_list = list(definition_div.stripped_strings)
+        definition_joined_words = ' '.join(definition_div_stripped_list)
+        definition_gramaticised = urban_utils.remove_punctuation_spacing(definition_joined_words)
 
-        return definition_list_of_words
+        return definition_gramaticised
 
     def get_definition_results(self):
         """
