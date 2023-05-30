@@ -9,7 +9,9 @@ import loguru
 
 sys.path.insert(0, os.getcwd())
 
-from src.urban import get_found_word_from_soup, get_soup_object_from_word
+from urban.urban_utils import *
+from urban.urban_api import *
+from urban.urban_commands import *
 
 
 class test_definition(unittest.TestCase):

@@ -45,7 +45,6 @@ class Definition:
         example: str | None = None,
         author: str = "John Doe",
         date: datetime = datetime.now(),
-        order: int = 1,
         **kwargs
     ):
         """
@@ -53,15 +52,15 @@ class Definition:
 
         It's times like these when I really wish I was using rust.
 
-        :param date: datetime object
-        :param author: Username of definition OP
-        :param definition: The main definition string
         :param example: The definition usage / example
+        :param author: Username of definition OP
+        :param date: datetime object
+        :param definition: The main definition string
 
         **kwargs: Kwargs such as soup objects, order, etc ...
         """
 
-        self._definition = self.definition
+        # Instance variables from constructor
         self.example = example
         self.author = author
         self.date = date
@@ -69,15 +68,17 @@ class Definition:
         raw_soup = kwargs["soup"]
         order = kwargs["order"]
 
+        filtered_soup_results = raw_soup.find_all("div", class_="definition")
+
+        # NTS: `selected_definitions` is much smaller than `filtered_soup_results` 🙂
+        self.selected_definitions = filtered_soup_results[order - 1]
         definitions_found = len(raw_soup.select(".definition"))
 
         if order > definitions_found:
             raise InvalidOrderError(definitions_found)
 
-        filtered_soup_results = raw_soup.find_all("div", class_="definition")
-
-        # NTS: `selected_definitions` is much smaller than `filtered_soup_results` 🙂
-        self.selected_definitions = filtered_soup_results[order - 1]
+        # Instance-specific properties
+        self._definition = self.definition
 
     @property
     def definition(self):
