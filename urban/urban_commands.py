@@ -101,6 +101,7 @@ def add_result_argument(parser: argparse.ArgumentParser):
         help="Retrieve a corresponding definition  - defaults to 1st result",
     )
 
+
 def add_verbose_argument(parser: argparse.ArgumentParser | argparse._ArgumentGroup):
     """
     Add verbose argument to `parser`.
@@ -122,4 +123,3 @@ def add_verbose_argument(parser: argparse.ArgumentParser | argparse._ArgumentGro
         help="Show more information for debugging and tracing",
         action="store_true",
     )
-
