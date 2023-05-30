@@ -25,7 +25,6 @@ def return_argument_parser():
 
     parser = argparse.ArgumentParser(
         prog="urban",
-        usage="usage line here...",
         description="Search the Urban Dictionary!",
         epilog=None,
         add_help=True,
@@ -35,7 +34,7 @@ def return_argument_parser():
     return parser
 
 
-def add_word_argument(parser: argparse.ArgumentParser):
+def add_word_argument(parser: argparse.ArgumentParser | argparse._ArgumentGroup):
     """
     Add word argument to `parser`.
 
@@ -43,7 +42,7 @@ def add_word_argument(parser: argparse.ArgumentParser):
     :raise TypeError: if `parser` is not of type `argparse.ArgumentParser`.
     """
 
-    if not isinstance(parser, argparse.ArgumentParser):
+    if not isinstance(parser, argparse.ArgumentParser | argparse._ArgumentGroup):
         raise TypeError("Argument parser must be of type `ArgumentParser`")
 
     parser.add_argument(
@@ -53,23 +52,21 @@ def add_word_argument(parser: argparse.ArgumentParser):
     )
 
 
-def add_cols_argument(parser: argparse.ArgumentParser):
+def add_cols_argument(parser: argparse.ArgumentParser | argparse._ArgumentGroup):
     """
     Add column width argument to `parser`.
 
     Specifies the width of the column.
-    For example, if the width was 1, then it look like (see below)
+    For example, if the width was 10, then it look like (see below)
 
-    t
-    h
-    i
-    s
+    the quick b
+    rown fox...
 
     :param parser: Command parser object.
     :raise TypeError: if `parser` is not of type `argparse.ArgumentParser`.
     """
 
-    if not isinstance(parser, argparse.ArgumentParser):
+    if not isinstance(parser, argparse.ArgumentParser | argparse._ArgumentGroup):
         raise TypeError("Argument parser must be of type `ArgumentParser`")
 
     parser.add_argument(
@@ -77,7 +74,8 @@ def add_cols_argument(parser: argparse.ArgumentParser):
         default=150,
         nargs=1,
         type=int,
-        help="Adjust the definition column width",
+        required=False,
+        help="Adjust the definition column width - defaults to 150",
     )
 
 
@@ -92,7 +90,7 @@ def add_result_argument(parser: argparse.ArgumentParser):
     :raise TypeError: if `parser` is not of type `argparse.ArgumentParser`.
     """
 
-    if not isinstance(parser, argparse.ArgumentParser):
+    if not isinstance(parser, argparse.ArgumentParser | argparse._ArgumentGroup):
         raise TypeError("Argument parser must be of type `ArgumentParser`")
 
     # ➡️➡️➡️ TODO➡️➡️➡️➡️  -1 returns all definitions!
@@ -100,5 +98,28 @@ def add_result_argument(parser: argparse.ArgumentParser):
         "--result",
         default=1,
         type=int,
-        help="Specify the result number to define. Retrieves the corresponding definition",
+        help="Retrieve a corresponding definition  - defaults to 1st result",
     )
+
+def add_verbose_argument(parser: argparse.ArgumentParser | argparse._ArgumentGroup):
+    """
+    Add verbose argument to `parser`.
+
+    This command prints more verbose output.
+    For example, it would use the loguru module to give helpful debugging information.
+
+    :param parser: Command parser object.
+    :raise TypeError: if `parser` is not of type `argparse.ArgumentParser`.
+    """
+
+    if not isinstance(parser, argparse.ArgumentParser | argparse._ArgumentGroup):
+        raise TypeError("Argument parser must be of type `ArgumentParser`")
+
+    parser.add_argument(
+        "--verbose",
+        default=False,
+        required=False,
+        help="Show more information for debugging and tracing",
+        action="store_true",
+    )
+

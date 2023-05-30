@@ -16,19 +16,17 @@ anticipated in its genesis.
 """
 
 from datetime import datetime
+from bs4 import Tag
 
-from bs4 import BeautifulSoup
+from loguru import logger
 
 from urban_exceptions import InvalidOrderError
+import urban_utils
 
 
 class Definition:
     def __init__(
-        self,
-        example: str | None = None,
-        author: str = "John Doe",
-        date: datetime = datetime.now(),
-        **kwargs
+        self, example: str | None = None, date: datetime = datetime.now(), **kwargs
     ):
         """
         Definition class to manage defitions easier.
@@ -45,16 +43,42 @@ class Definition:
 
         # Instance variables from constructor
         self.example = example
-        self.author = author
+        """Definition example as listed inside of `soup` - can be `None` or `str`"""
         self.date = date
+        """Date as a `datetime` object"""
         self.kwargs = kwargs
+        """Kwargs can contain soup object, order, etc ..."""
 
-        # All definitions found for the word
         self.definition_results = self.get_definition_results()
+        """All definitions found (as html) for 'soup' defined in kwargs"""
 
         # Specific defenition from property
-        self._definition = self.definition
+        # self._definition = self.definition
+        """Specific definition from property `definition`"""
 
+        # Get author div
+        self.author_div = self.definition.find_next("div", class_="contributor")
+
+        # Format definition once author has been found
+        self.definition_string = self.format_definition_object()
+        """ Definition as a readable string - can be printed """
+
+        # Derive author from author div
+        self.author = urban_utils.author_hyperlink_reference(str(self.author_div))
+        """The author of `definition` - derived from `soup`"""
+
+    def format_definition_object(self):
+        """
+        Format definition object from html
+
+        :return: string of a formatted definition object.
+        """
+
+        definition_div: Tag = self.definition.find_next("div", class_="meaning")
+        definition_div_stripped_list = definition_div.stripped_strings
+        definition_list_of_words = [word for word in definition_div_stripped_list]
+
+        return definition_list_of_words
 
     def get_definition_results(self):
         """
@@ -76,14 +100,6 @@ class Definition:
 
     @property
     def definition(self):
-        return self._definition
-
-    @definition.setter
-    def definition(self, value):
-        self._definition = value
-
-    @definition.getter
-    def definition(self):
         """
         This property getter returns an html phrase from all definitions that have been found.
 
@@ -94,14 +110,14 @@ class Definition:
         order = 0
         # Get definition results from index
         if "order" not in self.kwargs.keys():
-            Warning(
+            logger.warning(
                 "No result tag specified. Defaulting to first instance of definition class."
             )
         else:
             order = self.kwargs["order"] - 1
 
         # Raise `InvalidOrderError` if `order` is greater than definitions found
-        if order > len(self.definition_results):
-            raise InvalidOrderError(len(self.definition_results))
+        if order > len(self.get_definition_results()):
+            raise InvalidOrderError(len(self.get_definition_results()))
 
         return self.definition_results[order]
