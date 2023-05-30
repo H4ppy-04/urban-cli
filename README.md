@@ -1,13 +1,14 @@
 <div align="center">
 
   <h1>Urban CLI</h1>
-
+   <!--
    <a href="_blank">
      <img
           width="64px"
           alt="book icon"
           src="https://github.com/GH-Syn/urban-cli/blob/main/.github/images/book.png"/></a>
     <br>
+    -->
   <code>A command line interface for the infamous <a href="https://www.urbandictionary.com/">Urban Dictionary</a></code>
 </div>
 
