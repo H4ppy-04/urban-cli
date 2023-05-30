@@ -20,14 +20,13 @@ It functions as a centralized location from which the API can be utilized.
 
 from argparse import ArgumentParser
 
-from bs4 import Tag
 from loguru import logger
 
 from urban_api import send_phrase_request
 from urban_commands import add_cols_argument
 from urban_commands import add_result_argument, add_word_argument
 from urban_commands import return_argument_parser
-from urban_utils import Definition, return_definition, stringify_definition_tag
+from urban_utils import Definition, stringify_definition_tag
 
 
 def main():
@@ -56,7 +55,7 @@ def main():
     soup = send_phrase_request(args.WORD)
 
     # NOTE: debugging purposes *ONLY* ...
-    definition_object: Definition = return_definition(soup, order=args.result)
+    definition_object: Definition = Definition(soup=soup, order=args.result)
     logger.debug("Tag fetched")
 
     # NOTE: and this as well is debug only!
