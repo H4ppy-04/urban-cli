@@ -28,7 +28,6 @@ Common Data Structures
 Common data structures such as a date, definition struct, lives in this file.
 """
 
-from datetime import datetime
 from typing_extensions import deprecated
 
 from bs4 import BeautifulSoup
@@ -36,61 +35,7 @@ import bs4
 import requests
 import rich
 
-from urban_exceptions import InvalidOrderError
-
-
-class Definition:
-    def __init__(
-        self,
-        example: str | None = None,
-        author: str = "John Doe",
-        date: datetime = datetime.now(),
-        **kwargs
-    ):
-        """
-        Definition class to manage defitions easier.
-
-        It's times like these when I really wish I was using rust.
-
-        :param example: The definition usage / example
-        :param author: Username of definition OP
-        :param date: datetime object
-        :param definition: The main definition string
-
-        **kwargs: Kwargs such as soup objects, order, etc ...
-        """
-
-        # Instance variables from constructor
-        self.example = example
-        self.author = author
-        self.date = date
-
-        raw_soup = kwargs["soup"]
-        order = kwargs["order"]
-
-        filtered_soup_results = raw_soup.find_all("div", class_="definition")
-
-        # NTS: `selected_definitions` is much smaller than `filtered_soup_results` 🙂
-        self.selected_definitions = filtered_soup_results[order - 1]
-        definitions_found = len(raw_soup.select(".definition"))
-
-        if order > definitions_found:
-            raise InvalidOrderError(definitions_found)
-
-        # Instance-specific properties
-        self._definition = self.definition
-
-    @property
-    def definition(self):
-        return self._definition
-
-    @definition.setter
-    def definition(self, value):
-        self._definition = value
-
-    @definition.getter
-    def definition(self):
-        return (self.selected_definitions.select(".meaning")[0],)
+from urban_definition import Definition
 
 
 def show_does_not_exit_error(word: str):
