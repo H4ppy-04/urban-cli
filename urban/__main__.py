@@ -63,6 +63,10 @@ def main():
     # Parse newly added commands.
     args = parser.parse_args()
 
+    if args.verbose:
+        logger.remove()  # Remove all handlers added so far, including the default one.
+        logger.add(sys.stderr, level="DEBUG")
+
     logger.debug("Sending phrase request")
     # Ask urban dictionary for our word.
     soup = send_phrase_request(args.WORD)
