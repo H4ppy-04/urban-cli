@@ -17,6 +17,8 @@ anticipated in its genesis.
 
 from datetime import datetime
 
+from bs4 import BeautifulSoup
+
 from urban_exceptions import InvalidOrderError
 
 
@@ -45,21 +47,32 @@ class Definition:
         self.example = example
         self.author = author
         self.date = date
+        self.kwargs = kwargs
 
-        raw_soup = kwargs["soup"]
-        order = kwargs["order"]
+        # All definitions found for the word
+        self.definition_results = self.get_definition_results()
 
-        filtered_soup_results = raw_soup.find_all("div", class_="definition")
-
-        # NTS: `selected_definitions` is much smaller than `filtered_soup_results` 🙂
-        self.selected_definitions = filtered_soup_results[order - 1]
-        definitions_found = len(raw_soup.select(".definition"))
-
-        if order > definitions_found:
-            raise InvalidOrderError(definitions_found)
-
-        # Instance-specific properties
+        # Specific defenition from property
         self._definition = self.definition
+
+
+    def get_definition_results(self):
+        """
+        Get definition result from a soup object.
+        > Warns if no result index has been specified.
+
+        :raise IndexError: If soup has not been provided in `kwargs`.
+        :raise InvalidOrderError: If the order/result_index is greater than the number of definitions.
+        :return: `ResultSet` array or `Tag` found from soup.
+        """
+
+        if "soup" not in self.kwargs.keys():
+            raise IndexError("Soup has not been provided in `kwargs`.")
+
+        soup = self.kwargs["soup"]
+        soup_results = soup.find_all("div", class_="definition")
+
+        return soup_results
 
     @property
     def definition(self):
@@ -71,4 +84,24 @@ class Definition:
 
     @definition.getter
     def definition(self):
-        return (self.selected_definitions.select(".meaning")[0],)
+        """
+        This property getter returns an html phrase from all definitions that have been found.
+
+        :return: *specific* definition html from array of html definitions.
+        """
+
+        # Specific definition from order
+        order = 0
+        # Get definition results from index
+        if "order" not in self.kwargs.keys():
+            Warning(
+                "No result tag specified. Defaulting to first instance of definition class."
+            )
+        else:
+            order = self.kwargs["order"] - 1
+
+        # Raise `InvalidOrderError` if `order` is greater than definitions found
+        if order > len(self.definition_results):
+            raise InvalidOrderError(len(self.definition_results))
+
+        return self.definition_results[order]
