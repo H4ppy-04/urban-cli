@@ -5,7 +5,7 @@ Contributions are welcome and highly appreciated and as such, guidelines are not
 
 This project is formatted using the [Black](https://pypi.org/project/black/) code style. All formatting is followed as stipulated in python's pep documentation.
 [Black](https://pypi.org/project/black/) is not a part of `requirements.txt` and as such, needs to be installed manually.
-Installation is fairly straightforward and is typically done as follows.
+Installation is fairly straightforward and is typically done as follows. Please refer to the [refactoring guide](refactoring_guide.md) for more information on formatting and refactoring.
 
 ```sh
 exec python -m pip install --user black
