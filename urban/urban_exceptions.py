@@ -69,3 +69,28 @@ class InvalidOrderError(Exception):
                 return f"Invalid order: {self.order} (found 1 definition)"
             case _:
                 return f"Invalid order: {self.order} (found {definitions} definitions)"
+
+class InvalidWordError(Exception):
+    """
+    Custom exception raised when a word doesn't exist.
+
+    :attr word: The word in question
+    """
+
+    def __init__(self, word):
+        """
+        Initialize the InvalidWordError instance.
+
+        :param word: The invalid word.
+        """
+
+        self.word = word
+
+    def __str__(self) -> str:
+        """
+        Return a string representation of the exception.
+
+        :return: A string indicating the word is invalid.
+        """
+
+        return f"{self.word} is not a valid word"
