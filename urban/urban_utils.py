@@ -155,6 +155,7 @@ def get_facebook_link(soup: BeautifulSoup):
     :return: facebook link as a string value from a given definition.
     """
 
+
 def remove_punctuation_spacing(text: str):
     """
     Remove any spacing between punctuation.
@@ -184,4 +185,4 @@ def remove_punctuation_spacing(text: str):
                 if chars[char] == " ":
                     chars.pop(char)
 
-    return ''.join(chars)
+    return "".join(chars)
