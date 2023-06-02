@@ -22,6 +22,7 @@ from argparse import ArgumentParser
 import sys
 
 from loguru import logger
+from rich import print
 
 from urban_api import send_phrase_request
 from urban_commands import add_cols_argument, add_verbose_argument
@@ -67,22 +68,20 @@ def main():
         logger.remove()  # Remove all handlers added so far, including the default one.
         logger.add(sys.stderr, level="DEBUG")
 
-    logger.debug("Sending phrase request")
     # Ask urban dictionary for our word.
     soup = send_phrase_request(args.WORD)
 
     # NOTE: debugging purposes *ONLY* ...
     args = {"soup": soup}
 
+    logger.debug(args)
+
     definition_object: Definition = Definition(soup=soup)
     logger.debug("Tag fetched")
 
     # NOTE: and this as well is debug only!
     print(definition_object.definition_string)
-    print(definition_object.author)
-
-    logger.debug("stringify stuff done")
-
+    print(f"Defined by [cyan]{definition_object.author}")
 
 if __name__ == "__main__":
     main()

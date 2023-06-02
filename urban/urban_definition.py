@@ -57,14 +57,17 @@ class Definition:
         """Specific definition from property `definition`"""
 
         # Get author div
-        self.author_div = self.definition.find_next("div", class_="contributor")
+        self.author_div: Tag = self.definition.find_next("div", class_="contributor")
 
         # Format definition once author has been found
         self.definition_string = self.get_formatted_definition()
         """ Definition as a readable string - can be printed """
 
         # Derive author from author div
-        self.author = urban_utils.author_hyperlink_reference(str(self.author_div))
+        self.author = [i for i in self.author_div.stripped_strings][1]
+
+        # TODO: optimize this:
+        self.date = [i for i in self.author_div.stripped_strings][2]
         """The author of `definition` - derived from `soup`"""
 
     def get_formatted_definition(self) -> str:
@@ -112,11 +115,7 @@ class Definition:
         # Specific definition from order
         order = 0
         # Get definition results from index
-        if "order" not in self.kwargs.keys():
-            logger.warning(
-                "No result tag specified. Defaulting to first instance of definition class."
-            )
-        else:
+        if "order" in self.kwargs.keys():
             order = self.kwargs["order"] - 1
 
         # Raise `InvalidOrderError` if `order` is greater than definitions found
