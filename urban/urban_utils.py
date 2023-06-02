@@ -113,49 +113,6 @@ def format_wotd_content(soup: BeautifulSoup) -> Definition:
     return _definition
 
 
-def author_hyperlink_reference(href: str):
-    """
-    Return author from hyperlink reference.
-
-    This function takes a hyperlink reference.
-    For example, a reference that looks like this:
-
-    <div class="contributor font-bold">
-        by <a class=
-            "text-denim dark:text-fluorescent hover:text-limon-lime"
-            href="/author.php?author=CynderFanclub">CynderFanclub</a>
-        April 14, 2020
-    </div>
-
-    will extract the author by:
-      a) making a soup from the reference
-      b) using the soup to get the value inside of the <a> tags like this </a>
-
-    :param href: Hyperlink reference as a string containing a valid author and link tag.
-    :raises Exception: if the string doesn't contain a valid tag.
-    :return: Extracted author value from href.
-    """
-
-    soup = BeautifulSoup(href, "lxml")
-
-    a_tag = soup.select_one("a")
-
-    if a_tag is None:
-        raise Exception("String / `soup` does not contain <a>")
-
-    return a_tag.value
-
-
-def get_facebook_link(soup: BeautifulSoup):
-    """
-    Get facebook link from soup object.
-
-    The link pertains to the specific definition value.
-
-    :return: facebook link as a string value from a given definition.
-    """
-
-
 def remove_punctuation_spacing(text: str):
     """
     Remove any spacing between punctuation.
