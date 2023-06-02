@@ -18,8 +18,6 @@ anticipated in its genesis.
 from datetime import datetime
 from bs4 import Tag
 
-from loguru import logger
-
 from urban_exceptions import InvalidOrderError
 import urban_utils
 
