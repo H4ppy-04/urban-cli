@@ -176,13 +176,16 @@ def remove_punctuation_spacing(text: str):
 
     chars = list(text)
 
-    for char in range(0, len(chars) - 1):
-        match chars[char + 1]:
-            case ".":
-                if chars[char] == " ":
+    for char in range(0, len(chars) - 2):
+        if chars[char] == " ":
+            match chars[char + 1]:
+                case ".":
                     chars.pop(char)
-            case " ":
-                if chars[char] == " ":
+                case ",":
+                    chars.pop(char)
+                case ":":
+                    chars.pop(char)
+                case " ":
                     chars.pop(char)
 
     return "".join(chars)
