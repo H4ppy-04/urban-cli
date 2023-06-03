@@ -70,8 +70,6 @@ def main():
     # Ask urban dictionary for our word.
     soup = send_phrase_request(args.WORD)
 
-    order = args.result
-
     definition_object: Definition = Definition(soup=soup, order=args.result)
 
     logger.debug(definition_object)
