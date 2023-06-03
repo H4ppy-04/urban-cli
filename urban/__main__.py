@@ -65,10 +65,16 @@ def main():
         logger.remove()  # Remove all handlers added so far, including the default one.
         logger.add(sys.stderr, level="DEBUG")
 
+    logger.debug(args.result)
+
     # Ask urban dictionary for our word.
     soup = send_phrase_request(args.WORD)
 
-    definition_object: Definition = Definition(soup=soup)
+    order = args.result
+
+    definition_object: Definition = Definition(soup=soup, order=args.result)
+
+    logger.debug(definition_object)
 
     # NOTE: print to console
     print(definition_object.definition_string, end="\n\n")
