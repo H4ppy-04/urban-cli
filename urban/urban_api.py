@@ -30,10 +30,14 @@ within the API file. This file serves as a central point from which functions ar
 accessed.
 """
 
+import os
+import sys
 from typing import Literal
 
 from loguru import logger
 import requests
+
+sys.path.append(os.getcwd())
 
 from urban_exceptions import InvalidStatusCodeError, InvalidWordError
 from urban_utils import make_soup_from_response
@@ -47,8 +51,11 @@ def apply_word_to_url(word: str) -> str:
     :return: URL with word attached to the end of it.
     """
 
+    if not isinstance(word, str):
+        raise TypeError
+
     dictionary_url = "https://www.urbandictionary.com/define.php?term="
-    fetch_url = dictionary_url + word
+    fetch_url = str(dictionary_url + word)
 
     return fetch_url
 
