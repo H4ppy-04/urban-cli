@@ -35,8 +35,6 @@ import bs4
 import requests
 import rich
 
-from urban_definition import Definition
-
 
 def show_does_not_exit_error(word: str):
     """
@@ -53,19 +51,6 @@ def show_does_not_exit_error(word: str):
             link="[link url='https://urbandictionary.com/']Urban Dictionary website.[/link]"
         )
     )
-
-
-@deprecated("Removed in favour of indexing")
-def _get_num_of_definitions(result_set: bs4.ResultSet) -> int:  # pyright: ignore
-    """
-    Returns the number of definitions found for a given word
-
-    :param result_set: A list of tags, defined as a result set object.
-
-    :return: Number of definitions for a given word as an `int`.
-    """
-
-    return len(result_set)
 
 
 def make_soup_from_response(response: requests.Response):
@@ -85,34 +70,6 @@ def make_soup_from_response(response: requests.Response):
     return response_soup
 
 
-@deprecated("Indexed tag used in favour of stringifying `definition_tag`.")
-def stringify_definition_tag(definition_tag: bs4.Tag) -> str:
-    """
-    Convert a definition tag into a string.
-
-    This function assumes it's known with 100% certainty that `definition_tag`
-    is indeed a *definition* tag, which this function will 'stringify'.
-
-    :param definition_tag: Definition tag that is 100% known to contain a definition
-    :return: `stringified` definition
-    """
-
-    return str(definition_tag.strings)
-
-
-def format_wotd_content(soup: BeautifulSoup) -> Definition:
-    """
-    Format word of the day content response from a soup into a definition.
-
-    :param soup: Content received from the word of the day site
-    :return: Definition object formatted from content and parsed using bs4
-    """
-
-    _definition = Definition(soup=soup)
-
-    return _definition
-
-
 def remove_punctuation_spacing(text: str):
     """
     Remove any spacing between punctuation.
@@ -121,12 +78,19 @@ def remove_punctuation_spacing(text: str):
     -------
     A string such as "The quick brown fox ." when ran through this function as:
 
+    ```python
+
     >>> Definition.remove_punctuation_spacing("The quick brown fox .")
 
-    Will then return:
+    ```
+
+    Outputs:
+
+    ```python
 
     "The quick brown fox."
-    > Notice the location of the period.
+
+    ```
 
     :return: Formatted string with correct use of punctuation
     """

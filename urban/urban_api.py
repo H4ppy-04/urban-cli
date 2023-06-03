@@ -80,41 +80,6 @@ def send_exists_request(word: str) -> Literal[False] | requests.Response:
             raise InvalidStatusCodeError(status)
 
 
-def send_wotd_request() -> requests.Response:
-    """
-    Asks the urban dictionary to get the word of the day (page).
-
-    Returns the word of the day, or, to be more specific - the urban
-    dictionary homepage.
-
-    :return: Received data as a `requests.Response` containing
-             data received from the urban dictionary homepage.
-    """
-
-    response = requests.get("https://www.urbandictionary.com/")
-
-    return response
-
-
-def show_wotd(response_content: requests.Response):
-    """
-    Show word of the day from a dictionary object.
-
-    This function works with the help of `send_wotd_request()`.
-    No output is returned, everything is printed, hence the verb `show` and not `get` or `return`.
-
-    :param response_content: Content received as part of a `requests.Response()` method.
-    :type response_content: bytes
-    """
-
-    wotd_soup = make_soup_from_response(response_content)
-    definition_object = format_wotd_content(wotd_soup)
-
-    # Show definition information
-    print(definition_object.definition)
-    print(definition_object.author)
-
-
 def send_phrase_request(phrase: str):
     """
     Request phrase from the urban dictionary.
