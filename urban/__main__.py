@@ -39,7 +39,6 @@ def main():
      > Furthermore, it would be silly.
     """
 
-    # Configure logging
     logger.remove()  # Remove all handlers added so far, including the default one.
     logger.add(sys.stderr, level="WARNING")
 
@@ -59,8 +58,6 @@ def main():
     add_cols_argument(output_group)
     add_verbose_argument(output_group)
 
-    logger.debug("Parsing commands with `parse_args()`")
-
     # Parse newly added commands.
     args = parser.parse_args()
 
@@ -71,16 +68,10 @@ def main():
     # Ask urban dictionary for our word.
     soup = send_phrase_request(args.WORD)
 
-    # NOTE: debugging purposes *ONLY* ...
-    args = {"soup": soup}
-
-    # logger.debug(args)
-
     definition_object: Definition = Definition(soup=soup)
-    logger.debug("Tag fetched")
 
-    # NOTE: and this as well is debug only!
-    print(definition_object.definition_string)
+    # NOTE: print to console
+    print(definition_object.definition_string, end="\n\n")
     print(f"Defined by [cyan]{definition_object.author}")
 
 
