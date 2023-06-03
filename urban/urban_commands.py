@@ -96,7 +96,6 @@ def add_result_argument(parser: argparse.ArgumentParser):
     # ➡️➡️➡️ TODO➡️➡️➡️➡️  -1 returns all definitions!
     parser.add_argument(
         "--result",
-        default=1,
         type=int,
         help="Retrieve a corresponding definition  - defaults to 1st result",
     )

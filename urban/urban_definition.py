@@ -16,7 +16,9 @@ anticipated in its genesis.
 """
 
 from datetime import datetime
+
 from bs4 import Tag
+from loguru import logger
 
 from urban_exceptions import InvalidOrderError
 import urban_utils
@@ -39,11 +41,12 @@ class Definition:
         **kwargs: Kwargs such as soup objects, order, etc ...
         """
 
-        # Instance variables from constructor
         self.example = example
         """Definition example as listed inside of `soup` - can be `None` or `str`"""
+
         self.date = date
         """Date as a `datetime` object"""
+
         self.kwargs = kwargs
         """Kwargs can contain soup object, order, etc ..."""
 
@@ -53,6 +56,8 @@ class Definition:
         # Specific defenition from property
         # self._definition = self.definition
         """Specific definition from property `definition`"""
+
+        self.definition = self.get_definition_order(order=kwargs["order"])
 
         # Get author div
         self.author_div: Tag = self.definition.find_next("div", class_="contributor")
@@ -102,19 +107,21 @@ class Definition:
 
         return soup_results
 
-    @property
-    def definition(self):
+    def get_definition_order(self, order):
         """
-        This property getter returns an html phrase from all definitions that have been found.
+        Returns an html phrase from all definitions that have been found.
 
         :return: *specific* definition html from array of html definitions.
         """
 
-        # Specific definition from order
-        order = 0
         # Get definition results from index
+        logger.debug(f"order: {self.kwargs['order']}")
         if "order" in self.kwargs.keys():
-            order = self.kwargs["order"] - 1
+            if self.kwargs["order"] == None:
+                logger.warning("No result number specified")
+                order = 0
+            else:
+                order = self.kwargs["order"] - 1
 
         # Raise `InvalidOrderError` if `order` is greater than definitions found
         if order > len(self.get_definition_results()):
