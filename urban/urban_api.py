@@ -36,7 +36,6 @@ from loguru import logger
 import requests
 
 from urban_exceptions import InvalidStatusCodeError, InvalidWordError
-from urban_utils import format_wotd_content, make_soup_from_response
 
 
 def apply_word_to_url(word: str) -> str:

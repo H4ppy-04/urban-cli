@@ -28,10 +28,7 @@ Common Data Structures
 Common data structures such as a date, definition struct, lives in this file.
 """
 
-from typing_extensions import deprecated
-
 from bs4 import BeautifulSoup
-import bs4
 import requests
 import rich
 
