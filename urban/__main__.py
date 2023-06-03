@@ -29,6 +29,7 @@ from urban_commands import add_cols_argument, add_verbose_argument
 from urban_commands import add_result_argument, add_word_argument
 from urban_commands import return_argument_parser
 from urban_definition import Definition
+from urban_utils import format_sentences
 
 
 def main():
@@ -75,7 +76,10 @@ def main():
     logger.debug(definition_object)
 
     # NOTE: print to console
-    print(definition_object.definition_string, end="\n\n")
+    print(
+        format_sentences(definition_object.definition_string, max_length=args.cols),
+        end="\n\n",
+    )
     print(f"Defined by [cyan]{definition_object.author}")
 
 

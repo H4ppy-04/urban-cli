@@ -110,3 +110,33 @@ def remove_punctuation_spacing(text: str):
             break
 
     return "".join(chars)
+
+
+def format_sentences(text: str, max_length: int) -> str:
+    """
+    Formats sentences in the given text.
+
+    Function formats sentences by starting a new line if a sentence exceeds the maximum length.
+    Each line will not exceed the maximum length, even if it means breaking a word.
+
+    :param tag: The input text containing sentences.
+    :param max_length: The maximum length of a line.
+
+    :return: The formatted text with sentences wrapped properly.
+    """
+
+    words = text.split()
+    lines = []
+    current_line = ""
+
+    for word in words:
+        if len(current_line) + len(word) <= max_length:
+            current_line += word + " "
+        else:
+            lines.append(current_line.strip())
+            current_line = word + " "
+
+    lines.append(current_line.strip())
+    formatted_text = "\n".join(lines)
+
+    return formatted_text
