@@ -74,7 +74,7 @@ def main():
     # NOTE: debugging purposes *ONLY* ...
     args = {"soup": soup}
 
-    logger.debug(args)
+    # logger.debug(args)
 
     definition_object: Definition = Definition(soup=soup)
     logger.debug("Tag fetched")
@@ -82,6 +82,7 @@ def main():
     # NOTE: and this as well is debug only!
     print(definition_object.definition_string)
     print(f"Defined by [cyan]{definition_object.author}")
+
 
 if __name__ == "__main__":
     main()
