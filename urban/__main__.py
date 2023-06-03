@@ -45,12 +45,12 @@ def main():
     logger.debug("Instantiating parser object from `return_argument_parser()`")
     parser: ArgumentParser = return_argument_parser()
 
+    logger.debug("Adding commands to parser (cols, word, result)")
+
     # Add argument groups
     output_group = parser.add_argument_group(
         "output", "configure and customize console output"
     )
-
-    # logger.debug("Adding commands to parser (cols, word, result)")
 
     # Add commands to output
     add_word_argument(parser)
