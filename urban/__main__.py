@@ -40,8 +40,8 @@ def main():
      > Furthermore, it would be silly.
     """
 
-    logger.remove()  # Remove all handlers added so far, including the default one.
-    logger.add(sys.stderr, level="WARNING")
+    # Remove all handlers added so far, including the default one.
+    logger.remove()
 
     logger.debug("Instantiating parser object from `return_argument_parser()`")
     parser: ArgumentParser = return_argument_parser()
@@ -63,8 +63,9 @@ def main():
     args = parser.parse_args()
 
     if args.verbose:
-        logger.remove()  # Remove all handlers added so far, including the default one.
         logger.add(sys.stderr, level="DEBUG")
+    else:
+        logger.add(sys.stderr, level="WARNING")
 
     logger.debug(args.result)
 
