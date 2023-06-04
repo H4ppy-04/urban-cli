@@ -1,5 +1,31 @@
+.. |check| raw:: html
+
+    <input checked=""  type="checkbox">
+
+.. |check_| raw:: html
+
+    <input checked=""  disabled="" type="checkbox">
+
+.. |uncheck| raw:: html
+
+    <input type="checkbox">
+
+.. |uncheck_| raw:: html
+
+    <input disabled="" type="checkbox">
+
+
 Rework
 ======
+
+.. Note::
+
+   The rework is basically almost finished. The remaining tasks are as follows:
+
+
+   |uncheck_| Paragraphs between definition, example and author.
+
+   |uncheck_| Highlighting
 
 This project is being completely rebuilt from the ground up for the following reasons.
 
