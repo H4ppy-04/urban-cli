@@ -98,6 +98,8 @@ def remove_punctuation_spacing(text: str):
         try:
             if chars[char] == " ":
                 match chars[char + 1]:
+                    case "’":
+                        chars.pop(char)
                     case ".":
                         chars.pop(char)
                     case ",":
