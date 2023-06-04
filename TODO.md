@@ -9,7 +9,7 @@
  - [x] Refactor un-needed parts of the wiki
  - [x] shorten and remove un-needed code
  - [x] remove un-needed test stubs 
- - [ ] Remove any redundancies in existing docstrings
+ - [x] Remove any redundancies in existing docstrings
 
 ## Media
  - [ ] Upload updated video showcasing improvements
