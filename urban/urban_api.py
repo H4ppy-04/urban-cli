@@ -101,7 +101,9 @@ def send_phrase_request(phrase: str):
     """
 
     if not isinstance(phrase, str):
-        raise TypeError(f"`phrase` read as a `{type(phrase)}` must be a `string`.")
+        raise TypeError(
+            f"`phrase` read as a `{type(phrase)}` must be a `string`."
+        )
 
     # TODO: format `phrase` with urllib before asking if it exists
     phrase_exists = send_exists_request(phrase)

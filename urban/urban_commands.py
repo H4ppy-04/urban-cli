@@ -34,7 +34,9 @@ def return_argument_parser():
     return parser
 
 
-def add_word_argument(parser: argparse.ArgumentParser | argparse._ArgumentGroup):
+def add_word_argument(
+    parser: argparse.ArgumentParser | argparse._ArgumentGroup,
+):
     """
     Add word argument to `parser`.
 
@@ -42,7 +44,9 @@ def add_word_argument(parser: argparse.ArgumentParser | argparse._ArgumentGroup)
     :raise TypeError: if `parser` is not of type `argparse.ArgumentParser`.
     """
 
-    if not isinstance(parser, argparse.ArgumentParser | argparse._ArgumentGroup):
+    if not isinstance(
+        parser, argparse.ArgumentParser | argparse._ArgumentGroup
+    ):
         raise TypeError("Argument parser must be of type `ArgumentParser`")
 
     parser.add_argument(
@@ -52,7 +56,9 @@ def add_word_argument(parser: argparse.ArgumentParser | argparse._ArgumentGroup)
     )
 
 
-def add_cols_argument(parser: argparse.ArgumentParser | argparse._ArgumentGroup):
+def add_cols_argument(
+    parser: argparse.ArgumentParser | argparse._ArgumentGroup,
+):
     """
     Add column width argument to `parser`.
 
@@ -66,7 +72,9 @@ def add_cols_argument(parser: argparse.ArgumentParser | argparse._ArgumentGroup)
     :raise TypeError: if `parser` is not of type `argparse.ArgumentParser`.
     """
 
-    if not isinstance(parser, argparse.ArgumentParser | argparse._ArgumentGroup):
+    if not isinstance(
+        parser, argparse.ArgumentParser | argparse._ArgumentGroup
+    ):
         raise TypeError("Argument parser must be of type `ArgumentParser`")
 
     parser.add_argument(
@@ -90,7 +98,9 @@ def add_result_argument(parser: argparse.ArgumentParser):
     :raise TypeError: if `parser` is not of type `argparse.ArgumentParser`.
     """
 
-    if not isinstance(parser, argparse.ArgumentParser | argparse._ArgumentGroup):
+    if not isinstance(
+        parser, argparse.ArgumentParser | argparse._ArgumentGroup
+    ):
         raise TypeError("Argument parser must be of type `ArgumentParser`")
 
     # ➡️➡️➡️ TODO➡️➡️➡️➡️  -1 returns all definitions!
@@ -101,7 +111,9 @@ def add_result_argument(parser: argparse.ArgumentParser):
     )
 
 
-def add_verbose_argument(parser: argparse.ArgumentParser | argparse._ArgumentGroup):
+def add_verbose_argument(
+    parser: argparse.ArgumentParser | argparse._ArgumentGroup,
+):
     """
     Add verbose argument to `parser`.
 
@@ -112,7 +124,9 @@ def add_verbose_argument(parser: argparse.ArgumentParser | argparse._ArgumentGro
     :raise TypeError: if `parser` is not of type `argparse.ArgumentParser`.
     """
 
-    if not isinstance(parser, argparse.ArgumentParser | argparse._ArgumentGroup):
+    if not isinstance(
+        parser, argparse.ArgumentParser | argparse._ArgumentGroup
+    ):
         raise TypeError("Argument parser must be of type `ArgumentParser`")
 
     parser.add_argument(

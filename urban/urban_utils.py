@@ -118,7 +118,7 @@ def remove_punctuation_spacing(text: str):
                         chars.pop(char)
                     case "'":
                         chars.pop(char)
-                    case "\"":
+                    case '"':
                         chars.pop(char)
         except IndexError:
             break

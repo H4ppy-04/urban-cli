@@ -26,7 +26,10 @@ import urban_utils
 
 class Definition:
     def __init__(
-        self, example: str | None = None, date: datetime = datetime.now(), **kwargs
+        self,
+        example: str | None = None,
+        date: datetime = datetime.now(),
+        **kwargs,
     ):
         """
         Definition class to manage defitions easier.
@@ -60,7 +63,9 @@ class Definition:
         self.definition = self.get_definition_order(order=kwargs["order"])
 
         # Get author div
-        self.author_div: Tag = self.definition.find_next("div", class_="contributor")
+        self.author_div: Tag = self.definition.find_next(
+            "div", class_="contributor"
+        )
 
         # Format definition once author has been found
         self.definition_string = self.get_formatted_definition()

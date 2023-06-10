@@ -78,7 +78,9 @@ def main():
 
     # NOTE: print to console
     print(
-        format_sentences(definition_object.definition_string, max_length=args.cols),
+        format_sentences(
+            definition_object.definition_string, max_length=args.cols
+        ),
         end="\n\n",
     )
     print(f"Defined by [cyan]{definition_object.author}")
