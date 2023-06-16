@@ -85,7 +85,9 @@ class Definition:
         :return: A string representation of the formatted definition object.
         """
 
-        definition_div: Tag = self.definition.find_next("div", class_="meaning")
+        definition_div: Tag = self.definition.find_next(
+            "div", class_="meaning"
+        )
         definition_div_stripped_list = list(definition_div.stripped_strings)
         definition_joined_words = " ".join(definition_div_stripped_list)
         definition_gramaticised = urban_utils.remove_punctuation_spacing(
