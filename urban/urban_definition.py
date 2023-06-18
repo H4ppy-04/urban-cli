@@ -92,9 +92,7 @@ class Definition:
         :return: A string of the formatted example (breaks included).
         """
 
-        example_div: Tag = self.definition.find_next(
-            "div", class_="example"
-        )
+        example_div: Tag = self.definition.find_next("div", class_="example")
 
         example_div_stripped_list = list(example_div.stripped_strings)
 
@@ -107,7 +105,6 @@ class Definition:
         )
 
         return example_gramaticised
-
 
     def get_formatted_definition(self) -> str:
         """
