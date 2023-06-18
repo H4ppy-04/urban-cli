@@ -125,7 +125,8 @@ class Definition:
         logger.debug(f"order: {self.kwargs['order']}")
         if "order" in self.kwargs.keys():
             if self.kwargs["order"] == None:
-                logger.warning("No result number specified")
+                # NOTE: this has been revoked due to the fact that its fucking annoying
+                # logger.warning("No result number specified")
                 order = 0
             else:
                 order = self.kwargs["order"] - 1
