@@ -69,7 +69,11 @@ class Definition:
 
         # Format definition once author has been found
         self.definition_string = self.get_formatted_definition()
-        """ Definition as a readable string - can be printed """
+        """ Definition as a readable string """
+
+        # Format example which is going to be shown after the definition.
+        self.example_string = self.get_formatted_example()
+        """ Example as a readable string """
 
         # Derive author from author div
         self.author = [i for i in self.author_div.stripped_strings][1]
@@ -77,6 +81,33 @@ class Definition:
         # TODO: optimize this:
         self.date = [i for i in self.author_div.stripped_strings][2]
         """The author of `definition` - derived from `soup`"""
+
+    def get_formatted_example(self) -> str:
+        """
+        Retrieves and formats the example definition.
+
+        This function is very similar to `get_formatted_definition`,
+        the difference being, the indexed class is "example", not "meaning".
+
+        :return: A string of the formatted example (breaks included).
+        """
+
+        example_div: Tag = self.definition.find_next(
+            "div", class_="example"
+        )
+
+        example_div_stripped_list = list(example_div.stripped_strings)
+
+        logger.debug(example_div_stripped_list)
+
+        example_joined_words = " ".join(example_div_stripped_list)
+
+        example_gramaticised = urban_utils.remove_punctuation_spacing(
+            example_joined_words
+        )
+
+        return example_gramaticised
+
 
     def get_formatted_definition(self) -> str:
         """
@@ -88,8 +119,13 @@ class Definition:
         definition_div: Tag = self.definition.find_next(
             "div", class_="meaning"
         )
+
         definition_div_stripped_list = list(definition_div.stripped_strings)
+
+        # logger.debug(definition_div_stripped_list)
+
         definition_joined_words = " ".join(definition_div_stripped_list)
+
         definition_gramaticised = urban_utils.remove_punctuation_spacing(
             definition_joined_words
         )
