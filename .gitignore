@@ -51,6 +51,7 @@ env/
 
 # Sphinx documentation
 docs/_build/
+docs/source/releases.md
 
 # Compiled Python modules
 *.pyc
