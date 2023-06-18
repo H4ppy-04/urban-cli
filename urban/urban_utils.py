@@ -13,15 +13,17 @@ It is responsible for the following functions.
 
 Data Manipulation
 -----------------
-When a request object is received, it needs to be formatted in a way that Python can understand
-The beautifulsoup library helps beautifully ✨ with this. It parses html data in a way that can be
-read and manipulated very easily.
+When a request object is received, it needs to be formatted in a way that
+Python can understand The beautifulsoup library helps beautifully ✨ with
+this. It parses html data in a way that can be read and manipulated very
+easily.
 
 I/O handling
 ------------
-The argparse library can be thought of as boilerplate level code in addition to a few extra classes
-that greatly help building a command line interface. It removes most of the argument logic and lets the
-developer focus on what's important. Argparse is used in this file for showing and receiving data.
+The argparse library can be thought of as boilerplate level code in addition
+to a few extra classes that greatly help building a command line interface.
+It removes most of the argument logic and lets the developer focus on what's
+important. Argparse is used in this file for showing and receiving data.
 
 Common Data Structures
 -----------------------
@@ -37,7 +39,8 @@ def show_does_not_exit_error(word: str):
     """
     Show does not exist error when invalid word is queried.
 
-    A type error is not raised as data type is checked in `send_phrase_request` function.
+    A type error is not raised as data type is checked in `send_phrase_request`
+    function.
 
     :param word: The invalid word that apparently doesn't exist.
     """
@@ -54,9 +57,11 @@ def make_soup_from_response(response: requests.Response):
     """
     When life gives you ~~lemons~~ a `response` object... make soup?
 
-    Take a requests.response and extract response from it - thus returning a soup object.
+    Take a requests.response and extract response from it thus returning a
+    soup object.
 
-    :param response: Response object assumedly containing one or more definition(s).
+    :param response: Response object assumedly containing one or more
+                     definition(s).
     :return: ~~lemonade~~ A beautiful soup 🍜
     """
 
@@ -130,8 +135,9 @@ def format_sentences(text: str, max_length: int) -> str:
     """
     Formats sentences in the given text.
 
-    Function formats sentences by starting a new line if a sentence exceeds the maximum length.
-    Each line will not exceed the maximum length, even if it means breaking a word.
+    Function formats sentences by starting a new line if a sentence exceeds
+    the maximum length. Each line will not exceed the maximum length, even if
+    it means breaking a word.
 
     :param tag: The input text containing sentences.
     :param max_length: The maximum length of a line.
