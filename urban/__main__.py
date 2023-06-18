@@ -23,6 +23,7 @@ import sys
 
 from loguru import logger
 from rich import print
+import rich
 
 from urban_api import send_phrase_request
 from urban_commands import add_cols_argument, add_verbose_argument
@@ -67,22 +68,33 @@ def main():
     else:
         logger.add(sys.stderr, level="WARNING")
 
-    logger.debug(args.result)
+    # logger.debug(args.result)
 
     # Ask urban dictionary for our word.
     soup = send_phrase_request(args.WORD)
 
     definition_object: Definition = Definition(soup=soup, order=args.result)
 
-    logger.debug(definition_object)
+    # logger.debug(definition_object)
 
-    # NOTE: print to console
+    rich.print("Definition\n==========")
+
     print(
         format_sentences(
             definition_object.definition_string, max_length=args.cols
         ),
         end="\n\n",
     )
+
+    rich.print("Example\n=======")
+
+    print(
+        format_sentences(
+            definition_object.example_string, max_length=args.cols
+        ),
+        end="\n\n",
+    )
+    # Print the definition example
     print(f"Defined by [cyan]{definition_object.author}")
 
 
