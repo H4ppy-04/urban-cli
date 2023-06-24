@@ -12,5 +12,5 @@
  - [x] Remove any redundancies in existing docstrings
 
 ## Media
- - [ ] Upload updated video showcasing improvements
+ - [x] Upload updated video showcasing improvements
  - [x] Beautify ugly parts of the wiki
