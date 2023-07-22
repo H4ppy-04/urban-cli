@@ -63,9 +63,7 @@ class Definition:
         self.definition = self.get_definition_order(order=kwargs["order"])
 
         # Get author div
-        self.author_div: Tag = self.definition.find_next(
-            "div", class_="contributor"
-        )
+        self.author_div: Tag = self.definition.find_next("div", class_="contributor")
 
         # Format definition once author has been found
         self.definition_string = self.get_formatted_definition()
@@ -113,9 +111,7 @@ class Definition:
         :return: A string representation of the formatted definition object.
         """
 
-        definition_div: Tag = self.definition.find_next(
-            "div", class_="meaning"
-        )
+        definition_div: Tag = self.definition.find_next("div", class_="meaning")
 
         definition_div_stripped_list = list(definition_div.stripped_strings)
 

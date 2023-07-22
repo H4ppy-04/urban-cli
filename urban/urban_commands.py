@@ -44,9 +44,7 @@ def add_word_argument(
     :raise TypeError: if `parser` is not of type `argparse.ArgumentParser`.
     """
 
-    if not isinstance(
-        parser, argparse.ArgumentParser | argparse._ArgumentGroup
-    ):
+    if not isinstance(parser, argparse.ArgumentParser | argparse._ArgumentGroup):
         raise TypeError("Argument parser must be of type `ArgumentParser`")
 
     parser.add_argument(
@@ -72,9 +70,7 @@ def add_cols_argument(
     :raise TypeError: if `parser` is not of type `argparse.ArgumentParser`.
     """
 
-    if not isinstance(
-        parser, argparse.ArgumentParser | argparse._ArgumentGroup
-    ):
+    if not isinstance(parser, argparse.ArgumentParser | argparse._ArgumentGroup):
         raise TypeError("Argument parser must be of type `ArgumentParser`")
 
     parser.add_argument(
@@ -98,9 +94,7 @@ def add_result_argument(parser: argparse.ArgumentParser):
     :raise TypeError: if `parser` is not of type `argparse.ArgumentParser`.
     """
 
-    if not isinstance(
-        parser, argparse.ArgumentParser | argparse._ArgumentGroup
-    ):
+    if not isinstance(parser, argparse.ArgumentParser | argparse._ArgumentGroup):
         raise TypeError("Argument parser must be of type `ArgumentParser`")
 
     # ➡️➡️➡️ TODO➡️➡️➡️➡️  -1 returns all definitions!
@@ -124,9 +118,7 @@ def add_verbose_argument(
     :raise TypeError: if `parser` is not of type `argparse.ArgumentParser`.
     """
 
-    if not isinstance(
-        parser, argparse.ArgumentParser | argparse._ArgumentGroup
-    ):
+    if not isinstance(parser, argparse.ArgumentParser | argparse._ArgumentGroup):
         raise TypeError("Argument parser must be of type `ArgumentParser`")
 
     parser.add_argument(

@@ -81,18 +81,14 @@ def main():
 
     # GEt maximum length if args.cols == [<int>]
     print(
-        format_sentences(
-            definition_object.definition_string, max_length=args.cols
-        ),
+        format_sentences(definition_object.definition_string, max_length=args.cols),
         end="\n\n",
     )
 
     rich.print("Example\n=======")
 
     print(
-        format_sentences(
-            definition_object.example_string, max_length=args.cols
-        ),
+        format_sentences(definition_object.example_string, max_length=args.cols),
         end="\n\n",
     )
     # Print the definition example
