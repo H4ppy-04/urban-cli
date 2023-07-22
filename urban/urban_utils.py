@@ -33,6 +33,7 @@ Common data structures such as a date, definition struct, lives in this file.
 from bs4 import BeautifulSoup
 import requests
 import rich
+from loguru import logger
 
 
 def show_does_not_exit_error(word: str):
@@ -133,7 +134,7 @@ def remove_punctuation_spacing(text: str):
     return "".join(chars)
 
 
-def format_sentences(text: str, max_length: int) -> str:
+def format_sentences(text: str, max_length: list[int]) -> str:
     """
     Formats sentences in the given text.
 
@@ -142,7 +143,8 @@ def format_sentences(text: str, max_length: int) -> str:
     it means breaking a word.
 
     :param tag: The input text containing sentences.
-    :param max_length: The maximum length of a line.
+    :param max_length: The maximum length of a line. The default value for t
+                       this variable is 120.
 
     :return: The formatted text with sentences wrapped properly.
     """
@@ -151,7 +153,13 @@ def format_sentences(text: str, max_length: int) -> str:
     lines = []
     current_line = ""
 
+    if len(max_length):
+        max_length = max_length[0]
+    else:
+        max_length = 120
+
     for word in words:
+        # logger.debug(type(max_length))
         if len(current_line) + len(word) <= max_length:
             current_line += word + " "
         else:
