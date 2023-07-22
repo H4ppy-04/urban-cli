@@ -79,6 +79,7 @@ def main():
 
     rich.print("Definition\n==========")
 
+    # GEt maximum length if args.cols == [<int>]
     print(
         format_sentences(
             definition_object.definition_string, max_length=args.cols
