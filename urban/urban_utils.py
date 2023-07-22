@@ -149,14 +149,16 @@ def format_sentences(text: str, max_length: list[int]) -> str:
     :return: The formatted text with sentences wrapped properly.
     """
 
+    logger.debug(type(text))
     words = text.split()
     lines = []
     current_line = ""
 
-    if len(max_length):
-        max_length = max_length[0]
-    else:
-        max_length = 120
+    if isinstance(max_length, list):
+        if len(max_length):
+            max_length = max_length[0]
+        else:
+            max_length = 120
 
     for word in words:
         # logger.debug(type(max_length))
