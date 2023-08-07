@@ -134,7 +134,7 @@ def remove_punctuation_spacing(text: str):
     return "".join(chars)
 
 
-def format_sentences(text: str, max_length: list[int]) -> str:
+def format_sentences(text: str, max_length: list[int] | int) -> str:
     """
     Formats sentences in the given text.
 

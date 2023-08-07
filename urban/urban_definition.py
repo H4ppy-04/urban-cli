@@ -8,11 +8,11 @@ Definition
 :License: `Apache 2.0 <https://gh-syn.github.io/urban-cli/license.html>`_
 :File: urban_definition.py
 
-To prevent monolithic code practices, I've decided to seperate the definition class,
-which previously existed in `urban_utils.py` and let it have it's own file.
-
-This decision came about as a result of the size that the file ended up taking, which wasn't
-anticipated in its genesis.
+To prevent monolithic code practices, I've decided to seperate the definition c
+lass, which previously existed in `urban_utils.py` and let it have it's own fil
+e.
+This decision came about as a result of the size that the file ended up taking,
+which wasn't anticipated in its genesis.
 """
 
 from datetime import datetime
@@ -20,8 +20,8 @@ from datetime import datetime
 from bs4 import Tag
 from loguru import logger
 
-from urban_exceptions import InvalidOrderError
-import urban_utils
+from .urban_exceptions import InvalidOrderError
+from . import urban_utils
 
 
 class Definition:
@@ -45,7 +45,9 @@ class Definition:
         """
 
         self.example = example
-        """Definition example as listed inside of `soup` - can be `None` or `str`"""
+        """
+        Definition example as listed inside of soup - can be `None` or `str`
+        """
 
         self.date = date
         """Date as a `datetime` object"""
@@ -63,7 +65,9 @@ class Definition:
         self.definition = self.get_definition_order(order=kwargs["order"])
 
         # Get author div
-        self.author_div: Tag = self.definition.find_next("div", class_="contributor")
+        self.author_div: Tag = self.definition.find_next(
+            "div", class_="contributor"
+        )
 
         # Format definition once author has been found
         self.definition_string = self.get_formatted_definition()
@@ -77,7 +81,8 @@ class Definition:
         self.author = [i for i in self.author_div.stripped_strings][1]
 
         # TODO: optimize this:
-        self.date = [i for i in self.author_div.stripped_strings][2]
+        # NOTE: changed from self.date to self.definition due to mypy
+        self.definition = [i for i in self.author_div.stripped_strings][2]
         """The author of `definition` - derived from `soup`"""
 
     def get_formatted_example(self) -> str:
@@ -133,8 +138,9 @@ class Definition:
         > Warns if no result index has been specified.
 
         :raise IndexError: If soup has not been provided in `kwargs`.
-        :raise InvalidOrderError: If the order/result_index is greater than the number of definitions.
-        :return: `ResultSet` array or `Tag` found from soup.
+        :raise InvalidOrderError: If the order/result_index is greater than the
+        number of definitions. :return: `ResultSet` array or `Tag` found from s
+        oup.
         """
 
         if "soup" not in self.kwargs.keys():
@@ -155,14 +161,16 @@ class Definition:
         # Get definition results from index
         logger.debug(f"order: {self.kwargs['order']}")
         if "order" in self.kwargs.keys():
-            if self.kwargs["order"] == None:
-                # NOTE: this has been revoked due to the fact that its fucking annoying
+            if self.kwargs["order"] is not True:
+                # NOTE: this has been revoked due to the fact
+                # that its fucking annoying
                 # logger.warning("No result number specified")
                 order = 0
             else:
                 order = self.kwargs["order"] - 1
 
-        # Raise `InvalidOrderError` if `order` is greater than definitions found
+        # Raise `InvalidOrderError` if `order` is greater than definitions
+        # found
         if order > len(self.get_definition_results()):
             raise InvalidOrderError(len(self.get_definition_results()))
 

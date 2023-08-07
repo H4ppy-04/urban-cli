@@ -1,15 +1,16 @@
-global word
-global dictionary_url
-
 import json
 import os
 import sys
 import pytest
 import random
 
+from urban.urban_api import apply_word_to_url
+
+global word
+global dictionary_url
+
 sys.path.append(os.getcwd())
 
-from urban.urban_api import apply_word_to_url
 
 # Fetch test data
 testing_data_file_object = open(

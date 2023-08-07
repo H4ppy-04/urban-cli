@@ -25,12 +25,12 @@ from loguru import logger
 from rich import print
 import rich
 
-from urban_api import send_phrase_request
-from urban_commands import add_cols_argument, add_verbose_argument
-from urban_commands import add_result_argument, add_word_argument
-from urban_commands import return_argument_parser
-from urban_definition import Definition
-from urban_utils import format_sentences
+from .urban_api import send_phrase_request
+from .urban_commands import add_cols_argument, add_verbose_argument
+from .urban_commands import add_result_argument, add_word_argument
+from .urban_commands import return_argument_parser
+from .urban_definition import Definition
+from .urban_utils import format_sentences
 
 
 def main():
@@ -81,7 +81,9 @@ def main():
 
     # GEt maximum length if args.cols == [<int>]
     print(
-        format_sentences(definition_object.definition_string, max_length=args.cols),
+        format_sentences(
+            definition_object.definition_string, max_length=args.cols
+        ),
         end="\n\n",
     )
 

@@ -20,3 +20,5 @@ pytest
 pytest-cov
 pytest-html
 pytest-xdist
+
+tox

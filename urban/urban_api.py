@@ -26,21 +26,17 @@ would signify that a word has not been defined as oppose to a missing page.
 Integration
 -----------
 Functions that are defined in the various files around the codebase are managed
-within the API file. This file serves as a central point from which functions are
-accessed.
+within the API file. This file serves as a central point from which functions a
+re accessed.
 """
 
-import os
-import sys
 from typing import Literal
 
 from loguru import logger
 import requests
 
-sys.path.append(os.getcwd())
-
-from urban_exceptions import InvalidStatusCodeError, InvalidWordError
-from urban_utils import make_soup_from_response
+from .urban_exceptions import InvalidStatusCodeError, InvalidWordError
+from .urban_utils import make_soup_from_response
 
 
 def apply_word_to_url(word: str) -> str:
@@ -101,7 +97,9 @@ def send_phrase_request(phrase: str):
     """
 
     if not isinstance(phrase, str):
-        raise TypeError(f"`phrase` read as a `{type(phrase)}` must be a `string`.")
+        raise TypeError(
+            f"`phrase` read as a `{type(phrase)}` must be a `string`."
+        )
 
     # TODO: format `phrase` with urllib before asking if it exists
     phrase_exists = send_exists_request(phrase)

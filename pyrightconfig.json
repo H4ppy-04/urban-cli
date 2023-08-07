@@ -5,10 +5,10 @@
   "exclude": [
     "tests/**/*.py",
     "tests/*/*.py",
-	"tests/unit/*.py",
-	"tests/integration/*.py",
-	"tests/*.py",
-	"tests/"
+    "tests/unit/*.py",
+    "tests/integration/*.py",
+    "tests/*.py",
+    "tests/"
   ]
 }
 
