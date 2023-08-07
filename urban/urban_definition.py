@@ -20,8 +20,12 @@ from datetime import datetime
 from bs4 import Tag
 from loguru import logger
 
-from .urban_exceptions import InvalidOrderError
-from . import urban_utils
+try:
+    from .urban_exceptions import InvalidOrderError
+    from . import urban_utils
+except ImportError:
+    from urban_exceptions import InvalidOrderError
+    import urban_utils
 
 
 class Definition:
