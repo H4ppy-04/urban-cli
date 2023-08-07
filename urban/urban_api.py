@@ -45,6 +45,7 @@ def apply_word_to_url(word: str) -> str:
 
     :param word: Word to be attached to the end of fetch URL.
     :return: URL with word attached to the end of it.
+    :rtype: `str`
     """
 
     if not isinstance(word, str):
