@@ -1,17 +1,4 @@
 """
-=====
-Urban
-=====
-
-_Hurban the Urban till your brain starts hurtin._
-
-*Herben (verb)*: To look up a definition on the _'Dictionary of Urban'_.
-
-About the file
---------------
-The main file acts as an entry point for _Urban_.
-It functions as a centralized location from which the API can be utilized.
-
 :Author: Joshua Rose
 :Version: 2.0.0 of 2023/05/28
 :License: `Apache 2.0 <https://gh-syn.github.io/urban-cli/license.html>`_

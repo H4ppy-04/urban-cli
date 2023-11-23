@@ -1,8 +1,4 @@
 """
-========
-Commands
-========
-
 :Author: Joshua Rose
 :Version: 2.0.0 of 2023/05/28
 :License: `Apache 2.0 <https://gh-syn.github.io/urban-cli/license.html>`_

@@ -1,18 +1,10 @@
 """
-==========
-Definition
-==========
-
 :Author: Joshua Rose
 :Version: 2.0.0 of 2023/05/28
 :License: `Apache 2.0 <https://gh-syn.github.io/urban-cli/license.html>`_
 :File: urban_definition.py
 
-To prevent monolithic code practices, I've decided to seperate the definition c
-lass, which previously existed in `urban_utils.py` and let it have it's own fil
-e.
-This decision came about as a result of the size that the file ended up taking,
-which wasn't anticipated in its genesis.
+Contains the definition class.
 """
 
 from datetime import datetime

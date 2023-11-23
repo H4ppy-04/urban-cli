@@ -8,26 +8,12 @@ API
 :License: `Apache 2.0 <https://gh-syn.github.io/urban-cli/license.html>`_
 :File: urban_api.py
 
-The API contains centralized interactions with urban-cli.
-It's responsible for the following functions.
+The API contains centralized interactions with urban-cli.  It's responsible for:
 
-Sending requests
-----------------
-Requests that need to be sent to a remote source will be done so through
-functions declared in this file. Most of which, will be using custom
-exception classes as normal exceptions will not suit this specific use case.
+    * sending requests
+    * processing responses
+    * integrating all the functions in the application
 
-Processing responses
---------------------
-Responses that received using the requests library are processed and checked.
-Edge cases such as 404 errors work differently in this application, as one
-would signify that a word has not been defined as oppose to a missing page.
-
-Integration
------------
-Functions that are defined in the various files around the codebase are managed
-within the API file. This file serves as a central point from which functions a
-re accessed.
 """
 
 from typing import Literal

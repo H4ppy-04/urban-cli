@@ -3,7 +3,8 @@ File: sentence.py
 Author: Joshua Rose
 Email: joshuarose@gmx.com
 Github: https://github.com/JoshuaDRose
-Description: File container for sentence dataclass.
+
+Contains sentence class.
 """
 
 from dataclasses import dataclass
