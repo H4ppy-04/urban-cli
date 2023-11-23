@@ -31,3 +31,5 @@ jobs:
         documentation_path: ./docs/source
         requirements_path: ./requirements.txt
         cache: true
+      outputs:
+        page_url: "https://trivoz.github.io/urban-cli"
