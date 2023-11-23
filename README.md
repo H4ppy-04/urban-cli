@@ -11,3 +11,31 @@
 ----
 
 This project is licensed under the common MIT license.
+
+## Install
+
+No current method for installation - that's being worked on right now.
+
+
+## Contributing
+
+1. Create a virtual environment
+```
+python -m venv venv
+```
+
+2. Install requirements file
+```
+python -m pip install -r --user ./requirements.txt
+```
+
+3. Have a go at any of the issues listed [here](https://github.com/Trivoz/urban-cli/issues)
+
+4. Test your code
+```
+python -m pytest
+```
+
+4. Submit a [PR](https://github.com/Trivoz/urban-cli/pulls)
+
+5. I'll add your name to a `THANKS` file. (Thank you)
