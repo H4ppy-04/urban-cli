@@ -87,3 +87,6 @@ cmake_install.cmake
 compile_commands.json
 Makefile
 .python-version
+
+# universal ctags
+tags
