@@ -90,3 +90,7 @@ Makefile
 
 # universal ctags
 tags
+
+# cliff (for generating changelog)
+cliff.toml
+
