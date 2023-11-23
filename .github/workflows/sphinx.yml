@@ -14,6 +14,11 @@ jobs:
   build_and_deploy_docs:
     runs-on: ubuntu-latest
     name: Build Doxygen documentation and deploy
+    environment:
+      name: github-pages
+    permissions:
+      pages: write
+      id-token: write
     steps:
       - uses: actions/checkout@v2
       - uses: awalsh128/cache-apt-pkgs-action@latest
@@ -23,11 +28,12 @@ jobs:
 
       - name: Build
         run: |
-          cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+          sudo locale-gen en_US.UTF-8
+          sudo update-locale
 
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@4.1.5
+        uses: sphinx-notes/pages@v3
         with:
-          branch: gh-pages
-          folder: ${{github.workspace}}/docs/source
+          documentation_path: ./docs/source
+          requirements_path: ./requirements.txt
+          cache: true
