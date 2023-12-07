@@ -18,4 +18,5 @@ Table of Contents
    :maxdepth: 2
 
    installation.md
+   contributing.md
    license.md
