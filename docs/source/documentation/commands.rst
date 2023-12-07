@@ -1,2 +1,0 @@
-.. automodule:: urban_commands
-

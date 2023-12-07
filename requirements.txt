@@ -1,11 +1,6 @@
 requests
-beautifulsoup4
-
-myst-parser
-lxml
 typing_extensions
 
-loguru
 colorama
 rich
 
@@ -22,3 +17,5 @@ pytest-html
 pytest-xdist
 
 tox
+black
+hatch

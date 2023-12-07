@@ -1,98 +1,96 @@
 """
-:Author: Joshua Rose
+:Copyright: 2023 Joshua Rose
 :Version: 2.0.0 of 2023/05/28
-:License: `Apache 2.0 <https://gh-syn.github.io/urban-cli/license.html>`_
 :File: __main__.py.py
 """
 
-from argparse import ArgumentParser
+import argparse
 import sys
 
-from loguru import logger
-from rich import print
-import rich
+from request import Request
+from definition import Definition
 
-try:
-    from .urban_api import send_phrase_request
-    from .urban_commands import add_cols_argument, add_verbose_argument
-    from .urban_commands import add_result_argument, add_word_argument
-    from .urban_commands import return_argument_parser
-    from .urban_definition import Definition
-    from .urban_utils import format_sentences
-except ImportError:
-    from urban_api import send_phrase_request
-    from urban_commands import add_cols_argument, add_verbose_argument
-    from urban_commands import add_result_argument, add_word_argument
-    from urban_commands import return_argument_parser
-    from urban_definition import Definition
-    from urban_utils import format_sentences
+
+def build_argument_parser():
+    parser = argparse.ArgumentParser(
+        prog="urban",
+        description="Search the Urban Dictionary",
+        epilog=None,
+        add_help=True,
+        allow_abbrev=True,
+    )
+    parser.add_argument(
+        "--verbose",
+        default=False,
+        required=False,
+        help="Show additional debug info",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--result",
+        type=int,
+        help="Get the nth definition result",
+    )
+    parser.add_argument(
+        "--all",
+        required=False,
+        default=False,
+        help="Show all definition information",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--example",
+        required=False,
+        default=True,
+        help="Show example usage of the word",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--author",
+        required=False,
+        default=True,
+        help="Show the definition author",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--rating",
+        required=False,
+        default=True,
+        help="Show the like/dislike ratio of the definition",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--date",
+        required=False,
+        default=True,
+        help="Show the date the definition was published",
+        action="store_true",
+    )
+    parser.add_argument(
+        "word",
+        type=str,
+        help="Search the Urban Dictionary",
+    )
+    return parser
 
 
 def main():
-    """
-    Entry point that utilizes the parser and API for Urban.
-
-    Raises will not be stipulated as there are too many.
-     > Furthermore, it would be silly.
-    """
-
-    # Remove all handlers added so far, including the default one.
-    logger.remove()
-
-    logger.debug("Instantiating parser object from `return_argument_parser()`")
-    parser: ArgumentParser = return_argument_parser()
-
-    logger.debug("Adding commands to parser (cols, word, result)")
-
-    # Add argument groups
-    output_group = parser.add_argument_group(
-        "output", "configure and customize console output"
-    )
-
-    # Add commands to output
-    add_word_argument(parser)
-    add_result_argument(parser)
-    add_cols_argument(output_group)
-    add_verbose_argument(output_group)
-
-    # Parse newly added commands.
+    parser = build_argument_parser()
     args = parser.parse_args()
+    request = Request(args.word)
+    results = request.search()
 
-    if args.verbose:
-        logger.add(sys.stderr, level="DEBUG")
-    else:
-        logger.add(sys.stderr, level="WARNING")
+    if not len(results):
+        Definition.show_does_not_exit_error(args.word)
+        sys.exit()
 
-    # logger.debug(args.result)
-
-    # Ask urban dictionary for our word.
-    soup = send_phrase_request(args.WORD)
-
-    definition_object: Definition = Definition(soup=soup, order=args.result)
-
-    # logger.debug(definition_object)
-
-    rich.print("Definition\n==========")
-
-    # GEt maximum length if args.cols == [<int>]
-    print(
-        format_sentences(
-            definition_object.definition_string, max_length=args.cols
-        ),
-        end="\n\n",
-    )
-
-    rich.print("Example\n=======")
-
-    print(
-        format_sentences(
-            definition_object.example_string, max_length=args.cols
-        ),
-        end="\n\n",
-    )
-    # Print the definition example
-    print(f"Defined by [cyan]{definition_object.author}")
-
+    if args.result:
+        if args.result - 1 > len(results):
+            print(f"Index value for --result too high ({len(results.definitions)} results)")
+            sys.exit(1)
+        results[args].display(args.example, args.author, args.rating, args.date)
+        sys.exit(0)
+    results[0].display(args.example, args.author, args.rating, args.date)
 
 if __name__ == "__main__":
     main()
