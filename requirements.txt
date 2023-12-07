@@ -20,3 +20,5 @@ pytest-xdist
 tox
 black
 hatch
+
+myst_parser
