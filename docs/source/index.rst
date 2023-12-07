@@ -18,6 +18,5 @@ Table of Contents
    :maxdepth: 2
 
    installation.md
-   releases.md
-   rework.rst
+   contributing.md
    license.md
