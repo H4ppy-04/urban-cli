@@ -1,1 +1,0 @@
-.. automodule:: structs.sentence

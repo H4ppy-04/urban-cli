@@ -4,8 +4,8 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath("../.."))
-sys.path.insert(1, os.path.abspath("../../urban"))
-sys.path.insert(2, os.path.abspath("../../urban/"))
+sys.path.insert(1, os.path.abspath("../../src"))
+sys.path.insert(2, os.path.abspath("../../src/"))
 
 html_theme = "press"
 
@@ -30,7 +30,7 @@ source_suffix = {
 master_doc = "index"
 
 project = "urban-cli"
-copyright = "2023 Joshua Rose"
+copyright = "2024 Joshua Rose"
 author = "Joshua Rose"
 
 version = "1.0.2"

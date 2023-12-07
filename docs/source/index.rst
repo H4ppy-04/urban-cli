@@ -20,8 +20,4 @@ Table of Contents
    installation.md
    releases.md
    rework.rst
-   contributing.md
-   blog.rst
-   refactoring_guide.md
-   documentation/index.rst
    license.md
