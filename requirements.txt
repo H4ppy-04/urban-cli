@@ -8,6 +8,7 @@ rich
 coverage
 
 sphinx
+myst_parser
 sphinx-readable-theme
 python-docs-theme
 sphinx-press-theme
