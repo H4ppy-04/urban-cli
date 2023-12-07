@@ -26,13 +26,16 @@ classifiers = [
 ]
 dependencies = []
 
+[project.scripts]
+urban = "src.urban.parser:parse_arguments"
+
 [project.urls]
-Documentation = "https://github.com/unknown/urban-cli#readme"
-Issues = "https://github.com/unknown/urban-cli/issues"
-Source = "https://github.com/unknown/urban-cli"
+Documentation = "https://github.com/Trivoz/urban-cli#readme"
+Issues = "https://github.com/Trivoz/urban-cli/issues"
+Source = "https://github.com/Trivoz/urban-cli"
 
 [tool.hatch.version]
-path = "src/urban_cli/__about__.py"
+path = "src/urban/__about__.py"
 
 [tool.hatch.envs.default]
 dependencies = [
@@ -65,7 +68,7 @@ dependencies = [
   "ruff>=0.0.243",
 ]
 [tool.hatch.envs.lint.scripts]
-typing = "mypy --install-types --non-interactive {args:src/urban_cli tests}"
+typing = "mypy --install-types --non-interactive {args:src/urban tests}"
 style = [
   "ruff {args:.}",
   "black --check --diff {args:.}",
@@ -145,11 +148,11 @@ source_pkgs = ["urban_cli", "tests"]
 branch = true
 parallel = true
 omit = [
-  "src/urban_cli/__about__.py",
+  "src/urban/__about__.py",
 ]
 
 [tool.coverage.paths]
-urban_cli = ["src/urban_cli", "*/urban-cli/src/urban_cli"]
+urban_cli = ["src/urban", "*/urban-cli/src/urban"]
 tests = ["tests", "*/urban-cli/tests"]
 
 [tool.coverage.report]
