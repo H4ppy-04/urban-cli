@@ -7,10 +7,10 @@
 
 from typing import Literal
 
-from loguru import logger
 from typing import Literal, Optional
-from definition import Definition
 import requests
+
+from .definition import Definition
 
 
 class Request:

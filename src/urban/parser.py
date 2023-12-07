@@ -1,14 +1,8 @@
-"""
-:Copyright: 2023 Joshua Rose
-:Version: 2.0.0 of 2023/05/28
-:File: __main__.py.py
-"""
-
 import argparse
 import sys
 
-from request import Request
-from definition import Definition
+from .request import Request
+from .definition import Definition
 
 
 def build_argument_parser():
@@ -73,8 +67,7 @@ def build_argument_parser():
     )
     return parser
 
-
-def main():
+def parse_arguments():
     parser = build_argument_parser()
     args = parser.parse_args()
     request = Request(args.word)
@@ -91,6 +84,3 @@ def main():
         results[args].display(args.example, args.author, args.rating, args.date)
         sys.exit(0)
     results[0].display(args.example, args.author, args.rating, args.date)
-
-if __name__ == "__main__":
-    main()

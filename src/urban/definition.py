@@ -6,7 +6,6 @@
 """
 
 from typing import Literal, Optional
-import rich
 from dataclasses import dataclass, field
 
 import requests
@@ -35,7 +34,9 @@ class Definition:
     @staticmethod
     def trim(string: str):
         """ hyperlinks are encased in block brackets, this function removes them """
-        _string = string.replace("[", "",).replace("]", "")
+        if '[' and ']' in string:
+            _string = string.replace("[", "",).replace("]", "")
+            return _string
         return _string
 
     def display(
@@ -52,7 +53,7 @@ class Definition:
 
         string = ""
         string += f"{self.word}:\n{definition}\n\n"
-        string += f"Example:\n{example}" if print_example else "\n\n"
+        string += f"Example:\n{example}" if print_example and (self.example != '') else "\n\n"
         string += f"\n\n{self.thumbs_up} likes, {self.thumbs_down} dislikes" if print_rating else ""
         string += f"\nby {self.author}" if print_author else ""
         string += f" on {self.written_on}" if print_date else ""
@@ -61,16 +62,6 @@ class Definition:
 
     @staticmethod
     def show_does_not_exit_error(word: str):
-        """
-        Show does not exist error when invalid word is queried.
+        """ Show does not exist error when invalid word is queried. """
 
-        A type error is not raised as data type is checked in `send_phrase_request`
-        function.
-        """
-
-        rich.print("The word %s doesn't exist yet." % word, end=" ")
-        rich.print(
-            "You can change that by submitting a definition on the {link}".format(
-                link="[link url='https://urbandictionary.com/']Urban Dictionary website.[/link]"
-            )
-        )
+        print("The word %s doesn't exist yet." % word, end=" ")
