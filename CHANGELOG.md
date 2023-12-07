@@ -1,34 +1,20 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [unreleased]
+## [1.2.0](https://github.com/Trivoz/urban-cli/compare/v1.1.1...v1.2.0) (2023-12-07)
 
-### Bug Fixes
-
-- Change executable permissions for install
-
-### Documentation
-
-- Attempt 2 ( docs pipeline )
-- Reduce verbosity of docstrings
 
 ### Features
 
-- Add structs file; modify documentation
+* complete refactor. ([b0fdc1f](https://github.com/Trivoz/urban-cli/commit/b0fdc1f9695377886695a560aa3d1ab125f64313))
+* **structs:** add structs file; modify documentation ([4bff7cc](https://github.com/Trivoz/urban-cli/commit/4bff7cc0dec8e15a5e07e8cc76d0c911c27eedcd))
 
-### Miscellaneous Tasks
 
-- Ignore universal ctags
-- Add todo feat
+### Bug Fixes
 
-### Refactor
-
-- Make pipeline more relevant from fbff7cc
-
-### Wip
-
-- Attempt at getting pages to work again
+* corrected relative paths and minor bugs ([8be4d40](https://github.com/Trivoz/urban-cli/commit/8be4d40b7b9a561ecf5a7277a333b0b396013570))
+* **make:** change executable permissions for install ([8067a0b](https://github.com/Trivoz/urban-cli/commit/8067a0b719c363463beb4a8af8286ddb002c7722))
 
 ## [1.1.1] - 2023-08-07
 
