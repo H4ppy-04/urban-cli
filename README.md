@@ -19,14 +19,9 @@ No current method for installation - that's being worked on right now.
 
 ## Contributing
 
-1. Create a virtual environment
+1. Run this script that creates `venv`, activates it, installs deps, etc 
 ```
-python -m venv venv
-```
-
-2. Install requirements file
-```
-python -m pip install -r --user ./requirements.txt
+./scripts/venv.sh
 ```
 
 3. Have a go at any of the issues listed [here](https://github.com/Trivoz/urban-cli/issues)
