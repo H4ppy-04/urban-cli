@@ -5,8 +5,8 @@
 :File: urban_api.py
 """
 
-from typing import Literal, Optional
 from dataclasses import dataclass, field
+from typing import Literal, Optional
 
 import requests
 
@@ -33,9 +33,12 @@ class Definition:
 
     @staticmethod
     def trim(string: str):
-        """ hyperlinks are encased in block brackets, this function removes them """
+        """hyperlinks are encased in block brackets, this function removes them"""
         if '[' and ']' in string:
-            _string = string.replace("[", "",).replace("]", "")
+            _string = string.replace(
+                "[",
+                "",
+            ).replace("]", "")
             return _string
         return _string
 
@@ -62,6 +65,6 @@ class Definition:
 
     @staticmethod
     def show_does_not_exit_error(word: str):
-        """ Show does not exist error when invalid word is queried. """
+        """Show does not exist error when invalid word is queried."""
 
         print("The word %s doesn't exist yet." % word, end=" ")

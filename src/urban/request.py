@@ -5,9 +5,8 @@
 :File: request.py
 """
 
-from typing import Literal
-
 from typing import Literal, Optional
+
 import requests
 
 from .definition import Definition

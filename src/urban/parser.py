@@ -1,8 +1,8 @@
 import argparse
 import sys
 
-from .request import Request
 from .definition import Definition
+from .request import Request
 
 
 def build_argument_parser():
@@ -66,6 +66,7 @@ def build_argument_parser():
         help="Search the Urban Dictionary",
     )
     return parser
+
 
 def parse_arguments():
     parser = build_argument_parser()
