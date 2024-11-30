@@ -2,7 +2,8 @@ name: Publish Github Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, '[TEST]*']
+  workflow_dispatch:
 
 # Cancel any in-progress job or run
 # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#concurrency
