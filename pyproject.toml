@@ -9,7 +9,7 @@ description = 'The Urban Dictionary Terminal'
 readme = "README.md"
 requires-python = ">=3.7"
 license = "MIT"
-keywords = []
+keywords = ["cli", "tool", "urban"]
 authors = [
   { name = "Joshua Rose", email = "joshuarose@gmx.com" },
 ]
@@ -30,9 +30,12 @@ dependencies = []
 urban = "src.urban.parser:parse_arguments"
 
 [project.urls]
-Documentation = "https://github.com/Trivoz/urban-cli#readme"
-Issues = "https://github.com/Trivoz/urban-cli/issues"
-Source = "https://github.com/Trivoz/urban-cli"
+Documentation = "https://github.com/H4ppy-04/urban-cli#readme"
+Issues = "https://github.com/H4ppy-04/urban-cli/issues"
+Source = "https://github.com/H4ppy-04/urban-cli"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/urban"]
 
 [tool.hatch.version]
 path = "src/urban/__about__.py"
